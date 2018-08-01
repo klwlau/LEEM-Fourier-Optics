@@ -6,9 +6,8 @@ from numba import vectorize, cuda,jit
 
 # @vectorize(['float32(float32, float32)'])
 # @vectorize(['float32(float32, float32)'], target='cuda')
-@jit(nopython = True, parallel = True, nogil = True)
+# @jit(nopython = True, parallel = True, nogil = True)
 def VectorAdd(a, b):
-
     c= a+b
     return c
 
@@ -29,5 +28,5 @@ def main():
 
     print ("VectorAdd took for % seconds" % vector_add_time)
 
-if __name__=='__main__':
-    profile.run("main()",sort="time")
+# if __name__=='__main__':
+profile.run("main()",sort="time")
