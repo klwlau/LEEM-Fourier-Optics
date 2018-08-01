@@ -1,6 +1,5 @@
 import numpy as np
-if __name__ == '__main__':
-    print("")
+if __name__ == '__main__':print("")
 else: print("Loading Constants")
 
 U_a = 15.01e3  # eV  Accelerating Voltage
