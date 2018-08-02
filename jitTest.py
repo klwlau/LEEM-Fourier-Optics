@@ -30,5 +30,5 @@ def jitTest():
     print ("VectorAdd took for % seconds" % vector_add_time)
 
 # profile.run("jitTest()",sort="time")
-# if __name__ == '__main__':
-jitTest()
+if __name__ == '__main__':
+    jitTest()
