@@ -1,8 +1,9 @@
 from utilityFunc import *
 from setupObject import *
+from transmittionCrossCoefficientMatrix import *
 
 print("Start Main")
 
-print(q_max)
+print(Qi.shape)
 
 print("End Main")
