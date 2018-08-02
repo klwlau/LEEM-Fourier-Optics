@@ -31,21 +31,4 @@ lamda_o = 6.6262e-34 / np.sqrt(2 * 1.6022e-19 * 9.1095e-31 * U_o)
 q_max = alpha_ap / lamda
 q_ill = alpha_ill / lamda
 
-# Square Object
-K = 1 * np.pi
 
-sampleSpaceTotalStep = 501  # sample size
-sampleSpaceSize = 25 * 1e-9  # nm #25
-objectSpaceSize = 5 * 1e-9  # nm #5
-objectStep = int(objectSpaceSize / sampleSpaceSize * sampleSpaceTotalStep)
-sampleCoorXX, sampleCoorYY = np.mgrid[-sampleSpaceSize:sampleSpaceSize:sampleSpaceTotalStep * 1j,
-                             -sampleSpaceSize:sampleSpaceSize:sampleSpaceTotalStep * 1j]
-
-sqObject = np.zeros(sampleCoorXX.shape)
-sampleCenterX, sampleCenterY = int(sampleSpaceTotalStep / 2 + 1), int(sampleSpaceTotalStep / 2 + 1)
-sqObject[sampleCenterX - objectStep:sampleCenterX + objectStep,
-sampleCenterY - objectStep:sampleCenterY + objectStep] = 1
-
-objectPhaseShift = K * sqObject
-
-amp = 1
