@@ -1,10 +1,7 @@
-from constants import *
 from utilityFunc import *
-from sqObject import *
+from setupObject import *
 
 print("Start Main")
-
-
 
 
 

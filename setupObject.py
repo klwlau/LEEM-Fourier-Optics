@@ -40,3 +40,8 @@ aperture[apertureMask] = 1
 maskedWaveObjectFT = np.multiply(waveObjectFT, aperture)
 maskedQSpaceXX = np.multiply(qSpaceXX, aperture)
 maskedQSpaceYY = np.multiply(qSpaceYY, aperture)
+
+print(maskedQSpaceXX.shape)
+testX,testY = np.meshgrid(maskedQSpaceXX,maskedQSpaceXX)
+
+print(testX.shape)
