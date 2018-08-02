@@ -29,8 +29,8 @@ T_o = np.exp(1j * 2 * np.pi * (1 / 4 * C_3 * lamda ** 3 * (abs_Qi_4 - abs_Qj_4)
                                ))
 print("calc E_s")
 E_s = np.exp(-np.pi ^ 2 / 4 / np.log(2) * q_ill ^ 2 *
-             np.abs(C_3 * lamda ^ 3 * (Qi. * abs_Qi_2 - Qj. * abs_Qj_2)
-                    + C_5 * lamda ^ 5 * (Qi. * abs_Qi_4 - Qj. * abs_Qj_4)
+             np.abs(C_3 * lamda ^ 3 * (Qi * abs_Qi_2 - Qj * abs_Qj_2)
+                    + C_5 * lamda ^ 5 * (Qi * abs_Qi_4 - Qj * abs_Qj_4)
                     - delta_z * lamda * (Qi - Qj)) ** 2
              )
 #
