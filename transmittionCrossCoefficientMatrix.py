@@ -34,9 +34,9 @@ abs_Qj_6 = abs_Qj_2 ** 3
 #                     + C_5 * lamda ** 5 * (Qi * abs_Qi_4 - Qj * abs_Qj_4)
 #                     - delta_z * lamda * (Qi - Qj)) ** 2)
 #
-# print("calc E_cc")
-# E_cc = (1 - 1j * np.pi / 4 / np.log(2) *
-#         delta_fcc * lamda * (abs_Qi_2 - abs_Qj_2)) ** -0.5
+print("calc E_cc")
+E_cc = (1 - 1j * np.pi / 4 / np.log(2) *
+        delta_fcc * lamda * (abs_Qi_2 - abs_Qj_2)) ** -0.5
 
 print("calc E_ct")
 E_ct = E_cc * np.exp(-np.pi ** 2 / 16 / np.log(2) *
