@@ -2,9 +2,9 @@ from setupObject import *
 
 
 # T = np.zeros(N, N)
-Qx_i, Qx_j = np.meshgrid(maskedQSpaceXX,sparse=True)
-Qy_i, Qy_j = np.meshgrid(maskedQSpaceYY,sparse=True)
-F_i, F_j = np.meshgrid(maskedWaveObjectFT,sparse=True)
+Qx_i, Qx_j = np.meshgrid(maskedQSpaceXX,maskedQSpaceXX,sparse=True)
+Qy_i, Qy_j = np.meshgrid(maskedQSpaceYY,maskedQSpaceYY,sparse=True)
+F_i, F_j = np.meshgrid(maskedWaveObjectFT,maskedWaveObjectFT,sparse=True)
 
 Qi = Qx_i + 1j * Qy_i
 Qj = Qx_j + 1j * Qy_j
