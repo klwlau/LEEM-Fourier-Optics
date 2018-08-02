@@ -1,6 +1,9 @@
 import numpy as np
-if __name__ == '__main__':print("")
-else: print("Loading Constants")
+
+if __name__ == '__main__':
+    print("")
+else:
+    print("Loading Constants.py")
 
 U_a = 15.01e3  # eV  Accelerating Voltage
 U_o = 10  # eV  Electron Voltage
@@ -30,16 +33,19 @@ q_ill = alpha_ill / lamda
 
 # Square Object
 K = 1 * np.pi
-objectHeight = 1
-objectHeight = K * objectHeight
-sampleSpaceStep = 501  # sample size
-sampleSpaceSize = 25*1e-9  # nm #25
-objectSize = 5 * 1e-9  # nm #5
-sampleSpaceXX , sampleSpaceYY =np.mgrid[-sampleSpaceSize:sampleSpaceSize:sampleSpaceStep*1j,-sampleSpaceSize:sampleSpaceSize:sampleSpaceStep*1j]
 
-# h = double((x >= -sq_Size)&(x <= sq_Size)&(y >= -sq_Size)&(y <= sq_Size))
+sampleSpaceTotalStep = 501  # sample size
+sampleSpaceSize = 25 * 1e-9  # nm #25
+objectSpaceSize = 5 * 1e-9  # nm #5
+objectStep = int(objectSpaceSize / sampleSpaceSize * sampleSpaceTotalStep)
+sampleCoorXX, sampleCoorYY = np.mgrid[-sampleSpaceSize:sampleSpaceSize:sampleSpaceTotalStep * 1j,
+                             -sampleSpaceSize:sampleSpaceSize:sampleSpaceTotalStep * 1j]
 
+sqObject = np.zeros(sampleCoorXX.shape)
+sampleCenterX, sampleCenterY = int(sampleSpaceTotalStep / 2 + 1), int(sampleSpaceTotalStep / 2 + 1)
+sqObject[sampleCenterX - objectStep:sampleCenterX + objectStep,
+sampleCenterY - objectStep:sampleCenterY + objectStep] = 1
 
+objectPhaseShift = K * sqObject
 
-phase_shift = objectHeight
 amp = 1
