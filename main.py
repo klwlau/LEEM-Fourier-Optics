@@ -4,6 +4,8 @@ from transmittionCrossCoefficientMatrix import *
 
 print("Start Main")
 
-print(Qi.shape)
+
+
+print(T_o.shape)
 
 print("End Main")
