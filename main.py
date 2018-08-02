@@ -1,7 +1,6 @@
-def main():
-    from utilityFunc import *
-    from setupObject import *
-    from transmittionCrossCoefficientMatrix import *
+from utilityFunc import *
+from setupObject import *
+from transmittionCrossCoefficientMatrix import *
 
 print("Start Main")
 
