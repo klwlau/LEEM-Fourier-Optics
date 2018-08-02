@@ -29,4 +29,6 @@ def main():
     print ("VectorAdd took for % seconds" % vector_add_time)
 
 # if __name__=='__main__':
-profile.run("main()",sort="time")
+# profile.run("main()",sort="time")
+if __name__ == '__main__':
+    main()
