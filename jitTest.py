@@ -8,7 +8,7 @@ from numba import vectorize, cuda,jit
 # @vectorize(['float32(float32, float32)'], target='cuda')
 @jit(nopython = True, parallel = True, nogil = True)
 def VectorAdd(a, b):
-    c= a+2*b
+    c= a+b
     return c
 
 
