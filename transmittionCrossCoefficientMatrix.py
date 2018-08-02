@@ -41,7 +41,7 @@ E_cc = (1 - 1j * np.pi / 4 / np.log(2) *
 print("calc E_ct")
 E_ct = E_cc * np.exp(-np.pi ** 2 / 16 / np.log(2) *
                      (delta_fc * lamda * (abs_Qi_2 - abs_Qj_2)
-                      + 1 / 2 * delta_f3c * lamda ^ 3 *
+                      + 1 / 2 * delta_f3c * lamda ** 3 *
                       (abs_Qi_4 - abs_Qj_4)) ** 2 * E_cc ** 2)
 #
-# T = T_o. * E_s. * E_ct
+# T = T_o* E_s* E_ct
