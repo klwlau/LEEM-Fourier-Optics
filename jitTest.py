@@ -18,7 +18,7 @@ def jitTest():
     B = np.ones(N, dtype=np.float32)
 
     start = time.time()
-    for i in range(50):
+    for i in range(500):
         print(i)
         C = VectorAdd(A,B)
     vector_add_time = time.time() - start
