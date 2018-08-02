@@ -47,4 +47,4 @@ print(testXX.shape)
 testX,testY = np.meshgrid(testXX,testXX)
 
 print(testX.shape)
-print(getsizeof(testX))
+print(getsizeof(testX)/8/1024/1024)
