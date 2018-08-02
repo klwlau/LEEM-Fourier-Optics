@@ -1,4 +1,5 @@
 from constants import *
+from sys import getsizeof
 
 # set up Square Object
 K = 1 * np.pi
@@ -46,3 +47,4 @@ print(testXX.shape)
 testX,testY = np.meshgrid(testXX,testXX)
 
 print(testX.shape)
+print(getsizeof(testX))
