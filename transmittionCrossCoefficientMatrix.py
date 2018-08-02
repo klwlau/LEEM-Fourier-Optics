@@ -14,9 +14,17 @@ Qj = Qx_j + 1j * Qy_j
 abs_Qi = (Qx_i ** 2 + Qy_i ** 2) ** 0.5
 abs_Qj = (Qx_j ** 2 + Qy_j ** 2) ** 0.5
 
-T_o = np.exp(1j * 2 * np.pi * (1 / 4 * C_3 * lamda ** 3 * (abs_Qi ** 4 - abs_Qj ** 4)
-                               + 1 / 6 * C_5 * lamda ** 5 * (abs_Qi ** 6 - abs_Qj ** 6)
-                               - 1 / 2 * delta_z * lamda * (abs_Qi ** 2 - abs_Qj ** 2)
+abs_Qi_2 = abs_Qi**2
+abs_Qi_4 = abs_Qi_2**2
+abs_Qi_6 = abs_Qi_2**3
+abs_Qj_2 = abs_Qj**2
+abs_Qj_4 = abs_Qj_2**2
+abs_Qj_6 = abs_Qj_2**3
+
+
+T_o = np.exp(1j * 2 * np.pi * (1 / 4 * C_3 * lamda ** 3 * (abs_Qi_4 - abs_Qj_4)
+                               + 1 / 6 * C_5 * lamda ** 5 * (abs_Qi_6 - abs_Qj_6)
+                               - 1 / 2 * delta_z * lamda * (abs_Qi_2 - abs_Qj_2)
                                ))
 
 
