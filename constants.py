@@ -28,20 +28,18 @@ lamda_o = 6.6262e-34 / np.sqrt(2 * 1.6022e-19 * 9.1095e-31 * U_o)
 q_max = alpha_ap / lamda
 q_ill = alpha_ill / lamda
 
-# Square Step
+# Square Object
 K = 1 * np.pi
-n = 501  # sample size
-sSize = 25  # nm #25
-sq_Size = 5  # nm #5
-l = np.linspace(-sSize, sSize, n).T
-# [x, y] = meshgrid(l)
+objectHeight = 1
+objectHeight = K * objectHeight
+sampleSpaceStep = 501  # sample size
+sampleSpaceSize = 25*1e-9  # nm #25
+objectSize = 5 * 1e-9  # nm #5
+sampleSpaceXX , sampleSpaceYY =np.mgrid[-sampleSpaceSize:sampleSpaceSize:sampleSpaceStep*1j,-sampleSpaceSize:sampleSpaceSize:sampleSpaceStep*1j]
+
 # h = double((x >= -sq_Size)&(x <= sq_Size)&(y >= -sq_Size)&(y <= sq_Size))
-h = 1
 
-h = K * h
-l = l * 1e-9
-x = x * 1e-9
-y = y * 1e-9
 
-phase_shift = h
+
+phase_shift = objectHeight
 amp = 1
