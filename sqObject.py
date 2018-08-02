@@ -1,3 +1,4 @@
+from constants import *
 # Square Object
 K = 1 * np.pi
 
