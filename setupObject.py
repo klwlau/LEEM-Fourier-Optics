@@ -1,6 +1,6 @@
 from constants import *
 
-# Square Object
+# set up Square Object
 K = 1 * np.pi
 
 sampleSpaceTotalStep = 501  # sample size
@@ -19,25 +19,24 @@ sampleCenterY - objectStep:sampleCenterY + objectStep] = 1
 
 objectPhaseShift = K * sqObject
 
+# apply wave function and apply FFT
 amp = 1
 waveObject = amp * np.exp(1j * objectPhaseShift)
 waveObjectFT = np.fft.fftshift(np.fft.fft2(waveObject) / sampleSpaceTotalStep ** 2)
 
+
+# setup qSpace
 qSpaceCoor = 1 / sampleStepSize / (sampleSpaceTotalStep - 1) * np.arange(sampleSpaceTotalStep)
 qSpaceCoor = qSpaceCoor - (np.amax(qSpaceCoor) - np.amin(qSpaceCoor)) / 2  # adjust qSpaceCoor center
 
 qSpaceXX, qSpaceYY = np.meshgrid(qSpaceCoor, qSpaceCoor)
 
+# setup aperture function
 apertureMask = qSpaceXX ** 2 + qSpaceYY ** 2 <= q_max ** 2
 aperture = np.zeros_like(qSpaceYY)
-print(aperture.shape)
 aperture[apertureMask] = 1
-print(aperture.shape)
 
+# apply aperture function
 maskedWaveObjectFT = np.multiply(waveObjectFT, aperture)
 maskedQSpaceXX = np.multiply(qSpaceXX, aperture)
 maskedQSpaceYY = np.multiply(qSpaceYY, aperture)
-
-# mask_F_wave_obj = F_wave_obj(mask == 1)
-# mask_qx = qx(mask == 1)
-# mask_qy = qy(mask ==1)
