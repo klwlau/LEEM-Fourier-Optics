@@ -1,6 +1,11 @@
 from constants import *
 from utilityFunc import *
+from sqObject import *
 
-print("hello")
-print(sampleCenterX)
-plotArray(F_wave_obj.imag)
+print("Start Main")
+
+
+
+
+
+print("End Main")
