@@ -11,14 +11,14 @@ def VectorAdd(a, b):
     c= a+b
     return c
 
-def main():
+def jitTest():
     N = 320000000
 
     A = np.ones(N, dtype=np.float32)
     B = np.ones(N, dtype=np.float32)
 
     start = time.time()
-    for i in range(500):
+    for i in range(50):
         print(i)
         C = VectorAdd(A,B)
     vector_add_time = time.time() - start
@@ -31,4 +31,4 @@ def main():
 # if __name__=='__main__':
 # profile.run("main()",sort="time")
 if __name__ == '__main__':
-    main()
+    jitTest()
