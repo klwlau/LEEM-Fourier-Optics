@@ -11,6 +11,7 @@ def VectorAdd(a, b):
     c= a+b
     return c
 
+
 def jitTest():
     N = 320000000
 
@@ -18,7 +19,7 @@ def jitTest():
     B = np.ones(N, dtype=np.float32)
 
     start = time.time()
-    for i in range(500):
+    for i in range(10):
         print(i)
         C = VectorAdd(A,B)
     vector_add_time = time.time() - start
@@ -28,7 +29,6 @@ def jitTest():
 
     print ("VectorAdd took for % seconds" % vector_add_time)
 
-# if __name__=='__main__':
-# profile.run("main()",sort="time")
-if __name__ == '__main__':
-    jitTest()
+# profile.run("jitTest()",sort="time")
+# if __name__ == '__main__':
+jitTest()
