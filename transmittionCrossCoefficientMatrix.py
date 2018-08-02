@@ -35,13 +35,13 @@ abs_Qj_6 = abs_Qj_2 ** 3
 #                     - delta_z * lamda * (Qi - Qj)) ** 2)
 #
 print("calc E_cc")
-array1 = abs_Qi_2 - abs_Qj_2
-const1 = 1 - 1j * np.pi / 4 / np.log(2) * delta_fcc * lamda
-E_cc = (const1 * array1)
-E_cc = np.power(E_cc ** (0.5),-1)
+# array1 = abs_Qi_2 - abs_Qj_2
+# const1 = 1 - 1j * np.pi / 4 / np.log(2) * delta_fcc * lamda
+# E_cc = (const1 * array1)
+# E_cc = np.power(E_cc,(-0.5))
 
-# E_cc = (1 - 1j * np.pi / 4 / np.log(2) *
-        # delta_fcc * lamda * (abs_Qi_2 - abs_Qj_2)) ** -0.5
+E_cc = (1 - 1j * np.pi / 4 / np.log(2) *
+        delta_fcc * lamda * (abs_Qi_2 - abs_Qj_2)) ** -0.5
 
 # print("calc E_ct")
 # E_ct = E_cc * np.exp(-np.pi ** 2 / 16 / np.log(2) *
