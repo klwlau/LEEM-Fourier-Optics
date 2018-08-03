@@ -1,4 +1,4 @@
-from utilityFunc import *
+# from utilityFunc import *
 from setupObject import *
 from transmittionCrossCoefficientMatrix import *
 
