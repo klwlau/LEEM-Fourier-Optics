@@ -2,8 +2,6 @@ from setupObject import *
 
 print("runing transmittionCrossCoefficientMatrix.py")
 # T = np.zeros(N, N)
-maskedQSpaceXX = maskedQSpaceXX[251 - 72:251 + 72, 251 - 72:251 + 72]
-maskedQSpaceYY = maskedQSpaceYY[251 - 72:251 + 72, 251 - 72:251 + 72]
 
 Qx_i, Qx_j = np.meshgrid(maskedQSpaceXX, maskedQSpaceXX, sparse=True)
 Qy_i, Qy_j = np.meshgrid(maskedQSpaceYY, maskedQSpaceYY, sparse=True)
@@ -45,8 +43,8 @@ E_cc = (1 - 1j * np.pi / 4 / np.log(2) *
 
 print("calc E_ct")
 E_ct = E_cc * np.exp(-np.pi ** 2 / 16 / np.log(2) *
-                     (delta_fc * lamda * (abs_Qi_2 - abs_Qj_2)
-                      + 1 / 2 * delta_f3c * lamda ** 3 *
+                     ((delta_fc * lamda) * (abs_Qi_2 - abs_Qj_2)
+                      + (1 / 2 * delta_f3c * lamda ** 3 )*
                       (abs_Qi_4 - abs_Qj_4)) ** 2 * E_cc ** 2)
 
 print("calc T")

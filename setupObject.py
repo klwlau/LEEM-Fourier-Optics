@@ -25,7 +25,6 @@ amp = 1
 waveObject = amp * np.exp(1j * objectPhaseShift)
 waveObjectFT = np.fft.fftshift(np.fft.fft2(waveObject) / sampleSpaceTotalStep ** 2)
 
-
 # setup qSpace
 qSpaceCoor = 1 / sampleStepSize / (sampleSpaceTotalStep - 1) * np.arange(sampleSpaceTotalStep)
 qSpaceCoor = qSpaceCoor - (np.amax(qSpaceCoor) - np.amin(qSpaceCoor)) / 2  # adjust qSpaceCoor center
@@ -39,7 +38,12 @@ aperture[apertureMask] = 1
 
 # apply aperture function
 maskedWaveObjectFT = np.multiply(waveObjectFT, aperture)
-maskedQSpaceXX = np.multiply(qSpaceXX, aperture)
-maskedQSpaceYY = np.multiply(qSpaceYY, aperture)
+
+# maskedQSpaceXX = np.multiply(qSpaceXX, aperture)
+# maskedQSpaceYY = np.multiply(qSpaceYY, aperture)
+# maskedQSpaceXX = maskedQSpaceXX[251 - 72:251 + 72, 251 - 72:251 + 72]
+# maskedQSpaceYY = maskedQSpaceYY[251 - 72:251 + 72, 251 - 72:251 + 72]
 
 
+maskedQSpaceXX = qSpaceXX[aperture == 1]
+maskedQSpaceYY = qSpaceYY[aperture == 1]
