@@ -11,5 +11,6 @@ for result in multicoreResults:
     result += result
 
 result = np.fft.fftshift(result)
+result = np.absolute(result)
 
 print("End Main")
