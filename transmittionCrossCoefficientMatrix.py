@@ -1,6 +1,6 @@
 from setupObject import *
 
-print("runing transmittionCrossCoefficientMatrix.py")
+print("making transmittionCrossCoefficientMatrix.py")
 # T = np.zeros(N, N)
 
 Qx_i, Qx_j = np.meshgrid(maskedQSpaceXX, maskedQSpaceXX, sparse=True)
