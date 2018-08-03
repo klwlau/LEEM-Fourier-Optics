@@ -111,8 +111,9 @@ multicoreResults = Parallel(n_jobs=num_cores)(delayed(calI)(element) for element
 
 print("End multiprocessing")
 
-for matrixI in multicoreResults:
-    matrixI += matrixI
+
+multicoreResults = np.array(multicoreResults)
+matrixI = np.sum(multicoreResults,axis=0)
 
 matrixI = np.fft.fftshift(matrixI)
 matrixI = np.absolute(matrixI)
