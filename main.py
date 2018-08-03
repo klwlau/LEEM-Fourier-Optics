@@ -1,6 +1,4 @@
 # from utilityFunc import *
-from setupObject import *
-from transmittionCrossCoefficientMatrix import *
 from calMatI import *
 from joblib import Parallel, delayed
 import multiprocessing

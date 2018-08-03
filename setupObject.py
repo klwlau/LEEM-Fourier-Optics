@@ -1,5 +1,5 @@
 from constants import *
-from sys import getsizeof
+
 
 # set up Square Object
 K = 1 * np.pi
