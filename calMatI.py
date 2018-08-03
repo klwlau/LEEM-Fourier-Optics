@@ -9,4 +9,11 @@ EXP = np.exp(1j*2*np.pi*((qq_i - qq_j[:,np.newaxis]).real * maskedQSpaceXX
 aaa = maskedWaveObjectFT * np.conj(maskedWaveObjectFT[:,np.newaxis])
 print(aaa.shape)
 
+bbb = aaa.ravel()
+print(bbb.shape)
+
+def calI(element):
+    return element * T * EXP
+
+
 
