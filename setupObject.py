@@ -37,7 +37,7 @@ aperture = np.zeros_like(qSpaceYY)
 aperture[apertureMask] = 1
 
 # apply aperture function
-maskedWaveObjectFT = np.multiply(waveObjectFT, aperture)
+maskedWaveObjectFT = waveObjectFT[aperture==1]
 
 # maskedQSpaceXX = np.multiply(qSpaceXX, aperture)
 # maskedQSpaceYY = np.multiply(qSpaceYY, aperture)
