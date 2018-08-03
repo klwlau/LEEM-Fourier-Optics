@@ -104,8 +104,10 @@ EXP = np.exp(1j*2*np.pi*((qq_i - qq_j[:,np.newaxis]).real * maskedQSpaceXX
 abs_maskedWaveObjectFT = (maskedWaveObjectFT * np.conj(maskedWaveObjectFT[:, np.newaxis])).ravel()
 
 
-print("Start multiprocessing")
+
+
 num_cores = multiprocessing.cpu_count()
+print("Start multiprocessing")
 
 multicoreResults = Parallel(n_jobs=num_cores)(delayed(calI)(element) for element in abs_maskedWaveObjectFT)
 
