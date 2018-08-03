@@ -46,7 +46,6 @@ maskedQSpaceYY = qSpaceYY[aperture == 1]
 
 
 print("making transmittion CrossCoefficientMatrix")
-# T = np.zeros(N, N)
 
 Qx_i, Qx_j = np.meshgrid(maskedQSpaceXX, maskedQSpaceXX, sparse=True)
 Qy_i, Qy_j = np.meshgrid(maskedQSpaceYY, maskedQSpaceYY, sparse=True)
@@ -93,6 +92,8 @@ T = T_o* E_s* E_ct
 
 ##############cal Matrix I##########
 
+def calI(element):
+    return element * T * EXP
 
 qq_i = maskedQSpaceXX + maskedQSpaceYY*1j
 qq_j = maskedQSpaceXX + maskedQSpaceYY*1j

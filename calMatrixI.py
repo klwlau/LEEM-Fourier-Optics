@@ -10,6 +10,5 @@ abs_maskedWaveObjectFT = (maskedWaveObjectFT * np.conj(maskedWaveObjectFT[:, np.
 
 
 
-def calI(element):
-    return element * T * EXP
+
 
