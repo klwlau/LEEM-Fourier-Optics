@@ -110,10 +110,11 @@ num_cores = multiprocessing.cpu_count()
 multicoreResults = Parallel(n_jobs=num_cores)(delayed(calI)(element) for element in abs_maskedWaveObjectFT)
 
 print("End multiprocessing")
-for result in multicoreResults:
-    result += result
 
-result = np.fft.fftshift(result)
-result = np.absolute(result)
+for matrixI in multicoreResults:
+    matrixI += matrixI
+
+matrixI = np.fft.fftshift(matrixI)
+matrixI = np.absolute(matrixI)
 
 print("End Main")
