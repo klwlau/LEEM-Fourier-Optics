@@ -77,7 +77,7 @@ EctConstant2 = 1/2*delta_f3c*lamda**3
 def outerForLoop(counter_i):
     global returnMatrix
 
-    qq_i = maskedQSpaceXX(counter_i) + 1j * maskedQSpaceYY(counter_i)
+    qq_i = maskedQSpaceXX[counter_i] + 1j * maskedQSpaceYY[counter_i]
     abs_qq_i = np.absolute(qq_i)
 
     abs_qq_i_2 = abs_qq_i**2
@@ -85,7 +85,7 @@ def outerForLoop(counter_i):
     abs_qq_i_6 = abs_qq_i_2 **3
 
     for counter_j in range(len(maskedQSpaceYY)):
-        qq_j = maskedQSpaceXX(counter_j) + 1j * maskedQSpaceYY(counter_j)
+        qq_j = maskedQSpaceXX[counter_j] + 1j * maskedQSpaceYY[counter_j]
         abs_qq_j = np.absolute(qq_j)
 
         abs_qq_j_2 = abs_qq_j ** 2
