@@ -147,13 +147,13 @@ def outerForLoop(counter_i):
 
 
 num_cores = multiprocessing.cpu_count()
-
-print("Total outerLoop call: ", len(maskedQSpaceXX))
+totalOuterLoopCall = len(maskedQSpaceXX)
+print("Total outerLoop call: ", totalOuterLoopCall)
 
 print("Number of cores: "+ str(num_cores))
 print("Start multiprocessing")
 
-breakProcess = list( chunks(range(len(maskedQSpaceXX)),num_cores*1))
+breakProcess = list( chunks(range(len(maskedQSpaceXX)),num_cores))
 
 processTemp = np.zeros_like(sampleCoorRealSpaceXX)
 for process in breakProcess:
