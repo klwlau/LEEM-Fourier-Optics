@@ -2,6 +2,7 @@ from joblib import Parallel, delayed
 import multiprocessing
 #####import constants######
 from constants import *
+
 ######set up Square Object#######
 K = 1 * np.pi
 
@@ -11,7 +12,7 @@ objectSpaceSize = 5 * 1e-9  # nm #5
 
 objectStep = int(objectSpaceSize / sampleSpaceSize * sampleSpaceTotalStep)
 sampleCoorRealSpaceXX, sampleCoorRealSpaceYY = np.mgrid[-sampleSpaceSize:sampleSpaceSize:sampleSpaceTotalStep * 1j,
-                             -sampleSpaceSize:sampleSpaceSize:sampleSpaceTotalStep * 1j]
+                                               -sampleSpaceSize:sampleSpaceSize:sampleSpaceTotalStep * 1j]
 
 sampleStepSize = sampleCoorRealSpaceXX[1][0] - sampleCoorRealSpaceXX[0][0]
 sqObject = np.zeros(sampleCoorRealSpaceXX.shape)
@@ -38,12 +39,10 @@ aperture = np.zeros_like(qSpaceYY)
 aperture[apertureMask] = 1
 
 # apply aperture function
-maskedWaveObjectFT = waveObjectFT[aperture==1]
-
+maskedWaveObjectFT = waveObjectFT[aperture == 1]
 
 maskedQSpaceXX = qSpaceXX[aperture == 1]
 maskedQSpaceYY = qSpaceYY[aperture == 1]
-
 
 print("making transmittion CrossCoefficientMatrix")
 
@@ -84,24 +83,24 @@ E_cc = (1 - 1j * np.pi / 4 / np.log(2) *
 print("calc E_ct")
 E_ct = E_cc * np.exp(-np.pi ** 2 / 16 / np.log(2) *
                      ((delta_fc * lamda) * (abs_Qi_2 - abs_Qj_2)
-                      + (1 / 2 * delta_f3c * lamda ** 3 )*
+                      + (1 / 2 * delta_f3c * lamda ** 3) *
                       (abs_Qi_4 - abs_Qj_4)) ** 2 * E_cc ** 2)
 
 print("calc T")
-T = T_o* E_s* E_ct
+T = T_o * E_s * E_ct
+
 
 ##############cal Matrix I##########
 
-def calI(element,TElement):
+def calI(element, TElement):
     return element * TElement * EXP
 
-qq_i = maskedQSpaceXX + maskedQSpaceYY*1j
-qq_j = maskedQSpaceXX + maskedQSpaceYY*1j
 
-EXP = np.exp(1j*2*np.pi*(np.sum((qq_i - qq_j[:,np.newaxis]).real) * sampleCoorRealSpaceXX
-                         +np.sum((qq_i - qq_j[:,np.newaxis]).imag) * sampleCoorRealSpaceYY))
+qq_i = maskedQSpaceXX + maskedQSpaceYY * 1j
+qq_j = maskedQSpaceXX + maskedQSpaceYY * 1j
 
-
+EXP = np.exp(1j * 2 * np.pi * (np.sum((qq_i - qq_j[:, np.newaxis]).real) * sampleCoorRealSpaceXX
+                               + np.sum((qq_i - qq_j[:, np.newaxis]).imag) * sampleCoorRealSpaceYY))
 
 abs_maskedWaveObjectFTRavel = (maskedWaveObjectFT * np.conj(maskedWaveObjectFT[:, np.newaxis])).ravel()
 TRavel = T.ravel()
@@ -110,21 +109,18 @@ print(EXP.shape)
 print(T.ravel().shape)
 print(abs_maskedWaveObjectFTRavel.shape)
 
-
-
 num_cores = multiprocessing.cpu_count()
 print("Start multiprocessing")
 
-multicoreResults = Parallel(n_jobs=num_cores)(delayed(calI)(element,TElement) for element,TElement in zip(abs_maskedWaveObjectFTRavel,TRavel))
+multicoreResults = Parallel(n_jobs=num_cores)(
+    delayed(calI)(element, TElement) for element, TElement in zip(abs_maskedWaveObjectFTRavel, TRavel))
 
 print("End multiprocessing")
 
-
 multicoreResults = np.array(multicoreResults)
-matrixI = np.sum(multicoreResults,axis=0)
+matrixI = np.sum(multicoreResults, axis=0)
 
 matrixI = np.fft.fftshift(matrixI)
 matrixI = np.absolute(matrixI)
-
 
 print("End Main")
