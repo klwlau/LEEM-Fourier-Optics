@@ -11,8 +11,8 @@ from constants import *
 def printStatus(counter):
     if counter != 0:
         elapsedTime = ((time.time() - start_time) / 60)
-        progress = (counter / len(maskedQSpaceXX))
-        totalTime = elapsedTime/ progress
+        progress = (counter / len(maskedQSpaceXX))*100
+        totalTime = elapsedTime/ (progress/100)
         timeLeft = totalTime - elapsedTime
         print( "-Elapsed Time: %.2f / %.2f Minutes -" % (elapsedTime,totalTime)
                +"---Time Left: %.2f  Minutes ---" % timeLeft+ "%.2f"%progress)# + "Process ID: "+ counter)
