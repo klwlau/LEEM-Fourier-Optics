@@ -13,8 +13,8 @@ def printStatus(counter):
         elapsedTime = ((time.time() - start_time) / 60)
         totalTime = elapsedTime/(counter / len(maskedQSpaceXX))
         timeLeft = totalTime - elapsedTime
-        print( "---Elapsed Time: %.2f / %.2f Minutes ---" % (elapsedTime,totalTime)
-               +"---Time Left: %.2f  Minutes ---" % timeLeft)
+        print( "-Elapsed Time: %.2f / %.2f Minutes -" % (elapsedTime,totalTime)
+               +"---Time Left: %.2f  Minutes ---" % timeLeft + "Process ID:"+counter)
 
 ######set up Square Object#######
 K = 1 * np.pi
