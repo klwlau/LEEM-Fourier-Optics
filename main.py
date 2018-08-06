@@ -1,7 +1,9 @@
 from joblib import Parallel, delayed
 import multiprocessing
+# import matplotlib.pyplot as plt
 #####import constants######
 from constants import *
+
 
 ######set up Square Object#######
 K = 1 * np.pi
@@ -112,8 +114,15 @@ print(abs_maskedWaveObjectFTRavel.shape)
 num_cores = multiprocessing.cpu_count()
 print("Start multiprocessing")
 
-multicoreResults = Parallel(n_jobs=num_cores)(
-    delayed(calI)(element, TElement) for element, TElement in zip(abs_maskedWaveObjectFTRavel, TRavel))
+# multicoreResults = Parallel(n_jobs=num_cores)(
+#     delayed(calI)(element, TElement) for element, TElement in zip(abs_maskedWaveObjectFTRavel, TRavel))
+counter = 0
+multicoreResults = np.zeros_like(calI(abs_maskedWaveObjectFTRavel[0],TRavel[0]))
+for i,j in zip(abs_maskedWaveObjectFTRavel, TRavel):
+    multicoreResults += calI(i,j)
+    print(counter)
+    counter+=1
+
 
 print("End multiprocessing")
 
@@ -124,3 +133,8 @@ matrixI = np.fft.fftshift(matrixI)
 matrixI = np.absolute(matrixI)
 
 print("End Main")
+print(matrixI.shape)
+
+# plt.imshow(matrixI)
+# plt.show()
+
