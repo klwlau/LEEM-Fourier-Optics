@@ -108,7 +108,7 @@ abs_maskedWaveObjectFTRavel = (maskedWaveObjectFT * np.conj(maskedWaveObjectFT[:
 TRavel = T.ravel()
 
 print(EXP.shape)
-print(T.ravel().shape)
+print(T.shape)
 print(abs_maskedWaveObjectFTRavel.shape)
 
 num_cores = multiprocessing.cpu_count()
@@ -120,7 +120,7 @@ print("Start multiprocessing")
 # matrixI = np.sum(multicoreResults, axis=0)
 
 
-
+#
 counter = 0
 multicoreResults = np.zeros_like(calI(abs_maskedWaveObjectFTRavel[0],TRavel[0]))
 for i,j in zip(abs_maskedWaveObjectFTRavel, TRavel):
