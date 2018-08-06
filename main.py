@@ -10,11 +10,11 @@ sampleSpaceSize = 25 * 1e-9  # nm #25
 objectSpaceSize = 5 * 1e-9  # nm #5
 
 objectStep = int(objectSpaceSize / sampleSpaceSize * sampleSpaceTotalStep)
-sampleCoorXX, sampleCoorYY = np.mgrid[-sampleSpaceSize:sampleSpaceSize:sampleSpaceTotalStep * 1j,
+sampleCoorRealSpaceXX, sampleCoorRealSpaceYY = np.mgrid[-sampleSpaceSize:sampleSpaceSize:sampleSpaceTotalStep * 1j,
                              -sampleSpaceSize:sampleSpaceSize:sampleSpaceTotalStep * 1j]
 
-sampleStepSize = sampleCoorXX[1][0] - sampleCoorXX[0][0]
-sqObject = np.zeros(sampleCoorXX.shape)
+sampleStepSize = sampleCoorRealSpaceXX[1][0] - sampleCoorRealSpaceXX[0][0]
+sqObject = np.zeros(sampleCoorRealSpaceXX.shape)
 sampleCenterX, sampleCenterY = int(sampleSpaceTotalStep / 2 + 1), int(sampleSpaceTotalStep / 2 + 1)
 sqObject[sampleCenterX - objectStep:sampleCenterX + objectStep,
 sampleCenterY - objectStep:sampleCenterY + objectStep] = 1
