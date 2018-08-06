@@ -115,7 +115,7 @@ print(abs_maskedWaveObjectFTRavel.shape)
 num_cores = multiprocessing.cpu_count()
 print("Start multiprocessing")
 
-multicoreResults = Parallel(n_jobs=num_cores)(delayed(calI)(element) for element,TElement in zip(abs_maskedWaveObjectFTRavel,TRavel))
+multicoreResults = Parallel(n_jobs=num_cores)(delayed(calI)(element,TElement) for element,TElement in zip(abs_maskedWaveObjectFTRavel,TRavel))
 
 print("End multiprocessing")
 
