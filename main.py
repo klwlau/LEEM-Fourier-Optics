@@ -72,7 +72,7 @@ EctConstant0 = -np.pi ** 2 / 16 / np.log(2)
 EctConstant1 = delta_fc * lamda
 EctConstant2 = 1 / 2 * delta_f3c * lamda ** 3
 
-
+returnMatrix = np.zeros_like(sampleCoorRealSpaceXX)
 def outerForLoop(counter_i):
     global returnMatrix
 
@@ -110,14 +110,15 @@ def outerForLoop(counter_i):
         EXP = np.exp(1j * 2 * np.pi *
                      ((qq_i - qq_j).real * sampleCoorRealSpaceXX + (qq_i - qq_j).imag * sampleCoorRealSpaceXX))
 
-        testConstant = R_o * E_s * E_ct * EXP
 
-        returnMatrix += R_o * E_s * E_ct * maskedWaveObjectFT[counter_i] * np.conj(maskedWaveObjectFT[counter_j]) * EXP
+
+        returnMatrix = returnMatrix+ R_o * E_s * E_ct * maskedWaveObjectFT[counter_i] * np.conj(maskedWaveObjectFT[counter_j]) * EXP
+    print(counter_i)
 
     return returnMatrix
 
 
-returnMatrix = np.zeros_like(sampleCoorRealSpaceXX)
+
 
 num_cores = multiprocessing.cpu_count()
 
@@ -125,8 +126,8 @@ print(len(maskedQSpaceXX))
 
 print("Start multiprocessing")
 
-print(outerForLoop(10))
-# multicoreResults = Parallel(n_jobs=num_cores)(delayed(outerForLoop)(counter_i) for counter_i in range(len(maskedQSpaceXX)))
+
+multicoreResults = Parallel(n_jobs=num_cores)(delayed(outerForLoop)(counter_i) for counter_i in range(len(maskedQSpaceXX)))
 
 # multicoreResults = Parallel(n_jobs=num_cores)(
 #     delayed(calI)(element, TElement) for element, TElement in zip(abs_maskedWaveObjectFTRavel, TRavel))
