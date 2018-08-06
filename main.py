@@ -129,15 +129,11 @@ print("Start multiprocessing")
 
 multicoreResults = Parallel(n_jobs=num_cores)(delayed(outerForLoop)(counter_i) for counter_i in range(len(maskedQSpaceXX)))
 
-# multicoreResults = Parallel(n_jobs=num_cores)(
-#     delayed(calI)(element, TElement) for element, TElement in zip(abs_maskedWaveObjectFTRavel, TRavel))
-# multicoreResults = np.array(multicoreResults)
-# matrixI = np.sum(multicoreResults, axis=0)
 print("End multiprocessing")
+multicoreResults = np.array(multicoreResults)
+matrixI = np.sum(multicoreResults, axis=0)
 
-# matrixI = multicoreResults
-#
-# matrixI = np.fft.fftshift(matrixI)
-# matrixI = np.absolute(matrixI)
+matrixI = np.fft.fftshift(matrixI)
+matrixI = np.absolute(matrixI)
 
 print("End Main")
