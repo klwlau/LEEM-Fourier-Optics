@@ -75,10 +75,10 @@ EctConstant2 = 1 / 2 * delta_f3c * lamda ** 3
 
 returnMatrix = np.zeros_like(sampleCoorRealSpaceXX)
 
-@jit(nopython=True)
-def outerForLoop(counter_i):
-    global returnMatrix
 
+def outerForLoop(counter_i):
+    # global returnMatrix
+    returnMatrix = np.zeros_like(sampleCoorRealSpaceXX)
     qq_i = maskedQSpaceXX[counter_i] + 1j * maskedQSpaceYY[counter_i]
     abs_qq_i = np.absolute(qq_i)
 
@@ -122,12 +122,13 @@ def outerForLoop(counter_i):
 
 num_cores = multiprocessing.cpu_count()
 
-print("Total outerLoop call: ",len(maskedQSpaceXX))
+print("Total outerLoop call: ", len(maskedQSpaceXX))
 
 print("Start multiprocessing")
 
-multicoreResults = Parallel(n_jobs=num_cores)(
-    delayed(outerForLoop)(counter_i) for counter_i in range(len(maskedQSpaceXX)))
+multicoreResults = Parallel(n_jobs=num_cores)(delayed(outerForLoop)(counter_i) for counter_i in range(len(maskedQSpaceXX)))
+
+# print(outerForLoop(1))
 
 print("End multiprocessing")
 multicoreResults = np.array(multicoreResults)
