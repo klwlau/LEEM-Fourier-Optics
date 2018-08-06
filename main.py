@@ -125,6 +125,8 @@ returnMatrix = np.zeros_like(sampleCoorRealSpaceXX)
 
 num_cores = multiprocessing.cpu_count()
 
+print(len(maskedQSpaceXX))
+
 print("Start multiprocessing")
 multicoreResults = Parallel(n_jobs=num_cores)(delayed(outerForLoop)(counter_i) for counter_i in range(len(maskedQSpaceXX)))
 
