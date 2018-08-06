@@ -92,28 +92,30 @@ T = T_o* E_s* E_ct
 
 ##############cal Matrix I##########
 
-def calI(element):
-    return element * T * EXP
+def calI(element,TElement):
+    return element * TElement * EXP
 
 qq_i = maskedQSpaceXX + maskedQSpaceYY*1j
 qq_j = maskedQSpaceXX + maskedQSpaceYY*1j
 
 EXP = np.exp(1j*2*np.pi*(np.sum((qq_i - qq_j[:,np.newaxis]).real) * sampleCoorRealSpaceXX
-                         +np.sum((qq_i - qq_j[:,np.newaxis]).imag) * sampleCoorRealSpaceYY ))
+                         +np.sum((qq_i - qq_j[:,np.newaxis]).imag) * sampleCoorRealSpaceYY))
 
-print(EXP)
 
-abs_maskedWaveObjectFT = (maskedWaveObjectFT * np.conj(maskedWaveObjectFT[:, np.newaxis])).ravel()
+
+abs_maskedWaveObjectFTRavel = (maskedWaveObjectFT * np.conj(maskedWaveObjectFT[:, np.newaxis])).ravel()
+TRavel = T.ravel()
 
 print(EXP.shape)
-print(T.shape)
+print(T.ravel().shape)
+print(abs_maskedWaveObjectFTRavel.shape)
 
 
 
 num_cores = multiprocessing.cpu_count()
 print("Start multiprocessing")
 
-# multicoreResults = Parallel(n_jobs=num_cores)(delayed(calI)(element) for element in abs_maskedWaveObjectFT)
+multicoreResults = Parallel(n_jobs=num_cores)(delayed(calI)(element) for element,TElement in zip(abs_maskedWaveObjectFTRavel,TRavel))
 
 print("End multiprocessing")
 
@@ -124,7 +126,5 @@ matrixI = np.sum(multicoreResults,axis=0)
 matrixI = np.fft.fftshift(matrixI)
 matrixI = np.absolute(matrixI)
 
-# np.imshow(matrixI)
-# np.show()
 
 print("End Main")
