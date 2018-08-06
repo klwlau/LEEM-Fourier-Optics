@@ -57,7 +57,7 @@ F_i, F_j = np.meshgrid(maskedWaveObjectFT, maskedWaveObjectFT, sparse=True)
 qq_i = maskedQSpaceXX + maskedQSpaceYY * 1j
 qq_j = maskedQSpaceXX + maskedQSpaceYY * 1j
 
-RoConstant0 = 1j * 2 * np.pi()
+RoConstant0 = 1j * 2 * np.pi
 RoConstant1 = 1 / 4 * C_3 * lamda ** 3
 RoConstant2 = 1 / 6 * C_5 * lamda ** 5
 RoConstant3 = -1/2*delta_z*lamda
@@ -69,7 +69,7 @@ EsConstant3 = - delta_z*lamda
 
 EccConstant0 = 1j*np.pi/4/np.log(2)*delta_fcc*lamda
 
-EctConstant0 = -np.pi^2/16/np.log(2)
+EctConstant0 = -np.pi**2/16/np.log(2)
 EctConstant1 = delta_fc*lamda
 EctConstant2 = 1/2*delta_f3c*lamda**3
 
@@ -108,7 +108,7 @@ def outerForLoop(counter_i):
             (EctConstant1 * (abs_qq_i_2 - abs_qq_j_2)
             + EctConstant2 * (abs_qq_i_4 - abs_qq_j_4))**2*E_cc**2)
 
-        EXP = np.exp(1j*2*np.pi*...
+        EXP = np.exp(1j*2*np.pi*
             ((qq_i - qq_j).real*sampleCoorRealSpaceXX + (qq_i - qq_j).imag*sampleCoorRealSpaceXX))
 
         returnMatrix += maskedWaveObjectFT[counter_i] * np.conj(maskedWaveObjectFT[counter_j]) * R_o * E_s * E_ct * EXP
