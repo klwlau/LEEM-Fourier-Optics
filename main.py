@@ -1,9 +1,7 @@
 from joblib import Parallel, delayed
 import multiprocessing
-import matplotlib.pyplot as plt
 #####import constants######
 from constants import *
-
 
 ######set up Square Object#######
 K = 1 * np.pi
@@ -52,45 +50,6 @@ Qx_i, Qx_j = np.meshgrid(maskedQSpaceXX, maskedQSpaceXX, sparse=True)
 Qy_i, Qy_j = np.meshgrid(maskedQSpaceYY, maskedQSpaceYY, sparse=True)
 F_i, F_j = np.meshgrid(maskedWaveObjectFT, maskedWaveObjectFT, sparse=True)
 
-Qi = Qx_i + 1j * Qy_i
-Qj = Qx_j + 1j * Qy_j
-
-abs_Qi = (Qx_i ** 2 + Qy_i ** 2) ** 0.5
-abs_Qj = (Qx_j ** 2 + Qy_j ** 2) ** 0.5
-
-print("cal abs_Qi,abs_Qj power")
-abs_Qi_2 = abs_Qi ** 2
-abs_Qi_4 = abs_Qi_2 ** 2
-abs_Qi_6 = abs_Qi_2 ** 3
-abs_Qj_2 = abs_Qj ** 2
-abs_Qj_4 = abs_Qj_2 ** 2
-abs_Qj_6 = abs_Qj_2 ** 3
-
-print("calc T_o")
-T_o = np.exp(1j * 2 * np.pi * (1 / 4 * C_3 * lamda ** 3 * (abs_Qi_4 - abs_Qj_4)
-                               + 1 / 6 * C_5 * lamda ** 5 * (abs_Qi_6 - abs_Qj_6)
-                               - 1 / 2 * delta_z * lamda * (abs_Qi_2 - abs_Qj_2)
-                               ))
-print("calc E_s")
-E_s = np.exp(-np.pi ** 2 / 4 / np.log(2) * q_ill ** 2 *
-             np.abs(C_3 * lamda ** 3 * (Qi * abs_Qi_2 - Qj * abs_Qj_2)
-                    + C_5 * lamda ** 5 * (Qi * abs_Qi_4 - Qj * abs_Qj_4)
-                    - delta_z * lamda * (Qi - Qj)) ** 2)
-
-print("calc E_cc")
-
-E_cc = (1 - 1j * np.pi / 4 / np.log(2) *
-        delta_fcc * lamda * (abs_Qi_2 - abs_Qj_2)) ** -0.5
-
-print("calc E_ct")
-E_ct = E_cc * np.exp(-np.pi ** 2 / 16 / np.log(2) *
-                     ((delta_fc * lamda) * (abs_Qi_2 - abs_Qj_2)
-                      + (1 / 2 * delta_f3c * lamda ** 3) *
-                      (abs_Qi_4 - abs_Qj_4)) ** 2 * E_cc ** 2)
-
-print("calc T")
-T = T_o * E_s * E_ct
-
 
 ##############cal Matrix I##########
 
@@ -101,44 +60,71 @@ def calI(element, TElement):
 qq_i = maskedQSpaceXX + maskedQSpaceYY * 1j
 qq_j = maskedQSpaceXX + maskedQSpaceYY * 1j
 
-EXP = np.exp(1j * 2 * np.pi * (np.sum((qq_i - qq_j[:, np.newaxis]).real) * sampleCoorRealSpaceXX
-                               + np.sum((qq_i - qq_j[:, np.newaxis]).imag) * sampleCoorRealSpaceYY))
+RoConstant0 = 1j * 2 * np.pi()
+RoConstant1 = 1 / 4 * C_3 * lamda ** 3
+RoConstant2 = 1 / 6 * C_5 * lamda ** 5
+RoConstant3 = -1/2*delta_z*lamda
 
-abs_maskedWaveObjectFTRavel = (maskedWaveObjectFT * np.conj(maskedWaveObjectFT[:, np.newaxis])).ravel()
-TRavel = T.ravel()
+EsConstant0 = -np.pi**2/4/np.log(2)*q_ill**2
+EsConstant1 = C_3*lamda**3
+EsConstant2 = C_5*lamda**5
+EsConstant3 = - delta_z*lamda
 
-print(EXP.shape)
-print(T.shape)
-print(abs_maskedWaveObjectFTRavel.shape)
+EccConstant0 = 1j*np.pi/4/np.log(2)*delta_fcc*lamda
 
-num_cores = multiprocessing.cpu_count()
+
+
+for i in range(len(maskedQSpaceXX)):
+
+    qq_i = maskedQSpaceXX(i) + 1j * maskedQSpaceYY(i)
+    abs_qq_i = np.absolute(qq_i)
+
+    abs_qq_i_2 = abs_qq_i**2
+    abs_qq_i_4 = abs_qq_i_2 ** 2
+    abs_qq_i_6 = abs_qq_i_2 **3
+
+    for j in range(len(maskedQSpaceYY)):
+        qq_j = maskedQSpaceXX(j) + 1j * maskedQSpaceYY(j)
+        abs_qq_j = np.absolute(qq_j)
+
+        abs_qq_j_2 = abs_qq_j ** 2
+        abs_qq_j_4 = abs_qq_j_2 ** 2
+        abs_qq_j_6 = abs_qq_j_2 ** 3
+
+        R_o = np.exp(RoConstant0*
+            (RoConstant1 * (abs_qq_i_4 - abs_qq_j_4)
+            +RoConstant2 * (abs_qq_i_6 - abs_qq_j_6)
+            +RoConstant3 * (abs_qq_i_2 - abs_qq_j_2))
+            )
+        E_s = np.exp(EsConstant0*
+            np.abs(EsConstant1 * (qq_i*abs_qq_i_2 - qq_j*abs_qq_j_2)
+            + EsConstant2 * (qq_i*abs_qq_i_4 - qq_j*abs_qq_j_4)
+            +EsConstant3 * (qq_i - qq_j))**2
+            )
+        E_cc = np.sqrt(1 - EccConstant0* (abs_qq_i_2 - abs_qq_j_2))
+
+
+
+
+
+
+
+
+
+
+
+
+
 print("Start multiprocessing")
-
 # multicoreResults = Parallel(n_jobs=num_cores)(
 #     delayed(calI)(element, TElement) for element, TElement in zip(abs_maskedWaveObjectFTRavel, TRavel))
 # multicoreResults = np.array(multicoreResults)
 # matrixI = np.sum(multicoreResults, axis=0)
-
-
-#
-counter = 0
-multicoreResults = np.zeros_like(calI(abs_maskedWaveObjectFTRavel[0],TRavel[0]))
-for i,j in zip(abs_maskedWaveObjectFTRavel, TRavel):
-    multicoreResults += calI(i,j)
-    print(counter)
-    counter+=1
-
-
 print("End multiprocessing")
 
-matrixI = multicoreResults
-
-matrixI = np.fft.fftshift(matrixI)
-matrixI = np.absolute(matrixI)
+# matrixI = multicoreResults
+#
+# matrixI = np.fft.fftshift(matrixI)
+# matrixI = np.absolute(matrixI)
 
 print("End Main")
-print(matrixI.shape)
-
-plt.imshow(matrixI)
-plt.show()
-
