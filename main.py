@@ -1,6 +1,6 @@
 from joblib import Parallel, delayed
 import multiprocessing
-# import matplotlib.pyplot as plt
+import matplotlib.pyplot as plt
 #####import constants######
 from constants import *
 
@@ -116,6 +116,11 @@ print("Start multiprocessing")
 
 # multicoreResults = Parallel(n_jobs=num_cores)(
 #     delayed(calI)(element, TElement) for element, TElement in zip(abs_maskedWaveObjectFTRavel, TRavel))
+# multicoreResults = np.array(multicoreResults)
+# matrixI = np.sum(multicoreResults, axis=0)
+
+
+
 counter = 0
 multicoreResults = np.zeros_like(calI(abs_maskedWaveObjectFTRavel[0],TRavel[0]))
 for i,j in zip(abs_maskedWaveObjectFTRavel, TRavel):
@@ -126,9 +131,7 @@ for i,j in zip(abs_maskedWaveObjectFTRavel, TRavel):
 
 print("End multiprocessing")
 
-multicoreResults = np.array(multicoreResults)
 matrixI = multicoreResults
-# matrixI = np.sum(multicoreResults, axis=0)
 
 matrixI = np.fft.fftshift(matrixI)
 matrixI = np.absolute(matrixI)
@@ -136,6 +139,6 @@ matrixI = np.absolute(matrixI)
 print("End Main")
 print(matrixI.shape)
 
-# plt.imshow(matrixI)
-# plt.show()
+plt.imshow(matrixI)
+plt.show()
 
