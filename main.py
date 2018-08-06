@@ -1,10 +1,10 @@
 import time
 
 start_time = time.time()
-print("Program Started, Loading Libraries")
+print("Main Started, Loading Libraries")
 import datetime
 
-timeStamp = datetime.datetime.fromtimestamp(time.time()).strftime('%Y%m%d_%H%M%S')
+
 from joblib import Parallel, delayed
 import multiprocessing
 #####import constants######
@@ -166,28 +166,14 @@ for process in breakProcess:
     processTemp = processTemp+tempArray
     printStatus(process[-1])
 
-# multicoreResults = Parallel(n_jobs=num_cores)(delayed(outerForLoop)(counter_i) for counter_i in range(len(maskedQSpaceXX)))
-
-# for i in range(30):
-#     outerForLoop(i)
 
 print("End multiprocessing")
-
-# multicoreResults = np.array(multicoreResults)
-# matrixI = np.sum(multicoreResults, axis=0)
-
 matrixI = np.fft.fftshift(processTemp)
 matrixI = np.absolute(matrixI)
-
 print("start saving matrix")
+timeStamp = datetime.datetime.fromtimestamp(time.time()).strftime('%Y%m%d_%H%M%S')
 np.save(timeStamp + ".npy", matrixI)
-
 print("finished saving matrix")
-
 print("End Main")
 printStatus(100, done=True)
 
-# import matplotlib.pyplot as plt
-#
-# plt.imshow(matrixI)
-# plt.show()
