@@ -101,6 +101,8 @@ qq_j = maskedQSpaceXX + maskedQSpaceYY*1j
 EXP = np.exp(1j*2*np.pi*(np.sum((qq_i - qq_j[:,np.newaxis]).real) * sampleCoorRealSpaceXX
                          +np.sum((qq_i - qq_j[:,np.newaxis]).imag) * sampleCoorRealSpaceYY ))
 
+print(EXP)
+
 abs_maskedWaveObjectFT = (maskedWaveObjectFT * np.conj(maskedWaveObjectFT[:, np.newaxis])).ravel()
 
 
@@ -109,7 +111,7 @@ abs_maskedWaveObjectFT = (maskedWaveObjectFT * np.conj(maskedWaveObjectFT[:, np.
 num_cores = multiprocessing.cpu_count()
 print("Start multiprocessing")
 
-multicoreResults = Parallel(n_jobs=num_cores)(delayed(calI)(element) for element in abs_maskedWaveObjectFT)
+# multicoreResults = Parallel(n_jobs=num_cores)(delayed(calI)(element) for element in abs_maskedWaveObjectFT)
 
 print("End multiprocessing")
 
