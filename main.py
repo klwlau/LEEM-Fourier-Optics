@@ -126,7 +126,7 @@ returnMatrix = np.zeros_like(sampleCoorRealSpaceXX)
 num_cores = multiprocessing.cpu_count()
 
 print("Start multiprocessing")
-# multicoreResults = Parallel(n_jobs=num_cores)(delayed(outerForLoop)(counter_i) for counter_i in range(len(maskedQSpaceXX)))
+multicoreResults = Parallel(n_jobs=num_cores)(delayed(outerForLoop)(counter_i) for counter_i in range(len(maskedQSpaceXX)))
 
 # multicoreResults = Parallel(n_jobs=num_cores)(
 #     delayed(calI)(element, TElement) for element, TElement in zip(abs_maskedWaveObjectFTRavel, TRavel))
