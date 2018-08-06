@@ -15,7 +15,7 @@ def printStatus(counter,done=False):
         totalTime = elapsedTime/ (progress/100)
         timeLeft = totalTime - elapsedTime
     if done:
-        print("Total time: "+elapsedTime)
+        print("-Total Time: %.2f Minutes -" % elapsedTime)
     else:
         print( "-Elapsed Time: %.2f / %.2f Minutes -" % (elapsedTime,totalTime)
                +"Time Left: %.2f  Minutes -" % timeLeft+ "%.2f"%progress+"%-")# + "Process ID: "+ counter)
@@ -161,3 +161,4 @@ np.save(timeStamp+".npy", matrixI)
 print("finished saving matrix")
 
 print("End Main")
+printStatus(100,done=True)
