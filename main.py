@@ -145,7 +145,10 @@ num_cores = multiprocessing.cpu_count()
 
 print("Total outerLoop call: ", len(maskedQSpaceXX))
 
+print("Number of cores: "+ num_cores)
 print("Start multiprocessing")
+
+
 
 multicoreResults = Parallel(n_jobs=num_cores)(delayed(outerForLoop)(counter_i) for counter_i in range(len(maskedQSpaceXX)))
 
