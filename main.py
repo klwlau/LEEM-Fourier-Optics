@@ -1,24 +1,28 @@
 import time
+
 start_time = time.time()
 print("Program Started, Loading Libraries")
-import  datetime
+import datetime
+
 timeStamp = datetime.datetime.fromtimestamp(time.time()).strftime('%Y%m%d_%H%M%S')
 from joblib import Parallel, delayed
 import multiprocessing
 #####import constants######
 from constants import *
 
-def printStatus(counter,done=False):
+
+def printStatus(counter, done=False):
     if counter != 0:
         elapsedTime = ((time.time() - start_time) / 60)
-        progress = (counter / len(maskedQSpaceXX))*100
-        totalTime = elapsedTime/ (progress/100)
+        progress = (counter / len(maskedQSpaceXX)) * 100
+        totalTime = elapsedTime / (progress / 100)
         timeLeft = totalTime - elapsedTime
-    if done:
-        print("-Total Time: %.2f Minutes -" % elapsedTime)
-    else:
-        print( "-Elapsed Time: %.2f / %.2f Minutes -" % (elapsedTime,totalTime)
-               +"Time Left: %.2f  Minutes -" % timeLeft+ "%.2f"%progress+"%-")# + "Process ID: "+ counter)
+        if done:
+            print("-Total Time: %.2f Minutes -" % elapsedTime)
+        else:
+            print("-Elapsed Time: %.2f / %.2f Minutes -" % (elapsedTime, totalTime)
+                  + "Time Left: %.2f  Minutes -" % timeLeft + "%.2f" % progress + "%-")  # + "Process ID: "+ counter)
+
 
 ######set up Square Object#######
 K = 1 * np.pi
@@ -145,20 +149,21 @@ print("Start multiprocessing")
 
 multicoreResults = Parallel(n_jobs=num_cores)(delayed(outerForLoop)(counter_i) for counter_i in range(len(maskedQSpaceXX)))
 
-# print(outerForLoop(1))
+# for i in range(30):
+#     outerForLoop(i)
 
 print("End multiprocessing")
+
 multicoreResults = np.array(multicoreResults)
 matrixI = np.sum(multicoreResults, axis=0)
 
 matrixI = np.fft.fftshift(matrixI)
 matrixI = np.absolute(matrixI)
 
-
 print("start saving matrix")
-np.save(timeStamp+".npy", matrixI)
+np.save(timeStamp + ".npy", matrixI)
 
 print("finished saving matrix")
 
 print("End Main")
-printStatus(100,done=True)
+printStatus(100, done=True)
