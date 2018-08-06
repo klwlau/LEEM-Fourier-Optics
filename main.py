@@ -121,7 +121,7 @@ def outerForLoop(counter_i):
 
 num_cores = multiprocessing.cpu_count()
 
-print(len(maskedQSpaceXX))
+print("Total outerLoop call: ",len(maskedQSpaceXX))
 
 print("Start multiprocessing")
 
