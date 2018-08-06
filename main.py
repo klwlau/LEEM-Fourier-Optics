@@ -105,13 +105,13 @@ print(EXP)
 
 abs_maskedWaveObjectFT = (maskedWaveObjectFT * np.conj(maskedWaveObjectFT[:, np.newaxis])).ravel()
 
-
+print("test")
 
 
 num_cores = multiprocessing.cpu_count()
 print("Start multiprocessing")
 
-# multicoreResults = Parallel(n_jobs=num_cores)(delayed(calI)(element) for element in abs_maskedWaveObjectFT)
+multicoreResults = Parallel(n_jobs=num_cores)(delayed(calI)(element) for element in abs_maskedWaveObjectFT)
 
 print("End multiprocessing")
 
