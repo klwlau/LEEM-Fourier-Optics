@@ -127,7 +127,8 @@ for i,j in zip(abs_maskedWaveObjectFTRavel, TRavel):
 print("End multiprocessing")
 
 multicoreResults = np.array(multicoreResults)
-matrixI = np.sum(multicoreResults, axis=0)
+matrixI = multicoreResults
+# matrixI = np.sum(multicoreResults, axis=0)
 
 matrixI = np.fft.fftshift(matrixI)
 matrixI = np.absolute(matrixI)
