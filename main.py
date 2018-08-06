@@ -15,7 +15,7 @@ def printStatus(counter):
         totalTime = elapsedTime/ (progress/100)
         timeLeft = totalTime - elapsedTime
         print( "-Elapsed Time: %.2f / %.2f Minutes -" % (elapsedTime,totalTime)
-               +"---Time Left: %.2f  Minutes ---" % timeLeft+ "%.2f"%progress)# + "Process ID: "+ counter)
+               +"---Time Left: %.2f  Minutes ---" % timeLeft+ "%.2f"%progress+"%")# + "Process ID: "+ counter)
 
 ######set up Square Object#######
 K = 1 * np.pi
