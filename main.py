@@ -20,8 +20,13 @@ def printStatus(counter, done=False):
         if done:
             print("-Total Time: %.2f Minutes -" % elapsedTime)
         else:
-            print("-Elapsed Time: %.2f / %.2f Minutes -" % (elapsedTime, totalTime)
-                  + "Time Left: %.2f  Minutes -" % timeLeft + "%.2f" % progress + "%-")  # + "Process ID: "+ counter)
+            print("-ID:"+ str(counter)+"--Elapsed Time: %.2f / %.2f Minutes -" % (elapsedTime, totalTime)
+                  + "Time Left: %.2f  Minutes -" % timeLeft + "%.2f" % progress + "%-")  #)
+
+def chunks(l, n):
+    """Yield successive n-sized chunks from l."""
+    for i in range(0, len(l), n):
+        yield l[i:i + n]
 
 
 ######set up Square Object#######
@@ -136,31 +141,40 @@ def outerForLoop(counter_i):
         returnMatrix = returnMatrix + R_o * E_s * E_ct * maskedWaveObjectFT[counter_i] * np.conj(
             maskedWaveObjectFT[counter_j]) * EXP
 
-    printStatus(counter_i)
+
 
     return returnMatrix
 
 
 num_cores = multiprocessing.cpu_count()
-
-print("Total outerLoop call: ", len(maskedQSpaceXX))
+totalOuterLoopCall = len(maskedQSpaceXX)
+print("Total outerLoop call: ", totalOuterLoopCall)
 
 print("Number of cores: "+ str(num_cores))
 print("Start multiprocessing")
 
+breakProcess = list( chunks(range(len(maskedQSpaceXX)),num_cores))
 
+processTemp = np.zeros_like(sampleCoorRealSpaceXX)
+for process in breakProcess:
+    multicoreResults = Parallel(n_jobs=num_cores)(
+        delayed(outerForLoop)(counter_i) for counter_i in process)
+    tempArray = np.array(multicoreResults)
+    tempArray = np.sum(tempArray, axis=0)
+    processTemp = processTemp+tempArray
+    printStatus(process[-1])
 
-multicoreResults = Parallel(n_jobs=num_cores)(delayed(outerForLoop)(counter_i) for counter_i in range(len(maskedQSpaceXX)))
+# multicoreResults = Parallel(n_jobs=num_cores)(delayed(outerForLoop)(counter_i) for counter_i in range(len(maskedQSpaceXX)))
 
 # for i in range(30):
 #     outerForLoop(i)
 
 print("End multiprocessing")
 
-multicoreResults = np.array(multicoreResults)
-matrixI = np.sum(multicoreResults, axis=0)
+# multicoreResults = np.array(multicoreResults)
+# matrixI = np.sum(multicoreResults, axis=0)
 
-matrixI = np.fft.fftshift(matrixI)
+matrixI = np.fft.fftshift(processTemp)
 matrixI = np.absolute(matrixI)
 
 print("start saving matrix")
@@ -170,3 +184,8 @@ print("finished saving matrix")
 
 print("End Main")
 printStatus(100, done=True)
+
+import matplotlib.pyplot as plt
+
+plt.imshow(matrixI)
+plt.show()
