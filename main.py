@@ -8,7 +8,8 @@ import datetime
 from joblib import Parallel, delayed
 import multiprocessing
 #####import constants######
-from constants import *
+if __name__ == '__main__':
+    from constants import *
 
 
 def printStatus(counter, done=False):
