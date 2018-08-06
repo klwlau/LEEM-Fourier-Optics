@@ -98,8 +98,8 @@ def calI(element):
 qq_i = maskedQSpaceXX + maskedQSpaceYY*1j
 qq_j = maskedQSpaceXX + maskedQSpaceYY*1j
 
-EXP = np.exp(1j*2*np.pi*((qq_i - qq_j[:,np.newaxis]).real * sampleCoorRealSpaceXX
-                         +(qq_i - qq_j[:,np.newaxis]).imag * sampleCoorRealSpaceYY ))
+EXP = np.exp(1j*2*np.pi*(np.sum((qq_i - qq_j[:,np.newaxis]).real) * sampleCoorRealSpaceXX
+                         +np.sum((qq_i - qq_j[:,np.newaxis]).imag) * sampleCoorRealSpaceYY ))
 
 abs_maskedWaveObjectFT = (maskedWaveObjectFT * np.conj(maskedWaveObjectFT[:, np.newaxis])).ravel()
 
@@ -119,5 +119,8 @@ matrixI = np.sum(multicoreResults,axis=0)
 
 matrixI = np.fft.fftshift(matrixI)
 matrixI = np.absolute(matrixI)
+
+# np.imshow(matrixI)
+# np.show()
 
 print("End Main")
