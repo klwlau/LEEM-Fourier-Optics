@@ -50,7 +50,6 @@ Qx_i, Qx_j = np.meshgrid(maskedQSpaceXX, maskedQSpaceXX, sparse=True)
 Qy_i, Qy_j = np.meshgrid(maskedQSpaceYY, maskedQSpaceYY, sparse=True)
 F_i, F_j = np.meshgrid(maskedWaveObjectFT, maskedWaveObjectFT, sparse=True)
 
-
 ##############cal Matrix I##########
 
 
@@ -60,18 +59,18 @@ qq_j = maskedQSpaceXX + maskedQSpaceYY * 1j
 RoConstant0 = 1j * 2 * np.pi
 RoConstant1 = 1 / 4 * C_3 * lamda ** 3
 RoConstant2 = 1 / 6 * C_5 * lamda ** 5
-RoConstant3 = -1/2*delta_z*lamda
+RoConstant3 = -1 / 2 * delta_z * lamda
 
-EsConstant0 = -np.pi**2/4/np.log(2)*q_ill**2
-EsConstant1 = C_3*lamda**3
-EsConstant2 = C_5*lamda**5
-EsConstant3 = - delta_z*lamda
+EsConstant0 = -np.pi ** 2 / 4 / np.log(2) * q_ill ** 2
+EsConstant1 = C_3 * lamda ** 3
+EsConstant2 = C_5 * lamda ** 5
+EsConstant3 = - delta_z * lamda
 
-EccConstant0 = 1j*np.pi/4/np.log(2)*delta_fcc*lamda
+EccConstant0 = 1j * np.pi / 4 / np.log(2) * delta_fcc * lamda
 
-EctConstant0 = -np.pi**2/16/np.log(2)
-EctConstant1 = delta_fc*lamda
-EctConstant2 = 1/2*delta_f3c*lamda**3
+EctConstant0 = -np.pi ** 2 / 16 / np.log(2)
+EctConstant1 = delta_fc * lamda
+EctConstant2 = 1 / 2 * delta_f3c * lamda ** 3
 
 
 def outerForLoop(counter_i):
@@ -80,9 +79,9 @@ def outerForLoop(counter_i):
     qq_i = maskedQSpaceXX[counter_i] + 1j * maskedQSpaceYY[counter_i]
     abs_qq_i = np.absolute(qq_i)
 
-    abs_qq_i_2 = abs_qq_i**2
+    abs_qq_i_2 = abs_qq_i ** 2
     abs_qq_i_4 = abs_qq_i_2 ** 2
-    abs_qq_i_6 = abs_qq_i_2 **3
+    abs_qq_i_6 = abs_qq_i_2 ** 3
 
     for counter_j in range(len(maskedQSpaceYY)):
         qq_j = maskedQSpaceXX[counter_j] + 1j * maskedQSpaceYY[counter_j]
@@ -92,43 +91,42 @@ def outerForLoop(counter_i):
         abs_qq_j_4 = abs_qq_j_2 ** 2
         abs_qq_j_6 = abs_qq_j_2 ** 3
 
-        R_o = np.exp(RoConstant0*
-            (RoConstant1 * (abs_qq_i_4 - abs_qq_j_4)
-            +RoConstant2 * (abs_qq_i_6 - abs_qq_j_6)
-            +RoConstant3 * (abs_qq_i_2 - abs_qq_j_2))
-            )
-        E_s = np.exp(EsConstant0*
-            np.abs(EsConstant1 * (qq_i*abs_qq_i_2 - qq_j*abs_qq_j_2)
-            + EsConstant2 * (qq_i*abs_qq_i_4 - qq_j*abs_qq_j_4)
-            +EsConstant3 * (qq_i - qq_j))**2
-            )
-        E_cc = np.sqrt(1 - EccConstant0* (abs_qq_i_2 - abs_qq_j_2))
+        R_o = np.exp(RoConstant0 *
+                     (RoConstant1 * (abs_qq_i_4 - abs_qq_j_4)
+                      + RoConstant2 * (abs_qq_i_6 - abs_qq_j_6)
+                      + RoConstant3 * (abs_qq_i_2 - abs_qq_j_2))
+                     )
+        E_s = np.exp(EsConstant0 *
+                     np.abs(EsConstant1 * (qq_i * abs_qq_i_2 - qq_j * abs_qq_j_2)
+                            + EsConstant2 * (qq_i * abs_qq_i_4 - qq_j * abs_qq_j_4)
+                            + EsConstant3 * (qq_i - qq_j)) ** 2
+                     )
+        E_cc = np.sqrt(1 - EccConstant0 * (abs_qq_i_2 - abs_qq_j_2))
 
-        E_ct = E_cc*np.exp(EctConstant0*
-            (EctConstant1 * (abs_qq_i_2 - abs_qq_j_2)
-            + EctConstant2 * (abs_qq_i_4 - abs_qq_j_4))**2*E_cc**2)
+        E_ct = E_cc * np.exp(EctConstant0 *
+                             (EctConstant1 * (abs_qq_i_2 - abs_qq_j_2)
+                              + EctConstant2 * (abs_qq_i_4 - abs_qq_j_4)) ** 2 * E_cc ** 2)
 
-        EXP = np.exp(1j*2*np.pi*
-            ((qq_i - qq_j).real*sampleCoorRealSpaceXX + (qq_i - qq_j).imag*sampleCoorRealSpaceXX))
+        EXP = np.exp(1j * 2 * np.pi *
+                     ((qq_i - qq_j).real * sampleCoorRealSpaceXX + (qq_i - qq_j).imag * sampleCoorRealSpaceXX))
 
-        returnMatrix += maskedWaveObjectFT[counter_i] * np.conj(maskedWaveObjectFT[counter_j]) * R_o * E_s * E_ct * EXP
+        testConstant = R_o * E_s * E_ct * EXP
+
+        returnMatrix += R_o * E_s * E_ct * maskedWaveObjectFT[counter_i] * np.conj(maskedWaveObjectFT[counter_j]) * EXP
 
     return returnMatrix
 
 
 returnMatrix = np.zeros_like(sampleCoorRealSpaceXX)
 
-
-
-
-
-
 num_cores = multiprocessing.cpu_count()
 
 print(len(maskedQSpaceXX))
 
 print("Start multiprocessing")
-multicoreResults = Parallel(n_jobs=num_cores)(delayed(outerForLoop)(counter_i) for counter_i in range(len(maskedQSpaceXX)))
+
+print(outerForLoop(10))
+# multicoreResults = Parallel(n_jobs=num_cores)(delayed(outerForLoop)(counter_i) for counter_i in range(len(maskedQSpaceXX)))
 
 # multicoreResults = Parallel(n_jobs=num_cores)(
 #     delayed(calI)(element, TElement) for element, TElement in zip(abs_maskedWaveObjectFTRavel, TRavel))
