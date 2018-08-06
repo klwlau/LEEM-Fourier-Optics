@@ -1,6 +1,8 @@
 import time
 start_time = time.time()
 print("Program Started, Loading Libraries")
+import  datetime
+timeStamp = datetime.datetime.fromtimestamp(time.time()).strftime('%Y%m%d_%H%M%S')
 from joblib import Parallel, delayed
 import multiprocessing
 #####import constants######
@@ -149,7 +151,7 @@ matrixI = np.absolute(matrixI)
 
 
 print("start saving matrix")
-np.save("test.npy",matrixI)
+np.save(timeStamp+".npy", matrixI)
 
 print("finished saving matrix")
 
