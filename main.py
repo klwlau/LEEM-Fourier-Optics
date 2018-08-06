@@ -2,6 +2,7 @@ from joblib import Parallel, delayed
 import multiprocessing
 #####import constants######
 from constants import *
+from numba import jit
 
 ######set up Square Object#######
 K = 1 * np.pi
@@ -74,7 +75,7 @@ EctConstant2 = 1 / 2 * delta_f3c * lamda ** 3
 
 returnMatrix = np.zeros_like(sampleCoorRealSpaceXX)
 
-
+@jit(nopython=True)
 def outerForLoop(counter_i):
     global returnMatrix
 
