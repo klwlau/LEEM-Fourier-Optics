@@ -1,8 +1,18 @@
+import time
+start_time = time.time()
+print("Program Started, Loading Libraries")
 from joblib import Parallel, delayed
 import multiprocessing
 #####import constants######
 from constants import *
-from numba import jit
+
+def printStatus(counter):
+    if counter != 0:
+        elapsedTime = ((time.time() - start_time) / 60)
+        totalTime = elapsedTime/(counter / len(maskedQSpaceXX))
+        timeLeft = totalTime - elapsedTime
+        print( "---Elapsed Time: %.2f / %.2f Minutes ---" % (elapsedTime,totalTime)
+               +"---Time Left: %.2f  Minutes ---" % timeLeft)
 
 ######set up Square Object#######
 K = 1 * np.pi
@@ -115,7 +125,7 @@ def outerForLoop(counter_i):
 
         returnMatrix = returnMatrix + R_o * E_s * E_ct * maskedWaveObjectFT[counter_i] * np.conj(
             maskedWaveObjectFT[counter_j]) * EXP
-    print(counter_i)
+    printStatus(counter_i)
 
     return returnMatrix
 
@@ -136,5 +146,11 @@ matrixI = np.sum(multicoreResults, axis=0)
 
 matrixI = np.fft.fftshift(matrixI)
 matrixI = np.absolute(matrixI)
+
+
+print("start saving matrix")
+np.save("test.npy",matrixI)
+
+print("finished saving matrix")
 
 print("End Main")
