@@ -73,6 +73,8 @@ EctConstant1 = delta_fc * lamda
 EctConstant2 = 1 / 2 * delta_f3c * lamda ** 3
 
 returnMatrix = np.zeros_like(sampleCoorRealSpaceXX)
+
+
 def outerForLoop(counter_i):
     global returnMatrix
 
@@ -108,16 +110,13 @@ def outerForLoop(counter_i):
                               + EctConstant2 * (abs_qq_i_4 - abs_qq_j_4)) ** 2 * E_cc ** 2)
 
         EXP = np.exp(1j * 2 * np.pi *
-                     ((qq_i - qq_j).real * sampleCoorRealSpaceXX + (qq_i - qq_j).imag * sampleCoorRealSpaceXX))
+                     ((qq_i - qq_j).real * sampleCoorRealSpaceXX + (qq_i - qq_j).imag * sampleCoorRealSpaceYY))
 
-
-
-        returnMatrix = returnMatrix+ R_o * E_s * E_ct * maskedWaveObjectFT[counter_i] * np.conj(maskedWaveObjectFT[counter_j]) * EXP
+        returnMatrix = returnMatrix + R_o * E_s * E_ct * maskedWaveObjectFT[counter_i] * np.conj(
+            maskedWaveObjectFT[counter_j]) * EXP
     print(counter_i)
 
     return returnMatrix
-
-
 
 
 num_cores = multiprocessing.cpu_count()
@@ -126,8 +125,8 @@ print(len(maskedQSpaceXX))
 
 print("Start multiprocessing")
 
-
-multicoreResults = Parallel(n_jobs=num_cores)(delayed(outerForLoop)(counter_i) for counter_i in range(len(maskedQSpaceXX)))
+multicoreResults = Parallel(n_jobs=num_cores)(
+    delayed(outerForLoop)(counter_i) for counter_i in range(len(maskedQSpaceXX)))
 
 print("End multiprocessing")
 multicoreResults = np.array(multicoreResults)
