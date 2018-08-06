@@ -72,19 +72,23 @@ EsConstant3 = - delta_z*lamda
 
 EccConstant0 = 1j*np.pi/4/np.log(2)*delta_fcc*lamda
 
+EctConstant0 = -np.pi^2/16/np.log(2)
+EctConstant1 = delta_fc*lamda
+EctConstant2 = 1/2*delta_f3c*lamda**3
 
 
-for i in range(len(maskedQSpaceXX)):
+def outerForLoop(counter_i):
+    global returnMatrix
 
-    qq_i = maskedQSpaceXX(i) + 1j * maskedQSpaceYY(i)
+    qq_i = maskedQSpaceXX(counter_i) + 1j * maskedQSpaceYY(counter_i)
     abs_qq_i = np.absolute(qq_i)
 
     abs_qq_i_2 = abs_qq_i**2
     abs_qq_i_4 = abs_qq_i_2 ** 2
     abs_qq_i_6 = abs_qq_i_2 **3
 
-    for j in range(len(maskedQSpaceYY)):
-        qq_j = maskedQSpaceXX(j) + 1j * maskedQSpaceYY(j)
+    for counter_j in range(len(maskedQSpaceYY)):
+        qq_j = maskedQSpaceXX(counter_j) + 1j * maskedQSpaceYY(counter_j)
         abs_qq_j = np.absolute(qq_j)
 
         abs_qq_j_2 = abs_qq_j ** 2
@@ -103,19 +107,30 @@ for i in range(len(maskedQSpaceXX)):
             )
         E_cc = np.sqrt(1 - EccConstant0* (abs_qq_i_2 - abs_qq_j_2))
 
+        E_ct = E_cc*np.exp(EctConstant0*
+            (EctConstant1 * (abs_qq_i_2 - abs_qq_j_2)
+            + EctConstant2 * (abs_qq_i_4 - abs_qq_j_4))**2*E_cc**2)
+
+        EXP = np.exp(1j*2*np.pi*...
+            ((qq_i - qq_j).real*sampleCoorRealSpaceXX + (qq_i - qq_j).imag*sampleCoorRealSpaceXX))
+
+        returnMatrix += maskedWaveObjectFT[counter_i] * np.conj(maskedWaveObjectFT[counter_j]) * R_o * E_s * E_ct * EXP
+
+    return returnMatrix
+
+
+returnMatrix = np.zeros_like(sampleCoorRealSpaceXX)
 
 
 
 
 
 
-
-
-
-
-
+num_cores = multiprocessing.cpu_count()
 
 print("Start multiprocessing")
+multicoreResults = Parallel(n_jobs=num_cores)(delayed(outerForLoop)(counter_i) for counter_i in range(len(maskedQSpaceXX)))
+
 # multicoreResults = Parallel(n_jobs=num_cores)(
 #     delayed(calI)(element, TElement) for element, TElement in zip(abs_maskedWaveObjectFTRavel, TRavel))
 # multicoreResults = np.array(multicoreResults)
