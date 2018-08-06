@@ -185,7 +185,7 @@ print("finished saving matrix")
 print("End Main")
 printStatus(100, done=True)
 
-import matplotlib.pyplot as plt
-
-plt.imshow(matrixI)
-plt.show()
+# import matplotlib.pyplot as plt
+#
+# plt.imshow(matrixI)
+# plt.show()
