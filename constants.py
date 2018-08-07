@@ -31,7 +31,6 @@ delta_fcc = C_cc * (delta_E / U_a) ** 2
 lamda = 6.6262e-34 / np.sqrt(2 * 1.6022e-19 * 9.1095e-31 * U_a)
 lamda_o = 6.6262e-34 / np.sqrt(2 * 1.6022e-19 * 9.1095e-31 * U_o)
 
-q_max = alpha_ap / lamda
-q_ill = alpha_ill / lamda
+
 
 
