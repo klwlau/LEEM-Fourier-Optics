@@ -37,7 +37,7 @@ sampleSpaceTotalStep = 501  # sample size
 sampleSpaceSize = 25 * 1e-9  # nm #25
 objectSpaceSize = 5 * 1e-9  # nm #5
 
-objectStep = int(objectSpaceSize / sampleSpaceSize * sampleSpaceTotalStep)
+objectStep = int((objectSpaceSize / sampleSpaceSize * sampleSpaceTotalStep)/2)
 sampleCoorRealSpaceXX, sampleCoorRealSpaceYY = np.mgrid[-sampleSpaceSize:sampleSpaceSize:sampleSpaceTotalStep * 1j,
                                                -sampleSpaceSize:sampleSpaceSize:sampleSpaceTotalStep * 1j]
 
