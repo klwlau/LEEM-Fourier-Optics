@@ -1,11 +1,12 @@
+import time
+
 print("Main Started, Loading Libraries")
 import time
 from datetime import datetime
 import pytz
+# import datetime
 fmt = '%d/%m %H:%M:%S'
 hkTimeZone = pytz.timezone('Asia/Hong_Kong')
-hkDT = datetime.now(hkTimeZone)
-import datetime
 
 from joblib import Parallel, delayed
 import multiprocessing
@@ -23,17 +24,22 @@ def chunks(l, n):
 
 def main():
     start_time = time.time()
-    def printStatus(counter, done=False):
+    def printStatus(counter, done=False,loopMode = False):
         if counter != 0:
             elapsedTime = ((time.time() - start_time) / 60)
             progress = (counter / len(maskedQSpaceXX)) * 100
             totalTime = elapsedTime / (progress / 100)
             timeLeft = totalTime - elapsedTime
+            hkDT = datetime.now(hkTimeZone)
             currentHKTime = hkDT.strftime(fmt)
             if done:
                 print("-Total Time: %.2f Minutes -" % elapsedTime)
             else:
-                print("-ID:" + str(counter) + "--Elapsed Time: %.2f / %.2f Minutes -" % (elapsedTime, totalTime)
+                if loopMode:
+                    print("Loop:",loopMainCounter,"/",loopLen,"-ID:" + str(counter) + "--Elapsed Time: %.2f / %.2f Minutes -" % (elapsedTime, totalTime)
+                          + "Time Left: %.2f  Minutes -" % timeLeft + "%.2f" % progress + "%-" + currentHKTime)
+                else:
+                    print("-ID:" + str(counter) + "--Elapsed Time: %.2f / %.2f Minutes -" % (elapsedTime, totalTime)
                       + "Time Left: %.2f  Minutes -" % timeLeft + "%.2f" % progress + "%-"+currentHKTime)
 
     ######set up Square Object#######
@@ -106,7 +112,7 @@ def main():
     EctConstant1 = delta_fc * lamda
     EctConstant2 = 1 / 2 * delta_f3c * lamda ** 3
 
-    returnMatrix = np.zeros_like(sampleCoorRealSpaceXX)
+
 
     def outerForLoop(counter_i):
         # global returnMatrix
@@ -173,8 +179,9 @@ def main():
     matrixI = np.fft.fftshift(processTemp)
     matrixI = np.absolute(matrixI)
     print("start saving matrix")
-    timeStamp = datetime.datetime.fromtimestamp(time.time()).strftime('%Y%m%d_%H%M%S')
-    np.save(timeStamp + "_alpha_ap" + "%.2f" % (alpha_ap * 100) + ".npy", matrixI)
+    hkDT = datetime.now(hkTimeZone)
+    timeStamp = hkDT.strftime('%Y%m%d_%H%M%S')
+    np.save(timeStamp + "_alpha_ap" + "%.2f" % (alpha_ap * 1000) + ".npy", matrixI)
     print("finished saving matrix")
     print("End Main")
     printStatus(100, done=True)
