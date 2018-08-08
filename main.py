@@ -127,29 +127,44 @@ def main():
             abs_qq_j_4 = abs_qq_j_2 ** 2
             abs_qq_j_6 = abs_qq_j_2 ** 3
 
-            R_o = np.exp(RoConstant0 *
-                         (RoConstant1 * (abs_qq_i_4 - abs_qq_j_4)
-                          + RoConstant2 * (abs_qq_i_6 - abs_qq_j_6)
-                          + RoConstant3 * (abs_qq_i_2 - abs_qq_j_2))
-                         )
-            E_s = np.exp(EsConstant0 *
-                         np.abs(EsConstant1 * (qq_i * abs_qq_i_2 - qq_j * abs_qq_j_2)
-                                + EsConstant2 * (qq_i * abs_qq_i_4 - qq_j * abs_qq_j_4)
-                                + EsConstant3 * (qq_i - qq_j)) ** 2
-                         )
-            E_cc = np.sqrt(1 - EccConstant0 * (abs_qq_i_2 - abs_qq_j_2))
+            if counter_i>=counter_j:
 
-            E_ct = E_cc * np.exp(EctConstant0 *
-                                 (EctConstant1 * (abs_qq_i_2 - abs_qq_j_2)
-                                  + EctConstant2 * (abs_qq_i_4 - abs_qq_j_4)) ** 2 * E_cc ** 2)
+                R_o = np.exp(RoConstant0 *
+                             (RoConstant1 * (abs_qq_i_4 - abs_qq_j_4)
+                              + RoConstant2 * (abs_qq_i_6 - abs_qq_j_6)
+                              + RoConstant3 * (abs_qq_i_2 - abs_qq_j_2))
+                             )
 
-            temp = 2j * np.pi * ((qq_i - qq_j).real * sampleCoorRealSpaceXX + (qq_i - qq_j).imag * sampleCoorRealSpaceYY)
+                E_s = np.exp(EsConstant0 *
+                             np.abs(EsConstant1 * (qq_i * abs_qq_i_2 - qq_j * abs_qq_j_2)
+                                    + EsConstant2 * (qq_i * abs_qq_i_4 - qq_j * abs_qq_j_4)
+                                    + EsConstant3 * (qq_i - qq_j)) ** 2
+                             )
+                E_cc = np.sqrt(1 - EccConstant0 * (abs_qq_i_2 - abs_qq_j_2))
+                E_ct_exponent =EctConstant0 *(EctConstant1 * (abs_qq_i_2 - abs_qq_j_2)
+                                              + EctConstant2 * (abs_qq_i_4 - abs_qq_j_4)) ** 2
+                E_ct = E_cc * np.exp(E_ct_exponent * E_cc ** 2)
 
 
-            EXP = ne.evaluate("exp(temp)")
 
-            returnMatrix = returnMatrix + R_o * E_s * E_ct * maskedWaveObjectFT[counter_i] * np.conj(
-                maskedWaveObjectFT[counter_j]) * EXP
+
+                EXP_exponent = 2j * np.pi * ((qq_i - qq_j).real * sampleCoorRealSpaceXX + (qq_i - qq_j).imag * sampleCoorRealSpaceYY)
+
+
+                EXP = ne.evaluate("exp(EXP_exponent)")
+
+                returnMatrix = returnMatrix + R_o * E_s * E_ct * maskedWaveObjectFT[counter_i] * np.conj(
+                    maskedWaveObjectFT[counter_j]) * EXP
+                if counter_i >counter_j:
+                    R_o_sym = 1/R_o
+                    E_s_sym = E_s
+                    E_cc_sym =  np.sqrt(1 - EccConstant0 * (abs_qq_j_2 - abs_qq_i_2))
+                    E_ct_sym =  E_cc_sym* np.exp(E_ct_exponent * E_cc_sym ** 2)
+                    EXP_sym = ne.evaluate("EXP.real-1*EXP.imag")
+                    returnMatrix = returnMatrix + R_o_sym * E_s_sym * E_ct_sym * maskedWaveObjectFT[counter_j] * np.conj(
+                        maskedWaveObjectFT[counter_i]) * EXP_sym
+            else:
+                break
 
         return returnMatrix
 
