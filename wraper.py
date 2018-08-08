@@ -3,7 +3,7 @@ from utilityFunc import *
 
 matrixI = main()
 
-plotArray(matrixI)
+# plotArray(matrixI)
 
 
 

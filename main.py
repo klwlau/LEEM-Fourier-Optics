@@ -155,18 +155,18 @@ def main():
 
     num_cores = multiprocessing.cpu_count()
     totalOuterLoopCall = len(maskedQSpaceXX)
-    breakProcess = list(chunks(range(len(maskedQSpaceXX)), num_cores*1))
+    breakProcess = list(chunks(range(len(maskedQSpaceXX)), num_cores*2))
     numberOfChunk = int(len(breakProcess))
     print("Total outerLoop call: ", totalOuterLoopCall)
 
-    print("Number of Cores: " + str(num_cores))
+    print("Number of Thread: " + str(num_cores))
     print("Number of Chunk: " + str(numberOfChunk))
 
     print("Start multiprocessing")
 
     processTemp = np.zeros_like(sampleCoorRealSpaceXX)
     for process in breakProcess:
-        multicoreResults = Parallel(n_jobs=num_cores)(
+        multicoreResults = Parallel(n_jobs=num_cores, backend="threading")(
             delayed(outerForLoop)(counter_i) for counter_i in process)
         tempArray = np.array(multicoreResults)
         tempArray = np.sum(tempArray, axis=0)
