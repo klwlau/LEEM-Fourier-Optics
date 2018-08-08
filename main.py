@@ -5,6 +5,7 @@ import pytz
 from joblib import Parallel, delayed
 import multiprocessing
 from constants import *
+from numba import jit
 
 fmt = '%d/%m %H:%M:%S'
 hkTimeZone = pytz.timezone('Asia/Hong_Kong')
@@ -107,7 +108,7 @@ def main():
     EctConstant0 = -np.pi ** 2 / 16 / np.log(2)
     EctConstant1 = delta_fc * lamda
     EctConstant2 = 1 / 2 * delta_f3c * lamda ** 3
-
+    @jit
     def outerForLoop(counter_i):
         # global returnMatrix
         returnMatrix = np.zeros_like(sampleCoorRealSpaceXX)
@@ -142,9 +143,9 @@ def main():
                                  (EctConstant1 * (abs_qq_i_2 - abs_qq_j_2)
                                   + EctConstant2 * (abs_qq_i_4 - abs_qq_j_4)) ** 2 * E_cc ** 2)
 
-            temp = 2 * np.pi * ((qq_i - qq_j).real * sampleCoorRealSpaceXX + (qq_i - qq_j).imag * sampleCoorRealSpaceYY)
+            EXPExponent = 2 * np.pi * ((qq_i - qq_j).real * sampleCoorRealSpaceXX + (qq_i - qq_j).imag * sampleCoorRealSpaceYY)
 
-            EXP = np.cos(temp) + 1j * np.sin(temp)
+            EXP = np.cos(EXPExponent) + 1j * np.sin(EXPExponent)
 
             returnMatrix = returnMatrix + R_o * E_s * E_ct * maskedWaveObjectFT[counter_i] * np.conj(
                 maskedWaveObjectFT[counter_j]) * EXP
@@ -162,14 +163,18 @@ def main():
 
     print("Start multiprocessing")
 
-    processTemp = np.zeros_like(sampleCoorRealSpaceXX)
-    for process in breakProcess:
-        multicoreResults = Parallel(n_jobs=num_cores)(
-            delayed(outerForLoop)(counter_i) for counter_i in process)
-        tempArray = np.array(multicoreResults)
-        tempArray = np.sum(tempArray, axis=0)
-        processTemp = processTemp + tempArray
-        printStatus(process[-1])
+    # processTemp = np.zeros_like(sampleCoorRealSpaceXX)
+    # for process in breakProcess:
+    #     multicoreResults = Parallel(n_jobs=num_cores)(
+    #         delayed(outerForLoop)(counter_i) for counter_i in process)
+    #     tempArray = np.array(multicoreResults)
+    #     tempArray = np.sum(tempArray, axis=0)
+    #     processTemp = processTemp + tempArray
+    #     printStatus(process[-1])
+
+    for i in range(len(maskedQSpaceXX)):
+        outerForLoop(i)
+        printStatus(i)
 
     print("End multiprocessing")
     matrixI = np.fft.fftshift(processTemp)
