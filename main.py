@@ -1,13 +1,7 @@
-import time
-
 print("Main Started, Loading Libraries")
 import time
 from datetime import datetime
 import pytz
-# import datetime
-fmt = '%d/%m %H:%M:%S'
-hkTimeZone = pytz.timezone('Asia/Hong_Kong')
-
 from joblib import Parallel, delayed
 import multiprocessing
 
@@ -15,6 +9,8 @@ import multiprocessing
 if __name__ == '__main__':
     from constants import *
 
+fmt = '%d/%m %H:%M:%S'
+hkTimeZone = pytz.timezone('Asia/Hong_Kong')
 
 def chunks(l, n):
     """Yield successive n-sized chunks from l."""
@@ -190,4 +186,5 @@ def main():
 
 
 
-main()
+if __name__ == '__main__':
+    main()
