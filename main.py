@@ -5,6 +5,7 @@ import pytz
 from joblib import Parallel, delayed
 import multiprocessing
 from constants import *
+import numexpr as ne
 
 fmt = '%d/%m %H:%M:%S'
 hkTimeZone = pytz.timezone('Asia/Hong_Kong')
@@ -142,10 +143,10 @@ def main():
                                  (EctConstant1 * (abs_qq_i_2 - abs_qq_j_2)
                                   + EctConstant2 * (abs_qq_i_4 - abs_qq_j_4)) ** 2 * E_cc ** 2)
 
-            temp = 2 * np.pi * ((qq_i - qq_j).real * sampleCoorRealSpaceXX + (qq_i - qq_j).imag * sampleCoorRealSpaceYY)
+            temp = 2j * np.pi * ((qq_i - qq_j).real * sampleCoorRealSpaceXX + (qq_i - qq_j).imag * sampleCoorRealSpaceYY)
             # temp = temp.astype("Float32")
 
-            EXP = np.cos(temp) + 1j * np.sin(temp)
+            EXP = ne.evaluate("exp(temp)")
 
             returnMatrix = returnMatrix + R_o * E_s * E_ct * maskedWaveObjectFT[counter_i] * np.conj(
                 maskedWaveObjectFT[counter_j]) * EXP
