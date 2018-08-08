@@ -143,7 +143,7 @@ def main():
                                  (EctConstant1 * (abs_qq_i_2 - abs_qq_j_2)
                                   + EctConstant2 * (abs_qq_i_4 - abs_qq_j_4)) ** 2 * E_cc ** 2)
 
-            temp = 2 * np.pi * ((qq_i - qq_j).real * sampleCoorRealSpaceXX + (qq_i - qq_j).imag * sampleCoorRealSpaceYY)
+            temp = 2j * np.pi * ((qq_i - qq_j).real * sampleCoorRealSpaceXX + (qq_i - qq_j).imag * sampleCoorRealSpaceYY)
             # temp = temp.astype("Float32")
 
             EXP = ne.evaluate("exp(temp)")
