@@ -4,10 +4,11 @@ from datetime import datetime
 import pytz
 from joblib import Parallel, delayed
 import multiprocessing
+from constants import *
 
-#####import constants######
-if __name__ == '__main__':
-    from constants import *
+
+
+
 
 fmt = '%d/%m %H:%M:%S'
 hkTimeZone = pytz.timezone('Asia/Hong_Kong')
