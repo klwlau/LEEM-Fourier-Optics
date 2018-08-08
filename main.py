@@ -7,7 +7,7 @@ import multiprocessing
 from constants import *
 import numexpr as ne
 
-fmt = '%d/%m %H:%M:%S'
+fmt = '%H:%M:%S %d/%m'
 hkTimeZone = pytz.timezone('Asia/Hong_Kong')
 
 
