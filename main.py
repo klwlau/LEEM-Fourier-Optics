@@ -154,16 +154,17 @@ def main():
                     maskedWaveObjectFT[counter_j]) * EXP
                 if counter_i >counter_j:
 
-                    EXP_exponent_sym = 2j * np.pi * (
-                                (qq_j - qq_i).real * sampleCoorRealSpaceXX + (qq_j - qq_i).imag * sampleCoorRealSpaceYY)
-
-                    EXP_sym = ne.evaluate("exp(EXP_exponent_sym)")
+                    # EXP_exponent_sym = 2j * np.pi * (
+                    #             (qq_j - qq_i).real * sampleCoorRealSpaceXX + (qq_j - qq_i).imag * sampleCoorRealSpaceYY)
+                    #
+                    # EXP_sym = ne.evaluate("exp(EXP_exponent_sym)")
 
                     R_o_sym = 1/R_o
                     E_s_sym = E_s
                     E_cc_sym =  np.sqrt(1 - EccConstant0 * (abs_qq_j_2 - abs_qq_i_2))
                     E_ct_sym =  E_cc_sym* np.exp(E_ct_exponent * E_cc_sym ** 2)
                     # EXP_sym = ne.evaluate("EXP.real-1*EXP.imag")
+                    EXP_sym = ne.evaluate("conj(EXP)")
 
 
                     returnMatrix = returnMatrix + R_o_sym * E_s_sym * E_ct_sym * maskedWaveObjectFT[counter_j] * np.conj(
