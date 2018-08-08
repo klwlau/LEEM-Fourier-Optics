@@ -6,12 +6,9 @@ from joblib import Parallel, delayed
 import multiprocessing
 from constants import *
 
-
-
-
-
 fmt = '%d/%m %H:%M:%S'
 hkTimeZone = pytz.timezone('Asia/Hong_Kong')
+
 
 def chunks(l, n):
     """Yield successive n-sized chunks from l."""
@@ -21,7 +18,8 @@ def chunks(l, n):
 
 def main():
     start_time = time.time()
-    def printStatus(counter, done=False,loopMode = False):
+
+    def printStatus(counter, done=False, loopMode=False):
         if counter != 0:
             elapsedTime = ((time.time() - start_time) / 60)
             progress = (counter / len(maskedQSpaceXX)) * 100
@@ -33,11 +31,12 @@ def main():
                 print("-Total Time: %.2f Minutes -" % elapsedTime)
             else:
                 if loopMode:
-                    print("Loop:",loopMainCounter,"/",loopLen,"-ID:" + str(counter) + "--Elapsed Time: %.2f / %.2f Minutes -" % (elapsedTime, totalTime)
+                    print("Loop:", loopMainCounter, "/", loopLen,
+                          "-ID:" + str(counter) + "--Elapsed Time: %.2f / %.2f Minutes -" % (elapsedTime, totalTime)
                           + "Time Left: %.2f  Minutes -" % timeLeft + "%.2f" % progress + "%-" + currentHKTime)
                 else:
                     print("-ID:" + str(counter) + "--Elapsed Time: %.2f / %.2f Minutes -" % (elapsedTime, totalTime)
-                      + "Time Left: %.2f  Minutes -" % timeLeft + "%.2f" % progress + "%-"+currentHKTime)
+                          + "Time Left: %.2f  Minutes -" % timeLeft + "%.2f" % progress + "%-" + currentHKTime)
 
     ######set up Square Object#######
     K = 1 * np.pi
@@ -109,8 +108,6 @@ def main():
     EctConstant1 = delta_fc * lamda
     EctConstant2 = 1 / 2 * delta_f3c * lamda ** 3
 
-
-
     def outerForLoop(counter_i):
         # global returnMatrix
         returnMatrix = np.zeros_like(sampleCoorRealSpaceXX)
@@ -145,8 +142,9 @@ def main():
                                  (EctConstant1 * (abs_qq_i_2 - abs_qq_j_2)
                                   + EctConstant2 * (abs_qq_i_4 - abs_qq_j_4)) ** 2 * E_cc ** 2)
 
-            EXP = np.exp(1j * 2 * np.pi *
-                         ((qq_i - qq_j).real * sampleCoorRealSpaceXX + (qq_i - qq_j).imag * sampleCoorRealSpaceYY))
+            temp = 2 * np.pi * ((qq_i - qq_j).real * sampleCoorRealSpaceXX + (qq_i - qq_j).imag * sampleCoorRealSpaceYY)
+
+            EXP = np.cos(temp) + 1j * np.sin(temp)
 
             returnMatrix = returnMatrix + R_o * E_s * E_ct * maskedWaveObjectFT[counter_i] * np.conj(
                 maskedWaveObjectFT[counter_j]) * EXP
@@ -186,7 +184,6 @@ def main():
     print("----------------------------------------------------")
 
     return matrixI
-
 
 
 if __name__ == '__main__':
