@@ -84,14 +84,14 @@ def main():
 
     print("making transmittion CrossCoefficientMatrix")
 
-    Qx_i, Qx_j = np.meshgrid(maskedQSpaceXX, maskedQSpaceXX, sparse=True)
-    Qy_i, Qy_j = np.meshgrid(maskedQSpaceYY, maskedQSpaceYY, sparse=True)
-    F_i, F_j = np.meshgrid(maskedWaveObjectFT, maskedWaveObjectFT, sparse=True)
+    # Qx_i, Qx_j = np.meshgrid(maskedQSpaceXX, maskedQSpaceXX, sparse=True)
+    # Qy_i, Qy_j = np.meshgrid(maskedQSpaceYY, maskedQSpaceYY, sparse=True)
+    # F_i, F_j = np.meshgrid(maskedWaveObjectFT, maskedWaveObjectFT, sparse=True)
 
     ##############cal Matrix I##########
 
-    qq_i = maskedQSpaceXX + maskedQSpaceYY * 1j
-    qq_j = maskedQSpaceXX + maskedQSpaceYY * 1j
+    # qq_i = maskedQSpaceXX + maskedQSpaceYY * 1j
+    # qq_j = maskedQSpaceXX + maskedQSpaceYY * 1j
 
     RoConstant0 = 1j * 2 * np.pi
     RoConstant1 = 1 / 4 * C_3 * lamda ** 3
