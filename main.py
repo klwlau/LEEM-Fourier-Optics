@@ -34,10 +34,10 @@ def main():
                 if loopMode:
                     print("Loop:", loopMainCounter, "/", loopLen,
                           "-ID:" + str(counter) + "--Elapsed Time: %.2f / %.2f Minutes -" % (elapsedTime, totalTime)
-                          + "Time Left: %.2f  Minutes -" % timeLeft + "%.2f" % progress + "%-" + currentHKTime)
+                          + "Time Left: %.2f  Minutes -" % timeLeft + "%.2f" % progress + "%--HKT:" + currentHKTime)
                 else:
                     print("-ID:" + str(counter) + "--Elapsed Time: %.2f / %.2f Minutes -" % (elapsedTime, totalTime)
-                          + "Time Left: %.2f  Minutes -" % timeLeft + "%.2f" % progress + "%-" + currentHKTime)
+                          + "Time Left: %.2f  Minutes -" % timeLeft + "%.2f" % progress + "%--HKT:" + currentHKTime)
 
     ######set up Square Object#######
     K = 1 * np.pi
