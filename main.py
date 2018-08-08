@@ -154,7 +154,7 @@ def main():
 
     num_cores = multiprocessing.cpu_count()
     totalOuterLoopCall = len(maskedQSpaceXX)
-    breakProcess = list(chunks(range(len(maskedQSpaceXX)), num_cores*5))
+    breakProcess = list(chunks(range(len(maskedQSpaceXX)), num_cores*10)
     numberOfChunk = int(len(breakProcess))
     print("Total outerLoop call: ", totalOuterLoopCall)
 
