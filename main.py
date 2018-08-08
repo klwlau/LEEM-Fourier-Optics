@@ -109,7 +109,7 @@ def main():
     EctConstant1 = delta_fc * lamda
     EctConstant2 = 1 / 2 * delta_f3c * lamda ** 3
 
-    def outerForLoop(counter_i):
+    def outerForLoop(counter_i,sampleCoorRealSpaceXX = sampleCoorRealSpaceXX,sampleCoorRealSpaceYY=sampleCoorRealSpaceYY):
         # global returnMatrix
         returnMatrix = np.zeros_like(sampleCoorRealSpaceXX)
         qq_i = maskedQSpaceXX[counter_i] + 1j * maskedQSpaceYY[counter_i]
@@ -153,7 +153,7 @@ def main():
 
         return returnMatrix
 
-    num_cores = multiprocessing.cpu_count()
+    num_cores = multiprocessing.cpu_count()-4
     totalOuterLoopCall = len(maskedQSpaceXX)
     breakProcess = list(chunks(range(len(maskedQSpaceXX)), num_cores*2))
     numberOfChunk = int(len(breakProcess))
