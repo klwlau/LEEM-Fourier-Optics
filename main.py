@@ -185,6 +185,8 @@ def main():
     printStatus(100, done=True)
     print("----------------------------------------------------")
 
+    return matrixI
+
 
 
 if __name__ == '__main__':
