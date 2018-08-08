@@ -159,10 +159,11 @@ def main():
     num_cores = multiprocessing.cpu_count()
     totalOuterLoopCall = len(maskedQSpaceXX)
     breakProcess = list(chunks(range(len(maskedQSpaceXX)), num_cores))
+    numberOfChunk = int(len(breakProcess))
     print("Total outerLoop call: ", totalOuterLoopCall)
 
     print("Number of Cores: " + str(num_cores))
-    print("Number of Cycles: " + str(int(len(breakProcess))))
+    print("Number of Chunk: " + str(numberOfChunk))
 
     print("Start multiprocessing")
 
