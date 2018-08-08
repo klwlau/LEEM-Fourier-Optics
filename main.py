@@ -5,6 +5,7 @@ import pytz
 from joblib import Parallel, delayed
 import multiprocessing
 from constants import *
+import numexpr as ne
 
 fmt = '%d/%m %H:%M:%S'
 hkTimeZone = pytz.timezone('Asia/Hong_Kong')
@@ -145,7 +146,7 @@ def main():
             temp = 2 * np.pi * ((qq_i - qq_j).real * sampleCoorRealSpaceXX + (qq_i - qq_j).imag * sampleCoorRealSpaceYY)
             # temp = temp.astype("Float32")
 
-            EXP = np.cos(temp) + 1j * np.sin(temp)
+            EXP = ne.evaluate("exp(temp)")
 
             returnMatrix = returnMatrix + R_o * E_s * E_ct * maskedWaveObjectFT[counter_i] * np.conj(
                 maskedWaveObjectFT[counter_j]) * EXP
@@ -154,7 +155,7 @@ def main():
 
     num_cores = multiprocessing.cpu_count()
     totalOuterLoopCall = len(maskedQSpaceXX)
-    breakProcess = list(chunks(range(len(maskedQSpaceXX)), num_cores*10))
+    breakProcess = list(chunks(range(len(maskedQSpaceXX)), num_cores*1))
     numberOfChunk = int(len(breakProcess))
     print("Total outerLoop call: ", totalOuterLoopCall)
 
