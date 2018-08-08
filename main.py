@@ -109,7 +109,7 @@ def main():
     EctConstant1 = delta_fc * lamda
     EctConstant2 = 1 / 2 * delta_f3c * lamda ** 3
 
-    def outerForLoop(counter_i,sampleCoorRealSpaceXX = sampleCoorRealSpaceXX,sampleCoorRealSpaceYY=sampleCoorRealSpaceYY):
+    def outerForLoop(counter_i):
         # global returnMatrix
         returnMatrix = np.zeros_like(sampleCoorRealSpaceXX)
         qq_i = maskedQSpaceXX[counter_i] + 1j * maskedQSpaceYY[counter_i]
@@ -153,7 +153,7 @@ def main():
 
         return returnMatrix
 
-    num_cores = multiprocessing.cpu_count()-4
+    num_cores = multiprocessing.cpu_count()
     totalOuterLoopCall = len(maskedQSpaceXX)
     breakProcess = list(chunks(range(len(maskedQSpaceXX)), num_cores*2))
     numberOfChunk = int(len(breakProcess))
@@ -165,13 +165,14 @@ def main():
     print("Start multiprocessing")
 
     processTemp = np.zeros_like(sampleCoorRealSpaceXX)
-    for process in breakProcess:
-        multicoreResults = Parallel(n_jobs=num_cores, backend="threading")(
-            delayed(outerForLoop)(counter_i) for counter_i in process)
-        tempArray = np.array(multicoreResults)
-        tempArray = np.sum(tempArray, axis=0)
-        processTemp = processTemp + tempArray
-        printStatus(process[-1])
+
+    with Parallel(n_jobs=num_cores ) as parallel: #,backend="threading"
+        for process in breakProcess:
+            multicoreResults = parallel(delayed(outerForLoop)(counter_i) for counter_i in process)
+            tempArray = np.array(multicoreResults)
+            tempArray = np.sum(tempArray, axis=0)
+            processTemp = processTemp + tempArray
+            printStatus(process[-1])
 
     print("End multiprocessing")
     matrixI = np.fft.fftshift(processTemp)
