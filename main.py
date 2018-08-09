@@ -163,8 +163,8 @@ def main():
                     E_s_sym = E_s
                     E_cc_sym =  np.sqrt(1 - EccConstant0 * (abs_qq_j_2 - abs_qq_i_2))
                     E_ct_sym =  E_cc_sym* np.exp(E_ct_exponent * E_cc_sym ** 2)
-                    # EXP_sym = ne.evaluate("EXP.real-1*EXP.imag")
-                    EXP_sym = ne.evaluate("conj(EXP)")
+                    EXP_sym = ne.evaluate("EXP.real-1j*EXP.imag")
+                    # EXP_sym = ne.evaluate("conj(EXP)")
 
 
                     returnMatrix = returnMatrix + R_o_sym * E_s_sym * E_ct_sym * maskedWaveObjectFT[counter_j] * np.conj(
