@@ -6,6 +6,7 @@ from joblib import Parallel, delayed
 import multiprocessing
 from constants import *
 import numexpr as ne
+from utilityFunc import *
 
 fmt = '%H:%M:%S %d/%m'
 hkTimeZone = pytz.timezone('Asia/Hong_Kong')
@@ -39,6 +40,21 @@ def main():
                     print("-ID:" + str(counter) + "--Elapsed Time: %.2f / %.2f min -" % (elapsedTime, totalTime)
                           + "Time Left: %.2f  min -" % timeLeft+"OuterLoop Time: %.2f s--" % (elapsedTime/(counter+1)) + "%.2f" % progress + "%--HKT:" + currentHKTime)
 
+    def createSimulatedObject():
+        amp = 1
+        def simulatedObjectSpaceProfile(x,y):
+            value = amp*np.sin(0.5*y)+amp
+            return value
+
+        simulatedObject = np.zeros_like(simulatedSpace)
+        for x in range(len(simulatedObject)):
+            for y in range(len(simulatedObject)):
+                simulatedObject[x][y] = simulatedObjectSpaceProfile(x,y)
+
+
+        return simulatedObject
+
+
     ######set up Square Object#######
     K = 1 * np.pi
     q_max = alpha_ap / lamda
@@ -53,10 +69,15 @@ def main():
                                                    -sampleSpaceSize:sampleSpaceSize:sampleSpaceTotalStep * 1j]
 
     sampleStepSize = sampleCoorRealSpaceXX[1][0] - sampleCoorRealSpaceXX[0][0]
-    simulatedObject = np.zeros(sampleCoorRealSpaceXX.shape)
+    simulatedSpace = np.zeros(sampleCoorRealSpaceXX.shape)
     sampleCenterX, sampleCenterY = int(sampleSpaceTotalStep / 2 + 1), int(sampleSpaceTotalStep / 2 + 1)
-    simulatedObject[sampleCenterX - objectStep:sampleCenterX + objectStep,
+    simulatedObjectMask = np.copy(simulatedSpace)
+    simulatedObjectMask[sampleCenterX - objectStep:sampleCenterX + objectStep,
     sampleCenterY - objectStep:sampleCenterY + objectStep] = 1
+
+    simulatedObject = np.multiply(createSimulatedObject(),simulatedObjectMask)
+
+    plotArray(simulatedObject)
 
     objectPhaseShift = K * simulatedObject
 
@@ -189,7 +210,7 @@ def main():
 
     with Parallel(n_jobs=num_cores ) as parallel: #,backend="threading"
         for process in breakProcess:
-            multicoreResults = parallel(delayed(outerForLoop)(counter_i) for counter_i in process)
+            # multicoreResults = parallel(delayed(outerForLoop)(counter_i) for counter_i in process)
             tempArray = np.array(multicoreResults)
             tempArray = np.sum(tempArray, axis=0)
             processTemp = processTemp + tempArray
