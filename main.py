@@ -6,6 +6,7 @@ from joblib import Parallel, delayed
 import multiprocessing
 from constants import *
 import numexpr as ne
+
 # from utilityFunc import *
 
 fmt = '%H:%M:%S %d/%m'
@@ -35,10 +36,12 @@ def main(mainPass):
                 if loopMode:
                     print("Loop:", loopMainCounter, "/", loopLen,
                           "-ID:" + str(counter) + "--Elapsed Time: %.2f / %.2f min -" % (elapsedTime, totalTime)
-                          + "Time Left: %.2f  min -" % timeLeft +"OuterLoop Time:%.1f s"%(elapsedTime/(counter+1)) + "%.2f" % progress + "%--HKT:" + currentHKTime)
+                          + "Time Left: %.2f  min -" % timeLeft + "OuterLoop Time:%.1f s" % (
+                                      elapsedTime / (counter + 1)) + "%.2f" % progress + "%--HKT:" + currentHKTime)
                 else:
                     print("-ID:" + str(counter) + "--Elapsed Time: %.2f / %.2f min -" % (elapsedTime, totalTime)
-                          + "Time Left: %.2f  min -" % timeLeft+"OuterLoop Time: %.2f s--" % (elapsedTime/(counter+1)) + "%.2f" % progress + "%--HKT:" + currentHKTime)
+                          + "Time Left: %.2f  min -" % timeLeft + "OuterLoop Time: %.2f s--" % (
+                                      elapsedTime / (counter + 1)) + "%.2f" % progress + "%--HKT:" + currentHKTime)
 
     def createSimulatedObject():
         # amp = 1
@@ -53,7 +56,6 @@ def main(mainPass):
 
         simulatedObject = np.ones_like(simulatedSpace)
         return simulatedObject
-
 
     ######set up Square Object#######
     K = 1 * np.pi
@@ -76,7 +78,7 @@ def main(mainPass):
     simulatedObjectMask[sampleCenterX - objectStep:sampleCenterX + objectStep,
     sampleCenterY - objectStep:sampleCenterY + objectStep] = 1
 
-    simulatedObject = np.multiply(createSimulatedObject(),simulatedObjectMask)
+    simulatedObject = np.multiply(createSimulatedObject(), simulatedObjectMask)
 
     # plotArray(simulatedObject)
 
@@ -131,7 +133,6 @@ def main(mainPass):
     EctConstant1 = delta_fc * lamda
     EctConstant2 = 1 / 2 * delta_f3c * lamda ** 3
 
-
     def outerForLoop(counter_i):
         # global returnMatrix
         returnMatrix = np.zeros_like(sampleCoorRealSpaceXX)
@@ -150,7 +151,7 @@ def main(mainPass):
             abs_qq_j_4 = abs_qq_j_2 ** 2
             abs_qq_j_6 = abs_qq_j_2 ** 3
 
-            if counter_i>=counter_j:
+            if counter_i >= counter_j:
 
                 R_o = np.exp(RoConstant0 *
                              (RoConstant1 * (abs_qq_i_4 - abs_qq_j_4)
@@ -164,33 +165,32 @@ def main(mainPass):
                                     + EsConstant3 * (qq_i - qq_j)) ** 2
                              )
                 E_cc = np.sqrt(1 - EccConstant0 * (abs_qq_i_2 - abs_qq_j_2))
-                E_ct_exponent =EctConstant0 *(EctConstant1 * (abs_qq_i_2 - abs_qq_j_2)
-                                              + EctConstant2 * (abs_qq_i_4 - abs_qq_j_4)) ** 2
+                E_ct_exponent = EctConstant0 * (EctConstant1 * (abs_qq_i_2 - abs_qq_j_2)
+                                                + EctConstant2 * (abs_qq_i_4 - abs_qq_j_4)) ** 2
                 E_ct = E_cc * np.exp(E_ct_exponent * E_cc ** 2)
 
-                EXP_exponent = 2j * np.pi * ((qq_i - qq_j).real * sampleCoorRealSpaceXX + (qq_i - qq_j).imag * sampleCoorRealSpaceYY)
-
+                EXP_exponent = 2j * np.pi * (
+                            (qq_i - qq_j).real * sampleCoorRealSpaceXX + (qq_i - qq_j).imag * sampleCoorRealSpaceYY)
 
                 EXP = ne.evaluate("exp(EXP_exponent)")
 
                 returnMatrix = returnMatrix + R_o * E_s * E_ct * maskedWaveObjectFT[counter_i] * np.conj(
                     maskedWaveObjectFT[counter_j]) * EXP
-                if counter_i >counter_j:
-
+                if counter_i > counter_j:
                     # EXP_exponent_sym = 2j * np.pi * (
                     #             (qq_j - qq_i).real * sampleCoorRealSpaceXX + (qq_j - qq_i).imag * sampleCoorRealSpaceYY)
                     #
                     # EXP_sym = ne.evaluate("exp(EXP_exponent_sym)")
 
-                    R_o_sym = 1/R_o
+                    R_o_sym = 1 / R_o
                     E_s_sym = E_s
-                    E_cc_sym =  np.sqrt(1 - EccConstant0 * (abs_qq_j_2 - abs_qq_i_2))
-                    E_ct_sym =  E_cc_sym* np.exp(E_ct_exponent * E_cc_sym ** 2)
+                    E_cc_sym = np.sqrt(1 - EccConstant0 * (abs_qq_j_2 - abs_qq_i_2))
+                    E_ct_sym = E_cc_sym * np.exp(E_ct_exponent * E_cc_sym ** 2)
                     EXP_sym = ne.evaluate("EXP.real-1j*EXP.imag")
                     # EXP_sym = ne.evaluate("conj(EXP)")
 
-
-                    returnMatrix = returnMatrix + R_o_sym * E_s_sym * E_ct_sym * maskedWaveObjectFT[counter_j] * np.conj(
+                    returnMatrix = returnMatrix + R_o_sym * E_s_sym * E_ct_sym * maskedWaveObjectFT[
+                        counter_j] * np.conj(
                         maskedWaveObjectFT[counter_i]) * EXP_sym
             else:
                 break
@@ -199,22 +199,21 @@ def main(mainPass):
 
     def ijSymmetry(counter_i):
 
-        if counter_i == int(totalOuterLoopCall/2):
+        if counter_i == int(totalOuterLoopCall / 2):
             returnMatrix = outerForLoop(counter_i)
             # print(counter_i)
         else:
             returnMatrix1 = outerForLoop(counter_i)
-            returnMatrix2 = outerForLoop(totalOuterLoopCall-counter_i-1)
+            returnMatrix2 = outerForLoop(totalOuterLoopCall - counter_i - 1)
             returnMatrix = ne.evaluate("returnMatrix1+returnMatrix2")
 
         return returnMatrix
 
-
     num_cores = multiprocessing.cpu_count()
     totalOuterLoopCall = len(maskedQSpaceXX)
-    loopList = list(range(len(maskedQSpaceXX)))[:int(totalOuterLoopCall/2)+1]
+    loopList = list(range(len(maskedQSpaceXX)))[:int(totalOuterLoopCall / 2) + 1]
     # loopList = list(range(len(maskedQSpaceXX)))
-    breakProcess = list(chunks(loopList, num_cores*2))
+    breakProcess = list(chunks(loopList, num_cores * 2))
     numberOfChunk = int(len(breakProcess))
     print("Total Process: ", len(loopList))
 
@@ -225,7 +224,7 @@ def main(mainPass):
 
     processTemp = np.zeros_like(sampleCoorRealSpaceXX)
 
-    with Parallel(n_jobs=num_cores ) as parallel: #,backend="threading"
+    with Parallel(n_jobs=num_cores) as parallel:  # ,backend="threading"
         for process in breakProcess:
             # multicoreResults = parallel(delayed(outerForLoop)(counter_i) for counter_i in process)
 
@@ -251,4 +250,4 @@ def main(mainPass):
 
 
 if __name__ == '__main__':
-    main()
+    main(0.5E-3)
