@@ -37,11 +37,11 @@ def main(mainPass):
                     print("Loop:", loopMainCounter, "/", loopLen,
                           "-ID:" + str(counter) + "--Elapsed Time: %.2f / %.2f min -" % (elapsedTime, totalTime)
                           + "Time Left: %.2f  min -" % timeLeft + "OuterLoop Time:%.1f s" % (
-                                      elapsedTime / (counter + 1)) + "%.2f" % progress + "%--HKT:" + currentHKTime)
+                                      elapsedTime*60 / (counter + 1)) + "%.2f" % progress + "%--HKT:" + currentHKTime)
                 else:
                     print("-ID:" + str(counter) + "--Elapsed Time: %.2f / %.2f min -" % (elapsedTime, totalTime)
                           + "Time Left: %.2f  min -" % timeLeft + "OuterLoop Time: %.2f s--" % (
-                                      elapsedTime / (counter + 1)) + "%.2f" % progress + "%--HKT:" + currentHKTime)
+                                      elapsedTime *60/ (counter + 1)) + "%.2f" % progress + "%--HKT:" + currentHKTime)
 
     def createSimulatedObject():
         # amp = 1
