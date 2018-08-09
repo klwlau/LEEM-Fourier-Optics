@@ -9,7 +9,7 @@ import numexpr as ne
 
 # from utilityFunc import *
 
-fmt = '%H:%M:%S %d/%m'
+fmt = '%H:%M:%S' #%d/%m
 hkTimeZone = pytz.timezone('Asia/Hong_Kong')
 
 
