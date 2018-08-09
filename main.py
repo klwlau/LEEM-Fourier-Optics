@@ -43,7 +43,7 @@ def main():
     def createSimulatedObject():
         amp = 1
         def simulatedObjectSpaceProfile(x,y):
-            value = amp*np.sin(0.5*y)+amp
+            value = amp*np.sin(0.2*y)+amp
             return value
 
         simulatedObject = np.zeros_like(simulatedSpace)
@@ -210,7 +210,7 @@ def main():
 
     with Parallel(n_jobs=num_cores ) as parallel: #,backend="threading"
         for process in breakProcess:
-            # multicoreResults = parallel(delayed(outerForLoop)(counter_i) for counter_i in process)
+            multicoreResults = parallel(delayed(outerForLoop)(counter_i) for counter_i in process)
             tempArray = np.array(multicoreResults)
             tempArray = np.sum(tempArray, axis=0)
             processTemp = processTemp + tempArray
