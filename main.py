@@ -24,7 +24,7 @@ def main():
     def printStatus(counter, done=False, loopMode=False):
         if counter != 0:
             elapsedTime = ((time.time() - start_time) / 60)
-            progress = (counter / len(maskedQSpaceXX)) * 100
+            progress = (counter / len(loopList)) * 100
             totalTime = elapsedTime / (progress / 100)
             timeLeft = totalTime - elapsedTime
             hkDT = datetime.now(hkTimeZone)
@@ -197,21 +197,25 @@ def main():
         return returnMatrix
 
     def ijSymmetry(counter_i):
-        if counter_i == int(totalOuterLoopCall/2)+1:
+
+        if counter_i == int(totalOuterLoopCall/2):
             returnMatrix = outerForLoop(counter_i)
+            # print(counter_i)
         else:
-            returnMatrix = outerForLoop(counter_i) +outerForLoop(totalOuterLoopCall-counter_i-1)
+            returnMatrix1 = outerForLoop(counter_i)
+            returnMatrix2 = outerForLoop(totalOuterLoopCall-counter_i-1)
+            returnMatrix = ne.evaluate("returnMatrix1+returnMatrix2")
 
         return returnMatrix
 
 
     num_cores = multiprocessing.cpu_count()
     totalOuterLoopCall = len(maskedQSpaceXX)
-    # loopList = list(range(len(maskedQSpaceXX)))[:int(totalOuterLoopCall/2)+1]
-    loopList = list(range(len(maskedQSpaceXX)))
+    loopList = list(range(len(maskedQSpaceXX)))[:int(totalOuterLoopCall/2)+1]
+    # loopList = list(range(len(maskedQSpaceXX)))
     breakProcess = list(chunks(loopList, num_cores*2))
     numberOfChunk = int(len(breakProcess))
-    print("Total outerLoop call: ", totalOuterLoopCall)
+    print("Total Process: ", len(loopList))
 
     print("Number of Thread: " + str(num_cores))
     print("Number of Chunk: " + str(numberOfChunk))
@@ -222,11 +226,9 @@ def main():
 
     with Parallel(n_jobs=num_cores ) as parallel: #,backend="threading"
         for process in breakProcess:
-            multicoreResults = parallel(delayed(outerForLoop)(counter_i) for counter_i in process)
+            # multicoreResults = parallel(delayed(outerForLoop)(counter_i) for counter_i in process)
 
-
-
-            # multicoreResults = parallel(delayed(ijSymmetry)(counter_i) for counter_i in process)
+            multicoreResults = parallel(delayed(ijSymmetry)(counter_i) for counter_i in process)
             tempArray = np.array(multicoreResults)
             tempArray = np.sum(tempArray, axis=0)
             processTemp = processTemp + tempArray
