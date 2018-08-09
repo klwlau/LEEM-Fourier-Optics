@@ -130,6 +130,7 @@ def main():
     EctConstant1 = delta_fc * lamda
     EctConstant2 = 1 / 2 * delta_f3c * lamda ** 3
 
+
     def outerForLoop(counter_i):
         # global returnMatrix
         returnMatrix = np.zeros_like(sampleCoorRealSpaceXX)
@@ -195,9 +196,18 @@ def main():
 
         return returnMatrix
 
+    def ijSymmetry(counter_i):
+        if counter_i == int(totalOuterLoopCall/2)+1:
+            returnMatrix = outerForLoop(counter_i)
+        else:
+            returnMatrix = outerForLoop(counter_i) +outerForLoop(totalOuterLoopCall-counter_i-1)
+        return returnMatrix
+
+
     num_cores = multiprocessing.cpu_count()
     totalOuterLoopCall = len(maskedQSpaceXX)
-    breakProcess = list(chunks(range(len(maskedQSpaceXX)), num_cores*2))
+    loopList = list(range(len(maskedQSpaceXX)))[:int(totalOuterLoopCall/2)+1]
+    breakProcess = list(chunks(loopList, num_cores*2))
     numberOfChunk = int(len(breakProcess))
     print("Total outerLoop call: ", totalOuterLoopCall)
 
@@ -210,7 +220,11 @@ def main():
 
     with Parallel(n_jobs=num_cores ) as parallel: #,backend="threading"
         for process in breakProcess:
-            multicoreResults = parallel(delayed(outerForLoop)(counter_i) for counter_i in process)
+            # multicoreResults = parallel(delayed(outerForLoop)(counter_i) for counter_i in process)
+
+
+
+            multicoreResults = parallel(delayed(ijSymmetry)(counter_i) for counter_i in process)
             tempArray = np.array(multicoreResults)
             tempArray = np.sum(tempArray, axis=0)
             processTemp = processTemp + tempArray
