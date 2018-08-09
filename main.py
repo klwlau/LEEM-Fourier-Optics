@@ -53,12 +53,12 @@ def main():
                                                    -sampleSpaceSize:sampleSpaceSize:sampleSpaceTotalStep * 1j]
 
     sampleStepSize = sampleCoorRealSpaceXX[1][0] - sampleCoorRealSpaceXX[0][0]
-    sqObject = np.zeros(sampleCoorRealSpaceXX.shape)
+    simulatedObject = np.zeros(sampleCoorRealSpaceXX.shape)
     sampleCenterX, sampleCenterY = int(sampleSpaceTotalStep / 2 + 1), int(sampleSpaceTotalStep / 2 + 1)
-    sqObject[sampleCenterX - objectStep:sampleCenterX + objectStep,
+    simulatedObject[sampleCenterX - objectStep:sampleCenterX + objectStep,
     sampleCenterY - objectStep:sampleCenterY + objectStep] = 1
 
-    objectPhaseShift = K * sqObject
+    objectPhaseShift = K * simulatedObject
 
     # apply wave function and apply FFT
     amp = 1
