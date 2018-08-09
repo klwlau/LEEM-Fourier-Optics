@@ -41,17 +41,17 @@ def main():
                           + "Time Left: %.2f  min -" % timeLeft+"OuterLoop Time: %.2f s--" % (elapsedTime/(counter+1)) + "%.2f" % progress + "%--HKT:" + currentHKTime)
 
     def createSimulatedObject():
-        amp = 1
-        def simulatedObjectSpaceProfile(x,y):
-            value = amp*np.sin(0.2*y)+amp
-            return value
+        # amp = 1
+        # def simulatedObjectSpaceProfile(x,y):
+        #     value = amp*np.sin(0.2*y)+amp
+        #     return value
+        #
+        # simulatedObject = np.zeros_like(simulatedSpace)
+        # for x in range(len(simulatedObject)):
+        #     for y in range(len(simulatedObject)):
+        #         simulatedObject[x][y] = simulatedObjectSpaceProfile(x,y)
 
-        simulatedObject = np.zeros_like(simulatedSpace)
-        for x in range(len(simulatedObject)):
-            for y in range(len(simulatedObject)):
-                simulatedObject[x][y] = simulatedObjectSpaceProfile(x,y)
-
-
+        simulatedObject = np.ones_like(simulatedSpace)
         return simulatedObject
 
 
@@ -201,12 +201,14 @@ def main():
             returnMatrix = outerForLoop(counter_i)
         else:
             returnMatrix = outerForLoop(counter_i) +outerForLoop(totalOuterLoopCall-counter_i-1)
+
         return returnMatrix
 
 
     num_cores = multiprocessing.cpu_count()
     totalOuterLoopCall = len(maskedQSpaceXX)
-    loopList = list(range(len(maskedQSpaceXX)))[:int(totalOuterLoopCall/2)+1]
+    # loopList = list(range(len(maskedQSpaceXX)))[:int(totalOuterLoopCall/2)+1]
+    loopList = list(range(len(maskedQSpaceXX)))
     breakProcess = list(chunks(loopList, num_cores*2))
     numberOfChunk = int(len(breakProcess))
     print("Total outerLoop call: ", totalOuterLoopCall)
@@ -220,11 +222,11 @@ def main():
 
     with Parallel(n_jobs=num_cores ) as parallel: #,backend="threading"
         for process in breakProcess:
-            # multicoreResults = parallel(delayed(outerForLoop)(counter_i) for counter_i in process)
+            multicoreResults = parallel(delayed(outerForLoop)(counter_i) for counter_i in process)
 
 
 
-            multicoreResults = parallel(delayed(ijSymmetry)(counter_i) for counter_i in process)
+            # multicoreResults = parallel(delayed(ijSymmetry)(counter_i) for counter_i in process)
             tempArray = np.array(multicoreResults)
             tempArray = np.sum(tempArray, axis=0)
             processTemp = processTemp + tempArray
