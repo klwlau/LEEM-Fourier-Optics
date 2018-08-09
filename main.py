@@ -77,7 +77,7 @@ def main():
 
     simulatedObject = np.multiply(createSimulatedObject(),simulatedObjectMask)
 
-    plotArray(simulatedObject)
+    # plotArray(simulatedObject)
 
     objectPhaseShift = K * simulatedObject
 
