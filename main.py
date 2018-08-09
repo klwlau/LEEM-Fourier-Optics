@@ -18,7 +18,7 @@ def chunks(l, n):
         yield l[i:i + n]
 
 
-def main():
+def main(mainPass):
     start_time = time.time()
 
     def printStatus(counter, done=False, loopMode=False):
@@ -57,6 +57,7 @@ def main():
 
     ######set up Square Object#######
     K = 1 * np.pi
+    alpha_ap = mainPass
     q_max = alpha_ap / lamda
     q_ill = alpha_ill / lamda
 
