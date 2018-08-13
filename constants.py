@@ -20,7 +20,7 @@ alpha_ap = 1.37E-3  # rad Acceptance Aangle of the Contrast Aperture
 
 delta_E = 0.25  # eV  Energy Spread
 M_L = 0.653  # Lateral Magnification
-defocus = 0  # mA
+defocus = 3  # mA
 
 delta_zo = -1 * defocus * 5.23 * 10 ** -6  # m
 delta_z = delta_zo * 3.2

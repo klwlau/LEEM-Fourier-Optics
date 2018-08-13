@@ -7,7 +7,7 @@ import multiprocessing
 from constants import *
 import numexpr as ne
 
-# from utilityFunc import *
+from utilityFunc import *
 
 fmt = '%H:%M:%S' #%d/%m
 hkTimeZone = pytz.timezone('Asia/Hong_Kong')
@@ -46,7 +46,7 @@ def main(mainPass):
     def createSimulatedObject():
         amp = 1
         def simulatedObjectSpaceProfile(x,y):
-            value = amp*np.sin(0.2*y)+amp
+            value = amp*np.sin(0.1*y)+amp
             return value
 
         simulatedObject = np.zeros_like(simulatedSpace)
@@ -58,12 +58,12 @@ def main(mainPass):
         return simulatedObject
 
     ######set up Square Object#######
-    K = 1 * np.pi
+    K = 30 * np.pi
     alpha_ap = mainPass
     q_max = alpha_ap / lamda
     q_ill = alpha_ill / lamda
 
-    sampleSpaceTotalStep = 501  # sample size
+    sampleSpaceTotalStep =  501  # sample size
     sampleSpaceSize = 25 * 1e-9  # nm #25
     objectSpaceSize = 5 * 1e-9  # nm #5
 
@@ -78,11 +78,12 @@ def main(mainPass):
     simulatedObjectMask[sampleCenterX - objectStep:sampleCenterX + objectStep,
     sampleCenterY - objectStep:sampleCenterY + objectStep] = 1
 
-    simulatedObject = np.multiply(createSimulatedObject(), simulatedObjectMask)
+    simulatedObject = createSimulatedObject() #np.multiply(createSimulatedObject(), simulatedObjectMask)
 
-    # plotArray(simulatedObject)
 
     objectPhaseShift = K * simulatedObject
+
+    plotArray(objectPhaseShift)
 
     # apply wave function and apply FFT
     amp = 1
@@ -105,6 +106,8 @@ def main(mainPass):
 
     maskedQSpaceXX = qSpaceXX[aperture == 1]
     maskedQSpaceYY = qSpaceYY[aperture == 1]
+
+
 
     print("making transmittion CrossCoefficientMatrix")
 
