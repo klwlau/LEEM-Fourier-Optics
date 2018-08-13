@@ -247,6 +247,7 @@ def main(mainPass):
     hkDT = datetime.now(hkTimeZone)
     timeStamp = hkDT.strftime('%Y%m%d_%H%M%S')
     np.save(timeStamp + "_alpha_ap" + "%.2f" % (alpha_ap * 1000) + ".npy", matrixI)
+    np.save("result.npy",matrixI)
     print("finished saving matrix")
     print("End Main")
     printStatus(100, done=True)
