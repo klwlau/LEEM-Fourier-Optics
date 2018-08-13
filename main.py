@@ -116,24 +116,24 @@ def main(mainPass):
 
     ##############cal Matrix I##########
 
-    RoConstant0 = 1j * 2 * np.pi
-    RoConstant1 = 1 / 4 * C_3 * lamda ** 3
-    RoConstant2 = 1 / 6 * C_5 * lamda ** 5
-    RoConstant3 = -1 / 2 * delta_z * lamda
-
-    EsConstant0 = -np.pi ** 2 / 4 / np.log(2) * q_ill ** 2
-    EsConstant1 = C_3 * lamda ** 3
-    EsConstant2 = C_5 * lamda ** 5
-    EsConstant3 = - delta_z * lamda
-
-    EccConstant0 = 1j * np.pi / 4 / np.log(2) * delta_fcc * lamda
-
-    EctConstant0 = -np.pi ** 2 / 16 / np.log(2)
-    EctConstant1 = delta_fc * lamda
-    EctConstant2 = 1 / 2 * delta_f3c * lamda ** 3
 
     def outerForLoop(counter_i):
         time.sleep(np.random.rand() / 100)
+        RoConstant0 = 1j * 2 * np.pi
+        RoConstant1 = 1 / 4 * C_3 * lamda ** 3
+        RoConstant2 = 1 / 6 * C_5 * lamda ** 5
+        RoConstant3 = -1 / 2 * delta_z * lamda
+
+        EsConstant0 = -np.pi ** 2 / 4 / np.log(2) * q_ill ** 2
+        EsConstant1 = C_3 * lamda ** 3
+        EsConstant2 = C_5 * lamda ** 5
+        EsConstant3 = - delta_z * lamda
+
+        EccConstant0 = 1j * np.pi / 4 / np.log(2) * delta_fcc * lamda
+
+        EctConstant0 = -np.pi ** 2 / 16 / np.log(2)
+        EctConstant1 = delta_fc * lamda
+        EctConstant2 = 1 / 2 * delta_f3c * lamda ** 3
         # global returnMatrix
         returnMatrix = np.zeros_like(sampleCoorRealSpaceXX)
         qq_i = maskedQSpaceXX[counter_i] + 1j * maskedQSpaceYY[counter_i]
@@ -224,7 +224,7 @@ def main(mainPass):
 
     processTemp = np.zeros_like(sampleCoorRealSpaceXX)
 
-    with Parallel(n_jobs=num_cores) as parallel:  # ,backend="threading"
+    with Parallel(n_jobs=num_cores,backend="threading") as parallel:
         for process in breakProcess:
             # multicoreResults = parallel(delayed(outerForLoop)(counter_i) for counter_i in process)
 
