@@ -140,6 +140,7 @@ def main(mainPass):
     EctConstant2 = 1 / 2 * delta_f3c * lamda ** 3
 
     def outerForLoop(counter_i):
+        time.sleep(np.random.rand())
         # global returnMatrix
         returnMatrix = np.zeros_like(sampleCoorRealSpaceXX)
         qq_i = maskedQSpaceXX[counter_i] + 1j * maskedQSpaceYY[counter_i]
@@ -204,7 +205,7 @@ def main(mainPass):
         return returnMatrix
 
     def ijSymmetry(counter_i):
-        time.sleep(np.random.rand())
+
 
         if counter_i == int(totalOuterLoopCall / 2):
             returnMatrix = outerForLoop(counter_i)
