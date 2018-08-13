@@ -14,7 +14,7 @@ C_3 = 0  # m   Spherical Aberration Coefficient
 C_5 = 92.8
 alpha_ill = 0.122E-3  # rad Illumination Divergence Angle
 # alpha_ap = 1.37E-3  # rad Acceptance Aangle of the Contrast Aperture
-alpha_ap = 4.37E-3  # rad Acceptance Aangle of the Contrast Aperture
+alpha_ap = 2.37E-3  # rad Acceptance Aangle of the Contrast Aperture
 # alpha_ap = 0.47E-3  # rad Acceptance Aangle of the Contrast Aperture
 # alpha_ap = 7.37E-3  # rad Acceptance Aangle of the Contrast Aperture
 
