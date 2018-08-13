@@ -7,10 +7,10 @@ import multiprocessing
 from constants import *
 import numexpr as ne
 
-if if __name__ == '__main__':
+if __name__ == '__main__':
     from utilityFunc import *
 
-fmt = '%H:%M:%S' #%d/%m
+fmt = '%H:%M:%S'  # %d/%m
 hkTimeZone = pytz.timezone('Asia/Hong_Kong')
 
 
@@ -38,22 +38,23 @@ def main(mainPass):
                     print("Loop:", loopMainCounter, "/", loopLen,
                           "-ID:" + str(counter) + "--Elapsed Time: %.2f / %.2f min -" % (elapsedTime, totalTime)
                           + "Time Left: %.2f  min -" % timeLeft + "OuterLoop Time:%.1f s" % (
-                                      elapsedTime*60 / (counter + 1)) + "%.2f" % progress + "%--HKT:" + currentHKTime)
+                                  elapsedTime * 60 / (counter + 1)) + "%.2f" % progress + "%--HKT:" + currentHKTime)
                 else:
                     print("-ID:" + str(counter) + "--Elapsed Time: %.2f / %.2f min -" % (elapsedTime, totalTime)
                           + "Time Left: %.2f  min -" % timeLeft + "OuterLoop Time: %.1f s--" % (
-                                      elapsedTime *60/ (counter + 1)) + "%.2f" % progress + "%--HKT:" + currentHKTime)
+                                  elapsedTime * 60 / (counter + 1)) + "%.2f" % progress + "%--HKT:" + currentHKTime)
 
     def createSimulatedObject():
         amp = 1
-        def simulatedObjectSpaceProfile(x,y):
-            value = amp*np.sin(0.1*y)+amp
+
+        def simulatedObjectSpaceProfile(x, y):
+            value = amp * np.sin(0.00001 * (x / 3 + 100) * (y / 3 + 100)) + amp
             return value
 
         simulatedObject = np.zeros_like(simulatedSpace)
         for x in range(len(simulatedObject)):
             for y in range(len(simulatedObject)):
-                simulatedObject[x][y] = simulatedObjectSpaceProfile(x,y)
+                simulatedObject[x][y] = simulatedObjectSpaceProfile(x, y)
 
         # simulatedObject = np.ones_like(simulatedSpace)
         return simulatedObject
@@ -64,7 +65,7 @@ def main(mainPass):
     q_max = alpha_ap / lamda
     q_ill = alpha_ill / lamda
 
-    sampleSpaceTotalStep =  501  # sample size
+    sampleSpaceTotalStep = 501  # sample size
     sampleSpaceSize = 25 * 1e-9  # nm #25
     objectSpaceSize = 5 * 1e-9  # nm #5
 
@@ -77,17 +78,17 @@ def main(mainPass):
     sampleCenterX, sampleCenterY = int(sampleSpaceTotalStep / 2 + 1), int(sampleSpaceTotalStep / 2 + 1)
     simulatedObjectMask = np.copy(simulatedSpace)
     simulatedObjectMask[sampleCenterX - objectStep:sampleCenterX + objectStep,
-    sampleCenterY - objectStep+30:sampleCenterY + objectStep+30] = 1
+    sampleCenterY - objectStep + 30:sampleCenterY + objectStep + 30] = 1
 
     # simulatedObject = np.multiply(createSimulatedObject(), simulatedObjectMask)
     simulatedObject = createSimulatedObject()
 
-
     objectPhaseShift = K * simulatedObject
 
-    np.save("objectPhaseShift.npy",objectPhaseShift)
+    np.save("objectPhaseShift.npy", objectPhaseShift)
 
-    # plotArray(objectPhaseShift)
+    if __name__ == '__main__':
+        plotArray(objectPhaseShift)
 
     # apply wave function and apply FFT
     amp = 1
@@ -111,10 +112,7 @@ def main(mainPass):
     maskedQSpaceXX = qSpaceXX[aperture == 1]
     maskedQSpaceYY = qSpaceYY[aperture == 1]
 
-
-
     print("making transmittion CrossCoefficientMatrix")
-
 
     ##############cal Matrix I##########
 
@@ -135,7 +133,7 @@ def main(mainPass):
     EctConstant2 = 1 / 2 * delta_f3c * lamda ** 3
 
     def outerForLoop(counter_i):
-        time.sleep(np.random.rand()/100)
+        time.sleep(np.random.rand() / 100)
         # global returnMatrix
         returnMatrix = np.zeros_like(sampleCoorRealSpaceXX)
         qq_i = maskedQSpaceXX[counter_i] + 1j * maskedQSpaceYY[counter_i]
@@ -172,7 +170,7 @@ def main(mainPass):
                 E_ct = E_cc * np.exp(E_ct_exponent * E_cc ** 2)
 
                 EXP_exponent = 2j * np.pi * (
-                            (qq_i - qq_j).real * sampleCoorRealSpaceXX + (qq_i - qq_j).imag * sampleCoorRealSpaceYY)
+                        (qq_i - qq_j).real * sampleCoorRealSpaceXX + (qq_i - qq_j).imag * sampleCoorRealSpaceYY)
 
                 EXP = ne.evaluate("exp(EXP_exponent)")
 
@@ -200,7 +198,6 @@ def main(mainPass):
         return returnMatrix
 
     def ijSymmetry(counter_i):
-
 
         if counter_i == int(totalOuterLoopCall / 2):
             returnMatrix = outerForLoop(counter_i)
@@ -245,7 +242,7 @@ def main(mainPass):
     timeStamp = hkDT.strftime('%Y%m%d_%H%M%S')
     matrixI = matrixI.T
     np.save(timeStamp + "_alpha_ap" + "%.2f" % (alpha_ap * 1000) + ".npy", matrixI)
-    np.save("result.npy",matrixI)
+    np.save("result.npy", matrixI)
     print("finished saving matrix")
     print("End Main")
     printStatus(100, done=True)
