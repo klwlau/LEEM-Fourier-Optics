@@ -140,7 +140,7 @@ def main(mainPass):
     EctConstant2 = 1 / 2 * delta_f3c * lamda ** 3
 
     def outerForLoop(counter_i):
-        time.sleep(np.random.rand())
+        time.sleep(np.random.rand()/100)
         # global returnMatrix
         returnMatrix = np.zeros_like(sampleCoorRealSpaceXX)
         qq_i = maskedQSpaceXX[counter_i] + 1j * maskedQSpaceYY[counter_i]
