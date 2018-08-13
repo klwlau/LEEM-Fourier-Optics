@@ -246,6 +246,7 @@ def main(mainPass):
     print("start saving matrix")
     hkDT = datetime.now(hkTimeZone)
     timeStamp = hkDT.strftime('%Y%m%d_%H%M%S')
+    matrixI = matrixI.T
     np.save(timeStamp + "_alpha_ap" + "%.2f" % (alpha_ap * 1000) + ".npy", matrixI)
     np.save("result.npy",matrixI)
     print("finished saving matrix")
@@ -253,7 +254,7 @@ def main(mainPass):
     printStatus(100, done=True)
     print("----------------------------------------------------")
 
-    return matrixI.T
+    return matrixI
 
 
 if __name__ == '__main__':

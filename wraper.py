@@ -6,8 +6,8 @@ wraperStartTime = time.time()
 matrixI = main(alpha_ap)
 
 
-# from utilityFunc import *
-# plotArray(matrixI)
+from utilityFunc import *
+plotArray(matrixI)
 
 
 # alpha_apList = np.linspace(0.1E-3, 7.5E-3, num=10)
