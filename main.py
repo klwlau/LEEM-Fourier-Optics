@@ -7,7 +7,7 @@ import multiprocessing
 from constants import *
 import numexpr as ne
 
-# from utilityFunc import *
+from utilityFunc import *
 
 fmt = '%H:%M:%S' #%d/%m
 hkTimeZone = pytz.timezone('Asia/Hong_Kong')
@@ -58,7 +58,7 @@ def main(mainPass):
         return simulatedObject
 
     ######set up Square Object#######
-    K = 30 * np.pi
+    K = 10 * np.pi
     alpha_ap = mainPass
     q_max = alpha_ap / lamda
     q_ill = alpha_ill / lamda
@@ -84,7 +84,7 @@ def main(mainPass):
 
     objectPhaseShift = K * simulatedObject
 
-
+    np.save("objectPhaseShift.npy",objectPhaseShift)
 
     # plotArray(objectPhaseShift)
 
