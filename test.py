@@ -1,12 +1,8 @@
-k = range(10)
+from joblib import Parallel, delayed
 
-for i in k:
-    temp = []
-    temp2 =[]
-    for j in k:
-        if i>j:
-            temp.append([i,j])
-            temp2.append([j,i])
-        else:
-            break
-    print(temp,temp2)
+from tqdm import tqdm
+
+def myfun(x):
+    return x**2
+
+results = Parallel(n_jobs=4)(delayed(myfun)(i) for i in tqdm(range(100000)))
