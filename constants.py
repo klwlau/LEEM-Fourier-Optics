@@ -13,14 +13,14 @@ C_cc = 27.4
 C_3 = 0  # m   Spherical Aberration Coefficient
 C_5 = 92.8
 alpha_ill = 0.122E-3  # rad Illumination Divergence Angle
-alpha_ap = 1.37E-3  # rad Acceptance Aangle of the Contrast Aperture
+alpha_ap = 2.37E-3  # rad Acceptance Aangle of the Contrast Aperture
 # alpha_ap = 4.37E-3  # rad Acceptance Aangle of the Contrast Aperture
 # alpha_ap = 0.47E-3  # rad Acceptance Aangle of the Contrast Aperture
 # alpha_ap = 7.37E-3  # rad Acceptance Aangle of the Contrast Aperture
 
 delta_E = 0.25  # eV  Energy Spread
 M_L = 0.653  # Lateral Magnification
-defocus = 3  # mA
+defocus = 0.1  # mA
 
 delta_zo = -1 * defocus * 5.23 * 10 ** -6  # m
 delta_z = delta_zo * 3.2

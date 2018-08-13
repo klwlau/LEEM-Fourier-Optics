@@ -7,7 +7,7 @@ import multiprocessing
 from constants import *
 import numexpr as ne
 
-from utilityFunc import *
+# from utilityFunc import *
 
 fmt = '%H:%M:%S' #%d/%m
 hkTimeZone = pytz.timezone('Asia/Hong_Kong')
@@ -78,12 +78,12 @@ def main(mainPass):
     simulatedObjectMask[sampleCenterX - objectStep:sampleCenterX + objectStep,
     sampleCenterY - objectStep:sampleCenterY + objectStep] = 1
 
-    simulatedObject = createSimulatedObject() #np.multiply(createSimulatedObject(), simulatedObjectMask)
+    simulatedObject =  createSimulatedObject() #np.multiply(createSimulatedObject(), simulatedObjectMask)
 
 
     objectPhaseShift = K * simulatedObject
 
-    plotArray(objectPhaseShift)
+    # plotArray(objectPhaseShift)
 
     # apply wave function and apply FFT
     amp = 1
