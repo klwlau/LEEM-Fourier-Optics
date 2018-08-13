@@ -76,12 +76,15 @@ def main(mainPass):
     sampleCenterX, sampleCenterY = int(sampleSpaceTotalStep / 2 + 1), int(sampleSpaceTotalStep / 2 + 1)
     simulatedObjectMask = np.copy(simulatedSpace)
     simulatedObjectMask[sampleCenterX - objectStep:sampleCenterX + objectStep,
-    sampleCenterY - objectStep:sampleCenterY + objectStep] = 1
+    sampleCenterY - objectStep+30:sampleCenterY + objectStep+30] = 1
 
-    simulatedObject =  createSimulatedObject() #np.multiply(createSimulatedObject(), simulatedObjectMask)
+    # simulatedObject = np.multiply(createSimulatedObject(), simulatedObjectMask)
+    simulatedObject = createSimulatedObject()
 
 
     objectPhaseShift = K * simulatedObject
+
+
 
     # plotArray(objectPhaseShift)
 
@@ -249,7 +252,7 @@ def main(mainPass):
     printStatus(100, done=True)
     print("----------------------------------------------------")
 
-    return matrixI
+    return matrixI.T
 
 
 if __name__ == '__main__':
