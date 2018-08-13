@@ -44,17 +44,17 @@ def main(mainPass):
                                       elapsedTime *60/ (counter + 1)) + "%.2f" % progress + "%--HKT:" + currentHKTime)
 
     def createSimulatedObject():
-        # amp = 1
-        # def simulatedObjectSpaceProfile(x,y):
-        #     value = amp*np.sin(0.2*y)+amp
-        #     return value
-        #
-        # simulatedObject = np.zeros_like(simulatedSpace)
-        # for x in range(len(simulatedObject)):
-        #     for y in range(len(simulatedObject)):
-        #         simulatedObject[x][y] = simulatedObjectSpaceProfile(x,y)
+        amp = 1
+        def simulatedObjectSpaceProfile(x,y):
+            value = amp*np.sin(0.2*y)+amp
+            return value
 
-        simulatedObject = np.ones_like(simulatedSpace)
+        simulatedObject = np.zeros_like(simulatedSpace)
+        for x in range(len(simulatedObject)):
+            for y in range(len(simulatedObject)):
+                simulatedObject[x][y] = simulatedObjectSpaceProfile(x,y)
+
+        # simulatedObject = np.ones_like(simulatedSpace)
         return simulatedObject
 
     ######set up Square Object#######
