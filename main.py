@@ -204,6 +204,7 @@ def main(mainPass):
         return returnMatrix
 
     def ijSymmetry(counter_i):
+        time.sleep(np.random.rand())
 
         if counter_i == int(totalOuterLoopCall / 2):
             returnMatrix = outerForLoop(counter_i)
