@@ -7,7 +7,8 @@ import multiprocessing
 from constants import *
 import numexpr as ne
 
-from utilityFunc import *
+if if __name__ == '__main__':
+    from utilityFunc import *
 
 fmt = '%H:%M:%S' #%d/%m
 hkTimeZone = pytz.timezone('Asia/Hong_Kong')
@@ -114,14 +115,8 @@ def main(mainPass):
 
     print("making transmittion CrossCoefficientMatrix")
 
-    # Qx_i, Qx_j = np.meshgrid(maskedQSpaceXX, maskedQSpaceXX, sparse=True)
-    # Qy_i, Qy_j = np.meshgrid(maskedQSpaceYY, maskedQSpaceYY, sparse=True)
-    # F_i, F_j = np.meshgrid(maskedWaveObjectFT, maskedWaveObjectFT, sparse=True)
 
     ##############cal Matrix I##########
-
-    # qq_i = maskedQSpaceXX + maskedQSpaceYY * 1j
-    # qq_j = maskedQSpaceXX + maskedQSpaceYY * 1j
 
     RoConstant0 = 1j * 2 * np.pi
     RoConstant1 = 1 / 4 * C_3 * lamda ** 3
