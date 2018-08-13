@@ -215,7 +215,7 @@ def main(mainPass):
     totalOuterLoopCall = len(maskedQSpaceXX)
     loopList = list(range(len(maskedQSpaceXX)))[:int(totalOuterLoopCall / 2) + 1]
     # loopList = list(range(len(maskedQSpaceXX)))
-    breakProcess = list(chunks(loopList, num_cores * 2))
+    breakProcess = list(chunks(loopList, num_cores * 5))
     numberOfChunk = int(len(breakProcess))
     print("Total Process: ", len(loopList))
 
