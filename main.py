@@ -116,8 +116,6 @@ def main(mainPass):
 
     ##############cal Matrix I##########
 
-
-
     RoConstant0 = 1j * 2 * np.pi
     RoConstant1 = 1 / 4 * C_3 * lamda ** 3
     RoConstant2 = 1 / 6 * C_5 * lamda ** 5
@@ -133,6 +131,7 @@ def main(mainPass):
     EctConstant0 = -np.pi ** 2 / 16 / np.log(2)
     EctConstant1 = delta_fc * lamda
     EctConstant2 = 1 / 2 * delta_f3c * lamda ** 3
+
     def outerForLoop(counter_i):
         # time.sleep(np.random.rand() / 100)
 
@@ -226,7 +225,7 @@ def main(mainPass):
 
     processTemp = np.zeros_like(sampleCoorRealSpaceXX)
 
-    with Parallel(n_jobs=num_cores,verbose=50) as parallel: #,backend="threading"
+    with Parallel(n_jobs=num_cores, verbose=50) as parallel:  # ,backend="threading"
         for process in breakProcess:
             # multicoreResults = parallel(delayed(outerForLoop)(counter_i) for counter_i in process)
 
