@@ -5,6 +5,12 @@ if __name__ == '__main__':
 else:
     print("Loading Constants.py")
 
+sampleSpaceTotalStep = 501  # sample size
+sampleSpaceSize = 25 * 1e-9  # nm #25
+objectSpaceSize = 5 * 1e-9  # nm #5
+
+
+
 U_a = 15.01e3  # eV  Accelerating Voltage
 U_o = 10  # eV  Electron Voltage
 C_c = 0  # m   Chromatic Aberration Coefficient

@@ -66,11 +66,9 @@ def main(mainPass):
     q_max = alpha_ap / lamda
     q_ill = alpha_ill / lamda
 
-    sampleSpaceTotalStep = 501  # sample size
-    sampleSpaceSize = 25 * 1e-9  # nm #25
-    objectSpaceSize = 5 * 1e-9  # nm #5
 
-    objectStep = int((objectSpaceSize / sampleSpaceSize * sampleSpaceTotalStep) / 2)
+
+    objectMaskStep = int((objectSpaceSize / sampleSpaceSize * sampleSpaceTotalStep) / 2)
     sampleCoorRealSpaceXX, sampleCoorRealSpaceYY = np.mgrid[-sampleSpaceSize:sampleSpaceSize:sampleSpaceTotalStep * 1j,
                                                    -sampleSpaceSize:sampleSpaceSize:sampleSpaceTotalStep * 1j]
 
@@ -78,8 +76,8 @@ def main(mainPass):
     simulatedSpace = np.zeros(sampleCoorRealSpaceXX.shape)
     sampleCenterX, sampleCenterY = int(sampleSpaceTotalStep / 2 + 1), int(sampleSpaceTotalStep / 2 + 1)
     simulatedObjectMask = np.copy(simulatedSpace)
-    simulatedObjectMask[sampleCenterX - objectStep:sampleCenterX + objectStep,
-    sampleCenterY - objectStep + 30:sampleCenterY + objectStep + 30] = 1
+    simulatedObjectMask[sampleCenterX - objectMaskStep:sampleCenterX + objectMaskStep,
+    sampleCenterY - objectMaskStep + 30:sampleCenterY + objectMaskStep + 30] = 1
 
     # simulatedObject = np.multiply(createSimulatedObject(), simulatedObjectMask)
     simulatedObject = createSimulatedObject()
