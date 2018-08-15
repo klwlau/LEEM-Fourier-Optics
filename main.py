@@ -215,9 +215,9 @@ def main(mainPass):
 
     num_cores = multiprocessing.cpu_count()
     totalOuterLoopCall = len(maskedQSpaceXX)
-    loopList = list(range(len(maskedQSpaceXX)))[:int(totalOuterLoopCall / 2) + 1]
+    loopList = list(range(totalOuterLoopCall))[:int(totalOuterLoopCall / 2) + 1]
     # loopList = list(range(len(maskedQSpaceXX)))
-    breakProcess = list(chunks(loopList, num_cores * 1))
+    breakProcess = list(chunks(loopList, num_cores * 2))
     numberOfChunk = int(len(breakProcess))
     print("Total Process: ", len(loopList))
 
