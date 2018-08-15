@@ -101,7 +101,7 @@ def main(mainPass):
 
     ######set up Square Object#######
     K = 70 * np.pi
-    alpha_ap = 0.47E-3
+    # alpha_ap = 0.47E-3
     q_max = alpha_ap / lamda
     q_ill = alpha_ill / lamda
 
@@ -126,8 +126,8 @@ def main(mainPass):
 
     np.save("objectPhaseShift.npy", objectPhaseShift)
 
-    if __name__ == '__main__':
-        plotArray(objectPhaseShift)
+    # if __name__ == '__main__':
+        # plotArray(objectPhaseShift)
 
     # apply wave function and apply FFT
     amp = 1
@@ -300,4 +300,4 @@ def main(mainPass):
 
 
 if __name__ == '__main__':
-    main(0.1E-3)
+    main(0)
