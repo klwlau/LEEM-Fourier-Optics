@@ -133,7 +133,7 @@ def main(mainPass):
     EctConstant1 = delta_fc * lamda
     EctConstant2 = 1 / 2 * delta_f3c * lamda ** 3
 
-    @jit(nopython=True) #, parallel=True
+    @jit(nopython=True,cache=True) #, parallel=True
     def outerForLoop(counter_i):
 
 
