@@ -7,6 +7,7 @@ import multiprocessing
 from constants import *
 import numexpr as ne
 from numba import jit
+from scipy import ndimage
 
 if __name__ == '__main__':
     from utilityFunc import *
@@ -47,32 +48,51 @@ def main(mainPass):
 
     def createSimulatedObject():
         amp = 1
-        simulatedObject = amp*np.ones_like(simulatedSpace)
+        simulatedObject = amp * np.ones_like(simulatedSpace)
 
-        def rippleObject(xPixelStart, xPixelEnd, yPixelStart, yPixelEnd, deg):
+        # plotArray(simulatedObject)
+
+        def rippleObject(xCenter, yCenter, xLength, yLength, deg):
+
             returnMatrix = np.zeros_like(simulatedSpace)
-            radTheta = np.radians(deg)
 
-            def rippleFunc(x,y):
-                mapX = (x - xPixelStart) / (xPixelEnd - xPixelStart)
-                mapY = (y-yPixelStart) / (yPixelEnd - yPixelStart)
-                if 0 < mapX < 1:
-                    return amp * -1 * np.cos(2 * np.pi * mapX)
+            def rippleFunc(x, y):
+                xPixelStart = xCenter - xLength // 2
+                xPixelEnd = xCenter + xLength // 2
+                yPixelStart = yCenter - yLength // 2
+                yPixelEnd = yCenter + yLength // 2
+
+                def mapXY(x, y):
+                    mapX = (x - xPixelStart) / (xPixelEnd - xPixelStart)
+                    mapY = (y - yPixelStart) / (yPixelEnd - yPixelStart)
+                    return mapX, mapY
+
+                mapX, mapY = mapXY(x, y)
+                if 0 < mapX < 1 and 0 < mapY < 1:
+                    return amp * -1 * np.cos(2 * np.pi * mapX) + amp
                 else:
                     return 0
 
+            def rotateAtCenter(img, angle, pivot):
+                pivot[0],pivot[1] =pivot[1],pivot[0]
+                # img = np.flipud(img)
+                padX = [img.shape[1] - pivot[0], pivot[0]]
+                padY = [img.shape[0] - pivot[1], pivot[1]]
+                imgP = np.pad(img, [padY, padX], 'constant')
+                imgR = ndimage.rotate(imgP, angle, reshape=False)
+                return imgR[padY[0]: -padY[1], padX[0]: -padX[1]]
+
             for x in range(len(returnMatrix)):
                 for y in range(len(returnMatrix)):
-                    mapX = x * np.cos(radTheta) - y * np.sin(radTheta)
-                    mapY = x * np.sin(radTheta) + y * np.cos(radTheta)
-                    returnMatrix[x][y] = rippleFunc(mapX, mapY)
+                    returnMatrix[x][y] = rippleFunc(x, y)
 
-            matrixMask = np.zeros_like(simulatedSpace)
-            matrixMask[xPixelStart:xPixelEnd, yPixelStart:yPixelEnd] = 1
-            returnMatrix = np.multiply(returnMatrix,matrixMask)
+            returnMatrix = rotateAtCenter(returnMatrix, deg, [xCenter, yCenter])
 
             return returnMatrix
-        simulatedObject += rippleObject(100, 300, 100, 300, 30)
+
+        simulatedObject += rippleObject(150, 251, 50, 300, -30)
+        # plotArray(simulatedObject)
+        simulatedObject += rippleObject(350, 251, 50, 300, +30)
 
         return simulatedObject
 
