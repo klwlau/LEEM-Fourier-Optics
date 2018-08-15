@@ -6,6 +6,7 @@ from joblib import Parallel, delayed
 import multiprocessing
 from constants import *
 import numexpr as ne
+from numba import jit
 
 if __name__ == '__main__':
     from utilityFunc import *
@@ -132,11 +133,12 @@ def main(mainPass):
     EctConstant1 = delta_fc * lamda
     EctConstant2 = 1 / 2 * delta_f3c * lamda ** 3
 
+    @jit(nopython=True) #, parallel=True
     def outerForLoop(counter_i):
-        # time.sleep(np.random.rand() / 100)
+
 
         # global returnMatrix
-        returnMatrix = np.zeros_like(sampleCoorRealSpaceXX)
+        returnMatrix = np.zeros_like(sampleCoorRealSpaceXX,dtype=np.complex128)
         qq_i = maskedQSpaceXX[counter_i] + 1j * maskedQSpaceYY[counter_i]
         abs_qq_i = np.absolute(qq_i)
 
@@ -145,15 +147,15 @@ def main(mainPass):
         abs_qq_i_6 = abs_qq_i_2 ** 3
 
         for counter_j in range(len(maskedQSpaceYY)):
-            qq_j = maskedQSpaceXX[counter_j] + 1j * maskedQSpaceYY[counter_j]
-            abs_qq_j = np.absolute(qq_j)
-
-            abs_qq_j_2 = abs_qq_j ** 2
-            abs_qq_j_4 = abs_qq_j_2 ** 2
-            abs_qq_j_6 = abs_qq_j_2 ** 3
 
             if counter_i >= counter_j:
 
+                qq_j = maskedQSpaceXX[counter_j] + 1j * maskedQSpaceYY[counter_j]
+                abs_qq_j = np.absolute(qq_j)
+
+                abs_qq_j_2 = abs_qq_j ** 2
+                abs_qq_j_4 = abs_qq_j_2 ** 2
+                abs_qq_j_6 = abs_qq_j_2 ** 3
                 R_o = np.exp(RoConstant0 *
                              (RoConstant1 * (abs_qq_i_4 - abs_qq_j_4)
                               + RoConstant2 * (abs_qq_i_6 - abs_qq_j_6)
@@ -173,10 +175,10 @@ def main(mainPass):
                 EXP_exponent = 2j * np.pi * (
                         (qq_i - qq_j).real * sampleCoorRealSpaceXX + (qq_i - qq_j).imag * sampleCoorRealSpaceYY)
 
-                EXP = ne.evaluate("exp(EXP_exponent)")
+                # EXP = ne.evaluate("exp(EXP_exponent)")
+                EXP = np.exp(EXP_exponent)
 
-                returnMatrix = returnMatrix + R_o * E_s * E_ct * maskedWaveObjectFT[counter_i] * np.conj(
-                    maskedWaveObjectFT[counter_j]) * EXP
+                returnMatrix = returnMatrix + R_o * E_s * E_ct * maskedWaveObjectFT[counter_i] * np.conj(maskedWaveObjectFT[counter_j]) * EXP
                 if counter_i > counter_j:
                     # EXP_exponent_sym = 2j * np.pi * (
                     #             (qq_j - qq_i).real * sampleCoorRealSpaceXX + (qq_j - qq_i).imag * sampleCoorRealSpaceYY)
@@ -187,7 +189,8 @@ def main(mainPass):
                     E_s_sym = E_s
                     E_cc_sym = np.sqrt(1 - EccConstant0 * (abs_qq_j_2 - abs_qq_i_2))
                     E_ct_sym = E_cc_sym * np.exp(E_ct_exponent * E_cc_sym ** 2)
-                    EXP_sym = ne.evaluate("EXP.real-1j*EXP.imag")
+                    # EXP_sym = ne.evaluate("EXP.real-1j*EXP.imag")
+                    EXP_sym = EXP.real-1j*EXP.imag
                     # EXP_sym = ne.evaluate("conj(EXP)")
 
                     returnMatrix = returnMatrix + R_o_sym * E_s_sym * E_ct_sym * maskedWaveObjectFT[
@@ -214,7 +217,7 @@ def main(mainPass):
     totalOuterLoopCall = len(maskedQSpaceXX)
     loopList = list(range(len(maskedQSpaceXX)))[:int(totalOuterLoopCall / 2) + 1]
     # loopList = list(range(len(maskedQSpaceXX)))
-    breakProcess = list(chunks(loopList, num_cores * 5))
+    breakProcess = list(chunks(loopList, num_cores * 1))
     numberOfChunk = int(len(breakProcess))
     print("Total Process: ", len(loopList))
 
