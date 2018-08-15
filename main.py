@@ -90,17 +90,17 @@ def main(mainPass):
 
             return returnMatrix
 
-        simulatedObject += rippleObject(150, 251, 50, 300, -30)
+        simulatedObject += rippleObject(150, 251, 167, 300, -15)
         # plotArray(simulatedObject)
-        simulatedObject += rippleObject(350, 251, 50, 300, +30)
+        simulatedObject += rippleObject(350, 251, 167, 300, +15)
 
         return simulatedObject
 
     ######set up Square Object#######
-    K = 10 * np.pi
-    alpha_ap = mainPass
+    K = 70 * np.pi
     q_max = alpha_ap / lamda
     q_ill = alpha_ill / lamda
+
 
     objectMaskStep = int((objectSpaceSize / sampleSpaceSize * sampleSpaceTotalStep) / 2)
     sampleCoorRealSpaceXX, sampleCoorRealSpaceYY = np.mgrid[-sampleSpaceSize:sampleSpaceSize:sampleSpaceTotalStep * 1j,

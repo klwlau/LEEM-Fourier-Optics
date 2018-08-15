@@ -6,7 +6,7 @@ else:
     print("Loading Constants.py")
 
 sampleSpaceTotalStep = 501  # sample size
-sampleSpaceSize = 25 * 1e-9  # nm #25
+sampleSpaceSize = 1350 * 1e-9  # nm #25
 objectSpaceSize = 5 * 1e-9  # nm #5
 
 
