@@ -25,6 +25,8 @@ def chunks(l, n):
 def main(mainPass):
     start_time = time.time()
 
+
+
     def printStatus(counter, done=False, loopMode=False):
         if counter != 0:
             elapsedTime = ((time.time() - start_time) / 60)
@@ -99,10 +101,11 @@ def main(mainPass):
 
     ######set up Square Object#######
     K = 70 * np.pi
+    alpha_ap = 0.47E-3
     q_max = alpha_ap / lamda
     q_ill = alpha_ill / lamda
 
-    defocus = mainPass
+    # defocus = mainPass
 
 
     objectMaskStep = int((objectSpaceSize / sampleSpaceSize * sampleSpaceTotalStep) / 2)
