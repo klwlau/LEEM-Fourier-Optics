@@ -48,25 +48,33 @@ def main(mainPass):
     def createSimulatedObject():
         amp = 1
 
-        def simulatedObjectSpaceProfile(x, y):
-            value = amp * np.sin(0.00001 * (x / 3 + 100) * (y / 3 + 100)) + amp
-            return value
+        def rippleObject(xPixelStart, xPixelEnd, yPixelStart, yPixelEnd, deg):
+            matrix = np.zeros_like(simulatedSpace)
+            radTheta = np.radians(deg)
 
-        simulatedObject = np.zeros_like(simulatedSpace)
-        for x in range(len(simulatedObject)):
-            for y in range(len(simulatedObject)):
-                simulatedObject[x][y] = simulatedObjectSpaceProfile(x, y)
+            def rippleFunc(x,y):
+                mapX = (x - xPixelStart) / (xPixelEnd - xPixelStart)
+                mapY = (y-yPixelStart) / (yPixelEnd - yPixelStart)
+                if 0 < x < 1:
+                    return amp * -1 * np.cos(2 * np.pi * mapX)
+                else:
+                    return 0
 
-        # simulatedObject = np.ones_like(simulatedSpace)
-        return simulatedObject
+            for x in range(len(matrix)):
+                for y in range(len(matrix)):
+                    mapX = x * np.cos(radTheta) - y * np.sin(radTheta)
+                    mapY = x * np.sin(radTheta) + y * np.cos(radTheta)
+                    matrix[x][y] = rippleFunc(mapX, mapY)
+
+            return matrix
+
+        return rippleObject(100, 300, 100, 300, 0)
 
     ######set up Square Object#######
     K = 10 * np.pi
     alpha_ap = mainPass
     q_max = alpha_ap / lamda
     q_ill = alpha_ill / lamda
-
-
 
     objectMaskStep = int((objectSpaceSize / sampleSpaceSize * sampleSpaceTotalStep) / 2)
     sampleCoorRealSpaceXX, sampleCoorRealSpaceYY = np.mgrid[-sampleSpaceSize:sampleSpaceSize:sampleSpaceTotalStep * 1j,
@@ -131,12 +139,11 @@ def main(mainPass):
     EctConstant1 = delta_fc * lamda
     EctConstant2 = 1 / 2 * delta_f3c * lamda ** 3
 
-    @jit(nopython=True,cache=True) #, parallel=True
+    @jit(nopython=True, cache=True)  # , parallel=True
     def outerForLoop(counter_i):
 
-
         # global returnMatrix
-        returnMatrix = np.zeros_like(sampleCoorRealSpaceXX,dtype=np.complex128)
+        returnMatrix = np.zeros_like(sampleCoorRealSpaceXX, dtype=np.complex128)
         qq_i = maskedQSpaceXX[counter_i] + 1j * maskedQSpaceYY[counter_i]
         abs_qq_i = np.absolute(qq_i)
 
@@ -176,7 +183,8 @@ def main(mainPass):
                 # EXP = ne.evaluate("exp(EXP_exponent)")
                 EXP = np.exp(EXP_exponent)
 
-                returnMatrix = returnMatrix + R_o * E_s * E_ct * maskedWaveObjectFT[counter_i] * np.conj(maskedWaveObjectFT[counter_j]) * EXP
+                returnMatrix = returnMatrix + R_o * E_s * E_ct * maskedWaveObjectFT[counter_i] * np.conj(
+                    maskedWaveObjectFT[counter_j]) * EXP
                 if counter_i > counter_j:
                     # EXP_exponent_sym = 2j * np.pi * (
                     #             (qq_j - qq_i).real * sampleCoorRealSpaceXX + (qq_j - qq_i).imag * sampleCoorRealSpaceYY)
@@ -188,7 +196,7 @@ def main(mainPass):
                     E_cc_sym = np.sqrt(1 - EccConstant0 * (abs_qq_j_2 - abs_qq_i_2))
                     E_ct_sym = E_cc_sym * np.exp(E_ct_exponent * E_cc_sym ** 2)
                     # EXP_sym = ne.evaluate("EXP.real-1j*EXP.imag")
-                    EXP_sym = EXP.real-1j*EXP.imag
+                    EXP_sym = EXP.real - 1j * EXP.imag
                     # EXP_sym = ne.evaluate("conj(EXP)")
 
                     returnMatrix = returnMatrix + R_o_sym * E_s_sym * E_ct_sym * maskedWaveObjectFT[
@@ -254,4 +262,4 @@ def main(mainPass):
 
 
 if __name__ == '__main__':
-    main(0.5E-3)
+    main(0.1E-3)
