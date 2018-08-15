@@ -50,6 +50,7 @@ def main(mainPass):
         amp = 1
         simulatedObject = amp * np.ones_like(simulatedSpace)
 
+
         # plotArray(simulatedObject)
 
         def rippleObject(xCenter, yCenter, xLength, yLength, deg):
@@ -91,7 +92,7 @@ def main(mainPass):
             return returnMatrix
 
         simulatedObject += rippleObject(150, 251, 167, 300, -15)
-        # plotArray(simulatedObject)
+
         simulatedObject += rippleObject(350, 251, 167, 300, +15)
 
         return simulatedObject
@@ -100,6 +101,8 @@ def main(mainPass):
     K = 70 * np.pi
     q_max = alpha_ap / lamda
     q_ill = alpha_ill / lamda
+
+    defocus = mainPass
 
 
     objectMaskStep = int((objectSpaceSize / sampleSpaceSize * sampleSpaceTotalStep) / 2)
@@ -148,6 +151,12 @@ def main(mainPass):
     print("making transmittion CrossCoefficientMatrix")
 
     ##############cal Matrix I##########
+
+    delta_zo = -1 * defocus * 5.23 * 10 ** -6  # m
+    delta_z = delta_zo * 3.2
+    delta_fc = C_c * (delta_E / U_a)
+    delta_f3c = C_3c * (delta_E / U_a)
+    delta_fcc = C_cc * (delta_E / U_a) ** 2
 
     RoConstant0 = 1j * 2 * np.pi
     RoConstant1 = 1 / 4 * C_3 * lamda ** 3
@@ -277,7 +286,7 @@ def main(mainPass):
     hkDT = datetime.now(hkTimeZone)
     timeStamp = hkDT.strftime('%Y%m%d_%H%M%S')
     matrixI = matrixI.T
-    np.save(timeStamp + "_alpha_ap" + "%.2f" % (alpha_ap * 1000) + ".npy", matrixI)
+    np.save(timeStamp + "_defocus" + "%.2f" % (defocus) + ".npy", matrixI)
     np.save("result.npy", matrixI)
     print("finished saving matrix")
     print("End Main")

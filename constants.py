@@ -28,11 +28,7 @@ delta_E = 0.25  # eV  Energy Spread
 M_L = 0.653  # Lateral Magnification
 defocus = -0.1  # mA
 
-delta_zo = -1 * defocus * 5.23 * 10 ** -6  # m
-delta_z = delta_zo * 3.2
-delta_fc = C_c * (delta_E / U_a)
-delta_f3c = C_3c * (delta_E / U_a)
-delta_fcc = C_cc * (delta_E / U_a) ** 2
+
 
 lamda = 6.6262e-34 / np.sqrt(2 * 1.6022e-19 * 9.1095e-31 * U_a)
 lamda_o = 6.6262e-34 / np.sqrt(2 * 1.6022e-19 * 9.1095e-31 * U_o)
