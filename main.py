@@ -47,28 +47,34 @@ def main(mainPass):
 
     def createSimulatedObject():
         amp = 1
+        simulatedObject = amp*np.ones_like(simulatedSpace)
 
         def rippleObject(xPixelStart, xPixelEnd, yPixelStart, yPixelEnd, deg):
-            matrix = np.zeros_like(simulatedSpace)
+            returnMatrix = np.zeros_like(simulatedSpace)
             radTheta = np.radians(deg)
 
             def rippleFunc(x,y):
                 mapX = (x - xPixelStart) / (xPixelEnd - xPixelStart)
                 mapY = (y-yPixelStart) / (yPixelEnd - yPixelStart)
-                if 0 < x < 1:
+                if 0 < mapX < 1:
                     return amp * -1 * np.cos(2 * np.pi * mapX)
                 else:
                     return 0
 
-            for x in range(len(matrix)):
-                for y in range(len(matrix)):
+            for x in range(len(returnMatrix)):
+                for y in range(len(returnMatrix)):
                     mapX = x * np.cos(radTheta) - y * np.sin(radTheta)
                     mapY = x * np.sin(radTheta) + y * np.cos(radTheta)
-                    matrix[x][y] = rippleFunc(mapX, mapY)
+                    returnMatrix[x][y] = rippleFunc(mapX, mapY)
 
-            return matrix
+            matrixMask = np.zeros_like(simulatedSpace)
+            matrixMask[xPixelStart:xPixelEnd, yPixelStart:yPixelEnd] = 1
+            returnMatrix = np.multiply(returnMatrix,matrixMask)
 
-        return rippleObject(100, 300, 100, 300, 0)
+            return returnMatrix
+        simulatedObject += rippleObject(100, 300, 100, 300, 30)
+
+        return simulatedObject
 
     ######set up Square Object#######
     K = 10 * np.pi

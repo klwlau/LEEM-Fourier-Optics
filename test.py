@@ -13,7 +13,8 @@ def createSimulatedObject():
         def rippleFunc(x):  # , y):
             mapX = (x - xPixelStart) / (xPixelEnd - xPixelStart)
             # mapY = (y-yPixelStart) / (yPixelEnd - yPixelStart)
-            if 0 < x < 1:
+            if 1>mapX>0:
+                print(mapX)
                 return amp * -1 * np.cos(2 * np.pi * mapX)
             else:
                 return 0
@@ -25,10 +26,13 @@ def createSimulatedObject():
                 # matrix[x][y] = rippleFunc(mapX, mapY)
 
         testX = np.linspace(0, 501, 500)
-        testY = rippleFunc(testX)
+        testY = np.zeros_like(testX)
+        for i in range(len(testY)):
+            # print(i)
+            testY[i] = rippleFunc(i)
         plt.plot(testX, testY)
         plt.show()
 
-        return matrix
+    rippleObject(100,300,100,300,0)
 
-    return rippleObject(100, 300, 100, 300, 0)
+createSimulatedObject()
