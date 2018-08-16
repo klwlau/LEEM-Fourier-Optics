@@ -133,6 +133,12 @@ def main(mainPass):
     amp = 1
     waveObject = amp * np.exp(1j * objectPhaseShift)
     waveObjectFT = np.fft.fftshift(np.fft.fft2(waveObject) / sampleSpaceTotalStep ** 2)
+    test = np.log(np.abs(waveObjectFT))
+    plotArray(test)
+    test = np.ravel(test)
+    plt.hist(test)
+    plt.show()
+
 
     # setup qSpace
     qSpaceCoor = 1 / sampleStepSize / (sampleSpaceTotalStep - 1) * np.arange(sampleSpaceTotalStep)
@@ -147,6 +153,8 @@ def main(mainPass):
 
     # apply aperture function
     maskedWaveObjectFT = waveObjectFT[aperture == 1]
+    plt.hist(np.log(np.abs(maskedWaveObjectFT)))
+    plt.show()
 
     maskedQSpaceXX = qSpaceXX[aperture == 1]
     maskedQSpaceYY = qSpaceYY[aperture == 1]
