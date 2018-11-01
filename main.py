@@ -17,15 +17,12 @@ hkTimeZone = pytz.timezone('Asia/Hong_Kong')
 
 
 def chunks(l, n):
-    """Yield successive n-sized chunks from l."""
     for i in range(0, len(l), n):
         yield l[i:i + n]
 
 
 def main(mainPass):
     start_time = time.time()
-
-
 
     def printStatus(counter, done=False, loopMode=False):
         if counter != 0:
@@ -52,7 +49,6 @@ def main(mainPass):
         amp = 1
         simulatedObject = amp * np.ones_like(simulatedSpace)
 
-
         # plotArray(simulatedObject)
 
         def rippleObject(xCenter, yCenter, xLength, yLength, deg):
@@ -77,7 +73,7 @@ def main(mainPass):
                     return 0
 
             def rotateAtCenter(img, angle, pivot):
-                pivot[0],pivot[1] =pivot[1],pivot[0]
+                pivot[0], pivot[1] = pivot[1], pivot[0]
                 # img = np.flipud(img)
                 padX = [img.shape[1] - pivot[0], pivot[0]]
                 padY = [img.shape[0] - pivot[1], pivot[1]]
@@ -107,7 +103,6 @@ def main(mainPass):
 
     # defocus = mainPass
 
-
     objectMaskStep = int((objectSpaceSize / sampleSpaceSize * sampleSpaceTotalStep) / 2)
     sampleCoorRealSpaceXX, sampleCoorRealSpaceYY = np.mgrid[-sampleSpaceSize:sampleSpaceSize:sampleSpaceTotalStep * 1j,
                                                    -sampleSpaceSize:sampleSpaceSize:sampleSpaceTotalStep * 1j]
@@ -127,18 +122,17 @@ def main(mainPass):
     np.save("objectPhaseShift.npy", objectPhaseShift)
 
     # if __name__ == '__main__':
-        # plotArray(objectPhaseShift)
+    # plotArray(objectPhaseShift)
 
     # apply wave function and apply FFT
     amp = 1
     waveObject = amp * np.exp(1j * objectPhaseShift)
     waveObjectFT = np.fft.fftshift(np.fft.fft2(waveObject) / sampleSpaceTotalStep ** 2)
-    test = np.log(np.abs(waveObjectFT))
-    plotArray(test)
-    test = np.ravel(test)
-    plt.hist(test)
-    plt.show()
-
+    # test = np.log(np.abs(waveObjectFT))
+    # plotArray(test)
+    # test = np.ravel(test)
+    # plt.hist(test)
+    # plt.show()
 
     # setup qSpace
     qSpaceCoor = 1 / sampleStepSize / (sampleSpaceTotalStep - 1) * np.arange(sampleSpaceTotalStep)
@@ -153,8 +147,8 @@ def main(mainPass):
 
     # apply aperture function
     maskedWaveObjectFT = waveObjectFT[aperture == 1]
-    plt.hist(np.log(np.abs(maskedWaveObjectFT)))
-    plt.show()
+    # plt.hist(np.log(np.abs(maskedWaveObjectFT)))
+    # plt.show()
 
     maskedQSpaceXX = qSpaceXX[aperture == 1]
     maskedQSpaceYY = qSpaceYY[aperture == 1]
@@ -218,7 +212,9 @@ def main(mainPass):
                                     + EsConstant2 * (qq_i * abs_qq_i_4 - qq_j * abs_qq_j_4)
                                     + EsConstant3 * (qq_i - qq_j)) ** 2
                              )
+
                 E_cc = np.sqrt(1 - EccConstant0 * (abs_qq_i_2 - abs_qq_j_2))
+
                 E_ct_exponent = EctConstant0 * (EctConstant1 * (abs_qq_i_2 - abs_qq_j_2)
                                                 + EctConstant2 * (abs_qq_i_4 - abs_qq_j_4)) ** 2
                 E_ct = E_cc * np.exp(E_ct_exponent * E_cc ** 2)
