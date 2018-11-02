@@ -253,7 +253,6 @@ def main(mainPass):
 
         if counter_i == int(totalOuterLoopCall / 2):
             returnMatrix = outerForLoop(counter_i)
-            # print(counter_i)
         else:
             returnMatrix1 = outerForLoop(counter_i)
             returnMatrix2 = outerForLoop(totalOuterLoopCall - counter_i - 1)
