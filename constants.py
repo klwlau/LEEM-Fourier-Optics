@@ -5,7 +5,7 @@ if __name__ == '__main__':
 else:
     print("Loading Constants.py")
 
-resultName = "AC_-_object"
+resultName = "NAC_-_object"
 
 
 sampleSpaceTotalStep = 501  # sample size
@@ -17,13 +17,13 @@ objectSpaceSize = 10 * 1e-9  # nm #5
 U_a = 15.01e3  # eV  Accelerating Voltage
 U_o = 10  # eV  Electron Voltage
 delta_E = 0.25  # eV  Energy Spread
-C_c = 0  # m   Chromatic Aberration Coefficient
-C_3c = -67.4
-C_cc = 27.9
-C_3 = 0  # m   Spherical Aberration Coefficient
-C_5 = 92.8
+C_3 = 0.345  # m   Spherical Aberration Coefficient
+C_5 = 39.4
+C_c = -0.075  # m   Chromatic Aberration Coefficient
+C_3c = -58.37
+C_cc = 23.09
+alpha_ap = 2.34E-3  # rad Acceptance Aangle of the Contrast Aperture
 alpha_ill = 0.122E-3  # rad Illumination Divergence Angle
-alpha_ap = 7.37E-3  # rad Acceptance Aangle of the Contrast Aperture
 # alpha_ap = 1.37E-3  # rad Acceptance Aangle of the Contrast Aperture
 # alpha_ap = 2.37E-3  # rad Acceptance Aangle of the Contrast Aperture
 # alpha_ap = 7.37E-3  # rad Acceptance Aangle of the Contrast Aperture
