@@ -47,7 +47,7 @@ def main(mainPass):
 
     def createSimulatedObject():
         amp = 1
-        simulatedObject = amp * np.ones_like(simulatedSpace)
+        simulatedObject = amp * np.zeros_like(simulatedSpace)
 
         # plotArray(simulatedObject)
 
@@ -90,7 +90,7 @@ def main(mainPass):
             return returnMatrix
 
         # simulatedObject += rippleObject(150, 251, 167, 300, -15)
-        simulatedObject[251-50:251+50,251-50:251+50] = 0
+        simulatedObject[251-50:251+50,251-50:251+50] = 1
 
         plotArray(simulatedObject)
 
