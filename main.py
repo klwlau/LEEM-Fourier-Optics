@@ -4,10 +4,10 @@ from datetime import datetime
 import pytz
 from joblib import Parallel, delayed
 import multiprocessing
-from constants import *
 import numexpr as ne
 from numba import jit
 from scipy import ndimage
+from constants import *
 
 if __name__ == '__main__':
     from utilityFunc import *
@@ -89,11 +89,14 @@ def main(mainPass):
 
             return returnMatrix
 
-        simulatedObject += rippleObject(150, 251, 167, 300, -15)
+        # simulatedObject += rippleObject(150, 251, 167, 300, -15)
+        simulatedObject[251-50:251+50,251-50:251+50] = 0
 
-        simulatedObject += rippleObject(350, 251, 167, 300, +15)
+        plotArray(simulatedObject)
 
         return simulatedObject
+
+
 
     ######set up Square Object#######
     K = 70 * np.pi
@@ -116,6 +119,7 @@ def main(mainPass):
 
     # simulatedObject = np.multiply(createSimulatedObject(), simulatedObjectMask)
     simulatedObject = createSimulatedObject()
+
 
     objectPhaseShift = K * simulatedObject
 
@@ -292,7 +296,7 @@ def main(mainPass):
     hkDT = datetime.now(hkTimeZone)
     timeStamp = hkDT.strftime('%Y%m%d_%H%M%S')
     matrixI = matrixI.T
-    np.save(timeStamp + "_defocus" + "%.2f" % (defocus) + ".npy", matrixI)
+    np.save(resultName+ ".npy", matrixI)
     np.save("result.npy", matrixI)
     print("finished saving matrix")
     print("End Main")
