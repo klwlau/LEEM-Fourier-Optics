@@ -5,7 +5,7 @@ if __name__ == '__main__':
 else:
     print("Loading Constants.py")
 
-resultName = "NAC-_-object"
+resultName = "newNAC-_-object"
 
 
 sampleSpaceTotalStep = 501  # sample size

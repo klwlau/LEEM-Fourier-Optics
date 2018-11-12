@@ -123,7 +123,7 @@ def main(mainPass):
 
     objectPhaseShift = K * simulatedObject
 
-    np.save("objectPhaseShift.npy", objectPhaseShift)
+    np.save("simObject.npy", objectPhaseShift)
 
     # if __name__ == '__main__':
     # plotArray(objectPhaseShift)
