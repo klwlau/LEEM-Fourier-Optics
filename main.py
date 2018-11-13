@@ -49,7 +49,7 @@ def main(mainPass):
 
     def createSimulatedObject():
         amp = 1
-        simulatedObject = amp * np.ones_like(simulatedSpace)
+        simulatedObject = amp * np.zeros_like(simulatedSpace)
 
         # plotArray(simulatedObject)
 
@@ -92,8 +92,7 @@ def main(mainPass):
             return returnMatrix
 
         # simulatedObject += rippleObject(150, 251, 167, 300, -15)
-        simulatedObject[251 - 50:251 + 50, 251 - 50:251 + 50] = 0
-
+        simulatedObject[251 - 50:251 + 50, 251 - 50:251 + 50] = 1
 
         return simulatedObject
 
@@ -116,20 +115,15 @@ def main(mainPass):
     sampleCenterY - objectMaskStep + 30:sampleCenterY + objectMaskStep + 30] = 1
 
     # simulatedObject = np.multiply(createSimulatedObject(), simulatedObjectMask)
-    simulatedObject = createSimulatedObject()
 
-
-    objectPhaseShift = K * simulatedObject
+    objectPhaseShift = K * createSimulatedObject()
 
     np.save("simObject.npy", objectPhaseShift)
 
-    # if __name__ == '__main__':
-
-
     # apply wave function and apply FFT
     amp = 1
-    waveObject = amp * np.exp(1j * objectPhaseShift)
-    waveObjectFT = np.fft.fftshift(np.fft.fft2(waveObject) / sampleSpaceTotalStep ** 2)
+    Object = amp * np.exp(1j * objectPhaseShift)
+    ObjectFT = np.fft.fftshift(np.fft.fft2(Object) / sampleSpaceTotalStep ** 2)
 
 
     # setup qSpace
@@ -144,7 +138,7 @@ def main(mainPass):
     aperture[apertureMask] = 1
 
     # apply aperture function
-    maskedWaveObjectFT = waveObjectFT[aperture == 1]
+    maskedWaveObjectFT = ObjectFT[aperture == 1]
 
     maskedQSpaceXX = qSpaceXX[aperture == 1]
     maskedQSpaceYY = qSpaceYY[aperture == 1]
@@ -153,8 +147,7 @@ def main(mainPass):
 
     ##############cal Matrix I##########
 
-    delta_zo = -1 * defocus * 5.23 * 10 ** -6  # m
-    delta_z = 0e-6 #delta_zo * 3.2
+
     delta_fc = C_c * (delta_E / U_a)
     delta_f3c = C_3c * (delta_E / U_a)
     delta_fcc = C_cc * (delta_E / U_a) ** 2

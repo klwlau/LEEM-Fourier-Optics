@@ -5,7 +5,7 @@ if __name__ == '__main__':
 else:
     print("Loading Constants.py")
 
-resultName = "newNAC-_-object"
+resultName = "NAC-_-PhaseObject"
 
 
 sampleSpaceTotalStep = 501  # sample size
@@ -22,14 +22,13 @@ C_5 = 0
 C_cc = 0
 C_3c = 0
 C_c = -0.106  # m   Chromatic Aberration Coefficient
-alpha_ap = 1.4E-4  # rad Acceptance Aangle of the Contrast Aperture
+alpha_ap = 1.4E-3  # rad Acceptance Aangle of the Contrast Aperture
 alpha_ill = 0.11E-3  # rad Illumination Divergence Angle
-# alpha_ap = 1.37E-3  # rad Acceptance Aangle of the Contrast Aperture
-# alpha_ap = 2.37E-3  # rad Acceptance Aangle of the Contrast Aperture
-# alpha_ap = 7.37E-3  # rad Acceptance Aangle of the Contrast Aperture
 
 M_L = 0.653  # Lateral Magnification
 defocus = 0  # mA
+delta_zo = -1 * defocus * 5.23 * 10 ** -6  # m
+delta_z = 0e-6  # delta_zo * 3.2
 
 
 
