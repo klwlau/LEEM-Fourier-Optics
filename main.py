@@ -94,12 +94,11 @@ def main(mainPass):
         # simulatedObject += rippleObject(150, 251, 167, 300, -15)
         simulatedObject[251 - 50:251 + 50, 251 - 50:251 + 50] = 0
 
-        plotArray(simulatedObject)
 
         return simulatedObject
 
     ######set up Square Object#######
-    K = 70 * np.pi
+    K = 1 * np.pi
     q_max = alpha_ap / lamda
     q_ill = alpha_ill / lamda
 
@@ -125,17 +124,13 @@ def main(mainPass):
     np.save("simObject.npy", objectPhaseShift)
 
     # if __name__ == '__main__':
-    # plotArray(objectPhaseShift)
+
 
     # apply wave function and apply FFT
     amp = 1
     waveObject = amp * np.exp(1j * objectPhaseShift)
     waveObjectFT = np.fft.fftshift(np.fft.fft2(waveObject) / sampleSpaceTotalStep ** 2)
-    # test = np.log(np.abs(waveObjectFT))
-    # plotArray(test)
-    # test = np.ravel(test)
-    # plt.hist(test)
-    # plt.show()
+
 
     # setup qSpace
     qSpaceCoor = 1 / sampleStepSize / (sampleSpaceTotalStep - 1) * np.arange(sampleSpaceTotalStep)
@@ -150,8 +145,6 @@ def main(mainPass):
 
     # apply aperture function
     maskedWaveObjectFT = waveObjectFT[aperture == 1]
-    # plt.hist(np.log(np.abs(maskedWaveObjectFT)))
-    # plt.show()
 
     maskedQSpaceXX = qSpaceXX[aperture == 1]
     maskedQSpaceYY = qSpaceYY[aperture == 1]
@@ -161,7 +154,7 @@ def main(mainPass):
     ##############cal Matrix I##########
 
     delta_zo = -1 * defocus * 5.23 * 10 ** -6  # m
-    delta_z = 1e-6 #delta_zo * 3.2
+    delta_z = 0e-6 #delta_zo * 3.2
     delta_fc = C_c * (delta_E / U_a)
     delta_f3c = C_3c * (delta_E / U_a)
     delta_fcc = C_cc * (delta_E / U_a) ** 2
@@ -228,7 +221,6 @@ def main(mainPass):
 
                 # EXP = ne.evaluate("exp(EXP_exponent)")
                 EXP = np.exp(EXP_exponent)
-
                 returnMatrix = returnMatrix + R_o * E_s * E_ct * maskedWaveObjectFT[counter_i] * np.conj(
                     maskedWaveObjectFT[counter_j]) * EXP
                 if counter_i > counter_j:
