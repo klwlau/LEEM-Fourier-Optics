@@ -21,6 +21,8 @@ def chunks(l, n):
         yield l[i:i + n]
 
 
+
+
 def main(mainPass):
     start_time = time.time()
 
@@ -90,17 +92,14 @@ def main(mainPass):
             return returnMatrix
 
         # simulatedObject += rippleObject(150, 251, 167, 300, -15)
-        simulatedObject[251-50:251+50,251-50:251+50] = 0
+        simulatedObject[251 - 50:251 + 50, 251 - 50:251 + 50] = 0
 
         plotArray(simulatedObject)
 
         return simulatedObject
 
-
-
     ######set up Square Object#######
     K = 70 * np.pi
-    # alpha_ap = 0.47E-3
     q_max = alpha_ap / lamda
     q_ill = alpha_ill / lamda
 
@@ -162,7 +161,7 @@ def main(mainPass):
     ##############cal Matrix I##########
 
     delta_zo = -1 * defocus * 5.23 * 10 ** -6  # m
-    delta_z = delta_zo * 3.2
+    delta_z = 1e-6 #delta_zo * 3.2
     delta_fc = C_c * (delta_E / U_a)
     delta_f3c = C_3c * (delta_E / U_a)
     delta_fcc = C_cc * (delta_E / U_a) ** 2
@@ -188,6 +187,7 @@ def main(mainPass):
 
         # global returnMatrix
         returnMatrix = np.zeros_like(sampleCoorRealSpaceXX, dtype=np.complex128)
+
         qq_i = maskedQSpaceXX[counter_i] + 1j * maskedQSpaceYY[counter_i]
         abs_qq_i = np.absolute(qq_i)
 
@@ -250,6 +250,7 @@ def main(mainPass):
                         maskedWaveObjectFT[counter_i]) * EXP_sym
             else:
                 break
+
 
         return returnMatrix
 
