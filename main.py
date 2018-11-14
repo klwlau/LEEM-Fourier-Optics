@@ -123,6 +123,7 @@ def main(mainPass):
     # apply wave function and apply FFT
     amp = 1
     Object = amp * np.exp(1j * objectPhaseShift)
+
     ObjectFT = np.fft.fftshift(np.fft.fft2(Object) / sampleSpaceTotalStep ** 2)
 
 
