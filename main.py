@@ -266,7 +266,7 @@ def main(mainPass):
 
     processTemp = np.zeros_like(sampleCoorRealSpaceXX)
 
-    with Parallel(n_jobs=num_cores, verbose=50) as parallel:  # ,backend="threading"
+    with Parallel(n_jobs=-1, verbose=50) as parallel:  # ,backend="threading"
         for process in breakProcess:
             # multicoreResults = parallel(delayed(outerForLoop)(counter_i) for counter_i in process)
 
