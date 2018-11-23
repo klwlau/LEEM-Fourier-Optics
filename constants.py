@@ -25,7 +25,7 @@ alpha_ap = 7.37E-3  # rad Acceptance Aangle of the Contrast Aperture
 M_L = 0.653  # Lateral Magnification
 defocus = 0  # mA
 delta_zo = -1 * defocus * 5.23 * 10 ** -6  # m
-delta_z = 25-6  # delta_zo * 3.2
+delta_z = 5-6  # delta_zo * 3.2
 
 lamda = 6.6262e-34 / np.sqrt(2 * 1.6022e-19 * 9.1095e-31 * U_a)
 lamda_o = 6.6262e-34 / np.sqrt(2 * 1.6022e-19 * 9.1095e-31 * U_o)
