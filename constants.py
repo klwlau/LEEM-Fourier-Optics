@@ -5,7 +5,7 @@ if __name__ == '__main__':
 else:
     print("Loading Constants.py")
 
-resultName = "NAC-_-PhaseObject"
+resultName = "squarePiPhaseObject_delta_z_2"
 
 sampleSpaceTotalStep = 501  # sample size
 sampleSpaceSize = 25 * 1e-9  # nm #25 #
