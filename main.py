@@ -4,7 +4,6 @@ from datetime import datetime
 import pytz
 from joblib import Parallel, delayed
 import multiprocessing
-import numexpr as ne
 from numba import jit
 from scipy import ndimage
 from constants import *
@@ -19,8 +18,6 @@ hkTimeZone = pytz.timezone('Asia/Hong_Kong')
 def chunks(l, n):
     for i in range(0, len(l), n):
         yield l[i:i + n]
-
-
 
 
 def main(mainPass):
@@ -126,7 +123,6 @@ def main(mainPass):
 
     ObjectFT = np.fft.fftshift(np.fft.fft2(Object) / sampleSpaceTotalStep ** 2)
 
-
     # setup qSpace
     qSpaceCoor = 1 / sampleStepSize / (sampleSpaceTotalStep - 1) * np.arange(sampleSpaceTotalStep)
     qSpaceCoor = qSpaceCoor - (np.amax(qSpaceCoor) - np.amin(qSpaceCoor)) / 2  # adjust qSpaceCoor center
@@ -144,10 +140,11 @@ def main(mainPass):
     maskedQSpaceXX = qSpaceXX[aperture == 1]
     maskedQSpaceYY = qSpaceYY[aperture == 1]
 
+    print(maskedQSpaceXX.dtype)
+
     print("making transmittion CrossCoefficientMatrix")
 
     ##############cal Matrix I##########
-
 
     delta_fc = C_c * (delta_E / U_a)
     delta_f3c = C_3c * (delta_E / U_a)
@@ -213,7 +210,6 @@ def main(mainPass):
                 EXP_exponent = 2j * np.pi * (
                         (qq_i - qq_j).real * sampleCoorRealSpaceXX + (qq_i - qq_j).imag * sampleCoorRealSpaceYY)
 
-                # EXP = ne.evaluate("exp(EXP_exponent)")
                 EXP = np.exp(EXP_exponent)
                 returnMatrix = returnMatrix + R_o * E_s * E_ct * maskedWaveObjectFT[counter_i] * np.conj(
                     maskedWaveObjectFT[counter_j]) * EXP
@@ -221,22 +217,21 @@ def main(mainPass):
                     # EXP_exponent_sym = 2j * np.pi * (
                     #             (qq_j - qq_i).real * sampleCoorRealSpaceXX + (qq_j - qq_i).imag * sampleCoorRealSpaceYY)
                     #
-                    # EXP_sym = ne.evaluate("exp(EXP_exponent_sym)")
+
 
                     R_o_sym = 1 / R_o
                     E_s_sym = E_s
                     E_cc_sym = np.sqrt(1 - EccConstant0 * (abs_qq_j_2 - abs_qq_i_2))
                     E_ct_sym = E_cc_sym * np.exp(E_ct_exponent * E_cc_sym ** 2)
-                    # EXP_sym = ne.evaluate("EXP.real-1j*EXP.imag")
+
                     EXP_sym = EXP.real - 1j * EXP.imag
-                    # EXP_sym = ne.evaluate("conj(EXP)")
+
 
                     returnMatrix = returnMatrix + R_o_sym * E_s_sym * E_ct_sym * maskedWaveObjectFT[
                         counter_j] * np.conj(
                         maskedWaveObjectFT[counter_i]) * EXP_sym
             else:
                 break
-
 
         return returnMatrix
 
@@ -247,7 +242,8 @@ def main(mainPass):
         else:
             returnMatrix1 = outerForLoop(counter_i)
             returnMatrix2 = outerForLoop(totalOuterLoopCall - counter_i - 1)
-            returnMatrix = ne.evaluate("returnMatrix1+returnMatrix2")
+            returnMatrix = returnMatrix1+returnMatrix2
+            # returnMatrix = ne.evaluate("returnMatrix1+returnMatrix2")
 
         return returnMatrix
 
@@ -283,7 +279,7 @@ def main(mainPass):
     hkDT = datetime.now(hkTimeZone)
     timeStamp = hkDT.strftime('%Y%m%d_%H%M%S')
     matrixI = matrixI.T
-    np.save(resultName+ ".npy", matrixI)
+    np.save(resultName + ".npy", matrixI)
     np.save("result.npy", matrixI)
     print("finished saving matrix")
     print("End Main")
