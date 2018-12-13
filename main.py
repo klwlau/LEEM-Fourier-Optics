@@ -140,7 +140,6 @@ def main(mainPass):
     maskedQSpaceXX = qSpaceXX[aperture == 1]
     maskedQSpaceYY = qSpaceYY[aperture == 1]
 
-    print(maskedQSpaceXX.dtype)
 
     print("making transmittion CrossCoefficientMatrix")
 
@@ -205,6 +204,7 @@ def main(mainPass):
 
                 E_ct_exponent = EctConstant0 * (EctConstant1 * (abs_qq_i_2 - abs_qq_j_2)
                                                 + EctConstant2 * (abs_qq_i_4 - abs_qq_j_4)) ** 2
+
                 E_ct = E_cc * np.exp(E_ct_exponent * E_cc ** 2)
 
                 EXP_exponent = 2j * np.pi * (
