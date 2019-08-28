@@ -5,7 +5,7 @@ if __name__ == '__main__':
 else:
     print("Loading Constants.py")
 
-resultName = "NAC-_-PhaseObject"
+resultFileName = "NAC-_-PhaseObject"
 
 sampleSpaceTotalStep = 501  # sample size
 sampleSpaceSize = 25 * 1e-9  # nm #25 #
@@ -29,13 +29,3 @@ delta_z = 0e-6  # delta_zo * 3.2
 
 lamda = 6.6262e-34 / np.sqrt(2 * 1.6022e-19 * 9.1095e-31 * U_a)
 lamda_o = 6.6262e-34 / np.sqrt(2 * 1.6022e-19 * 9.1095e-31 * U_o)
-
-# RoConstant0 = 1j * 2 * np.pi
-# RoConstant1 = 1 / 4 * C_3 * lamda ** 3
-# RoConstant2 = 1 / 6 * C_5 * lamda ** 5
-# RoConstant3 = -1 / 2 * delta_z * lamda
-#
-# print(RoConstant0)
-# print(RoConstant1)
-# print(RoConstant2)
-# print(RoConstant3)
