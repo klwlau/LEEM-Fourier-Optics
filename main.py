@@ -12,7 +12,7 @@ if __name__ == '__main__':
     from utilityFunc import *
 
 fmt = '%H:%M:%S'  # %d/%m
-hkTimeZone = pytz.timezone('Asia/Hong_Kong')
+timeZone = pytz.timezone('Asia/Hong_Kong')
 
 
 def chunks(l, n):
@@ -29,7 +29,7 @@ def main(mainPass):
             progress = (counter / len(loopList)) * 100
             totalTime = elapsedTime / (progress / 100)
             timeLeft = totalTime - elapsedTime
-            hkDT = datetime.now(hkTimeZone)
+            hkDT = datetime.now(timeZone)
             currentHKTime = hkDT.strftime(fmt)
             if done:
                 print("-Total Time: %.2f Minutes -" % elapsedTime)
@@ -93,7 +93,7 @@ def main(mainPass):
 
         return simulatedObject
 
-    ######set up Square Object#######
+    ######set up Object#######
     K = 1 * np.pi
     q_max = alpha_ap / lamda
     q_ill = alpha_ill / lamda
@@ -276,7 +276,7 @@ def main(mainPass):
     matrixI = np.fft.fftshift(processTemp)
     matrixI = np.absolute(matrixI)
     print("start saving matrix")
-    hkDT = datetime.now(hkTimeZone)
+    hkDT = datetime.now(timeZone)
     timeStamp = hkDT.strftime('%Y%m%d_%H%M%S')
     matrixI = matrixI.T
     np.save(resultName + ".npy", matrixI)
