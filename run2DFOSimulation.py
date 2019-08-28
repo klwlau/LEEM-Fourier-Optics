@@ -5,7 +5,7 @@ import pytz
 from joblib import Parallel, delayed
 import multiprocessing
 from numba import jit
-from constants import *
+from constants2DFO import *
 
 if __name__ == '__main__':
     from utilityFunc import *
@@ -21,7 +21,7 @@ def chunks(l, n):
 
 def main(mainPass):
     start_time = time.time()
-    from Sample2D import create2DSimulatedObject
+    from sample2D import create2DSimulatedObject
 
     def printStatus(counter, done=False, loopMode=False):
         if counter != 0:
