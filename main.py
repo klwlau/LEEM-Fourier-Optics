@@ -44,7 +44,7 @@ def main(mainPass):
                           + "Time Left: %.2f  min -" % timeLeft + "OuterLoop Time: %.1f s--" % (
                                   elapsedTime * 60 / (counter + 1)) + "%.2f" % progress + "%--HKT:" + currentHKTime)
 
-    def createSimulatedObject():
+    def create2DSimulatedObject():
         amp = 1
         simulatedObject = amp * np.zeros_like(simulatedSpace)
 
@@ -111,9 +111,9 @@ def main(mainPass):
     simulatedObjectMask[sampleCenterX - objectMaskStep:sampleCenterX + objectMaskStep,
     sampleCenterY - objectMaskStep + 30:sampleCenterY + objectMaskStep + 30] = 1
 
-    # simulatedObject = np.multiply(createSimulatedObject(), simulatedObjectMask)
+    # simulatedObject = np.multiply(create2DSimulatedObject(), simulatedObjectMask)
 
-    objectPhaseShift = K * createSimulatedObject()
+    objectPhaseShift = K * create2DSimulatedObject()
 
     np.save("simObject.npy", objectPhaseShift)
 
