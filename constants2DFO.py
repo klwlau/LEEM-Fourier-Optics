@@ -5,7 +5,7 @@ if __name__ == '__main__':
 else:
     print("Loading Constants.py")
 
-resultFileName = "NAC-_-PhaseObject"
+resultFileName = "resultFileName"
 
 sampleSpaceTotalStep = 501  # sample size
 sampleSpaceSize = 25 * 1e-9  # nm #25 #
@@ -26,6 +26,8 @@ M_L = 0.653  # Lateral Magnification
 defocus = 0  # mA
 delta_zo = -1 * defocus * 5.23 * 10 ** -6  # m
 delta_z = 0e-6  # delta_zo * 3.2
+
+###################################################################
 
 lamda = 6.6262e-34 / np.sqrt(2 * 1.6022e-19 * 9.1095e-31 * U_a)
 lamda_o = 6.6262e-34 / np.sqrt(2 * 1.6022e-19 * 9.1095e-31 * U_o)
