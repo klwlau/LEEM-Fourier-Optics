@@ -5,7 +5,6 @@ import pytz
 from joblib import Parallel, delayed
 import multiprocessing
 from numba import jit
-
 from constants import *
 
 if __name__ == '__main__':
