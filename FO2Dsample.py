@@ -5,7 +5,6 @@ def create2DSimulatedObject(simulatedSpace):
     amp = 1
     simulatedObject = amp * np.zeros_like(simulatedSpace)
 
-    # plotArray(simulatedObject)
 
     def rippleObject(xCenter, yCenter, xLength, yLength, deg):
 
