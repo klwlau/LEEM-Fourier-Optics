@@ -5,7 +5,7 @@ import pytz
 from joblib import Parallel, delayed
 import multiprocessing
 from numba import jit
-from constants2DFO import *
+from FO2Dconstants import *
 
 if __name__ == '__main__':
     from utilityFunc import *

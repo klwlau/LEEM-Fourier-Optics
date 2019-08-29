@@ -1,21 +1,16 @@
-from constants2DFO import *
+from FO2Dconstants import *
 
 def create2DSimulatedObject():
     amp = 1
     simulatedObject = amp * np.zeros((simulatingSpaceTotalStep,simulatingSpaceTotalStep))
 
-    simulatedObject[251 - 50:251 + 50, 251 - 50:251 + 50] = 1
+    simulatedObject[251 - 50:251 + 50, 251 - 50:251 + 50] = amp
 
     return simulatedObject
 
 
 if __name__ == '__main__':
     import matplotlib.pyplot as plt
-    def plotArray(plot_data, vmin=-1, vmax=1):
-        plt.imshow(plot_data.T, interpolation='nearest', cmap='jet',  # np.flipud(plot_data)
-                   origin='lower', vmin=vmin, vmax=vmax)  # vmin=0, vmax=2,
-        plt.colorbar()
-        plt.show()
-
+    from utilityFunc import *
 
     plotArray(create2DSimulatedObject())
