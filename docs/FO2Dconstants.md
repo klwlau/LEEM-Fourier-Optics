@@ -12,3 +12,5 @@
 `C_c`,`C_3c`,`C_cc`: Chromatic Aberration Coefficient in meter  
 `alpha_ill`: Illumination Divergence Angle in radian  
 `alpha_ap`: Acceptance Aangle of the Contrast Aperture in radian  
+`M_L`: Lateral Magnification  
+`defocus`: Defocus current in mA  
