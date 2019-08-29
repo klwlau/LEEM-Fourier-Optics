@@ -15,7 +15,7 @@ This is a simulation program written in python that help user to simulate sample
 Users can match the simulation with their LEEM setting by tuning constants and sample in the program.
 
 ## 2D FO Simulation Setup
-In 2D FO Simulation, user can setup the constants in the `FO2Dconstants.py` file.  
+In 2D FO Simulation, user can setup the constants in `FO2Dconstants.py`.  
 Details of constants are listed [here](https://github.com/klwlau/LEEM-Fourier-Optics/blob/master/docs/FO2Dconstants.md).
 
 To setup the sample in the simulation user can specify in `FO2Dsample.py`.  
