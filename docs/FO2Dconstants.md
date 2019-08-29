@@ -11,4 +11,4 @@
 `C_3`,`C_5`: Spherical Aberration Coefficient in meter   
 `C_c`,`C_3c`,`C_cc`: Chromatic Aberration Coefficient in meter  
 `alpha_ill`: Illumination Divergence Angle in radian  
-`alpha_ap`: Acceptance Aangle of the Contrast Aperture in rad  
+`alpha_ap`: Acceptance Aangle of the Contrast Aperture in radian  
