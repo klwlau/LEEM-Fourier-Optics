@@ -12,6 +12,7 @@ if __name__ == '__main__':
 
 fmt = '%H:%M:%S'  # %d/%m
 timeZonePytz = pytz.timezone(timezone)
+startTimeStamp = datetime.now(timeZonePytz).strftime('%Y%m%d_%H%M%S')
 
 
 def chunks(l, n):
@@ -55,7 +56,7 @@ def main():
 
     objectPhaseShift = K * create2DSimulatedObject(simulatedSpace)
 
-    np.save("simObject.npy", objectPhaseShift)
+    np.save("simObject_"+startTimeStamp+".npy", objectPhaseShift)
 
     # apply wave function and apply FFT
     amp = 1
@@ -209,10 +210,9 @@ def main():
     matrixI = np.absolute(matrixI)
     print("start saving matrix")
     nowDT = datetime.now(timeZonePytz)
-    timeStamp = nowDT.strftime('%Y%m%d_%H%M%S')
     matrixI = matrixI.T
     np.save(resultFileName + ".npy", matrixI)
-    np.save("result_"+timeStamp+".npy", matrixI)
+    np.save("result_"+startTimeStamp+".npy", matrixI)
     print("finished saving matrix")
     print("End Main")
     printStatus(100, done=True)
