@@ -20,8 +20,7 @@ C_c = 0  # m   Chromatic Aberration Coefficient
 C_3c = -67.4
 C_cc = 27.9
 alpha_ill = 0.1E-3  # rad Illumination Divergence Angle
-alpha_ap = 1.37E-3  # rad Acceptance Aangle of the Contrast Aperture
-# alpha_ap = 7.37E-3  # rad Acceptance Aangle of the Contrast Aperture
+alpha_ap = 7.37E-3  # rad Acceptance Aangle of the Contrast Aperture
 
 M_L = 0.653  # Lateral Magnification
 defocus = 0  # mA
