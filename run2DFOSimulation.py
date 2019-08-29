@@ -35,7 +35,7 @@ def main():
                 print("-Total Time: %.2f Minutes -" % elapsedTime)
             else:
                 print("-ID:" + str(counter) + "---Elapsed Time: %.2f / %.2f min---" % (elapsedTime, totalTime)
-                          + "Time Left: %.2f  min---" % timeLeft + "%.2f" % progress + "%-- Time:" + currentHKTime)
+                          + "Time Left: %.2f  min---" % timeLeft + "%.2f" % progress + "%-- Time: " + currentHKTime)
 
 
 
