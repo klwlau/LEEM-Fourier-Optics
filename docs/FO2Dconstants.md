@@ -1,8 +1,8 @@
 # Parameters in 2D FO Simulation
 
 ## Simulation Parameters
-`simulatingSpaceSize`: The 2D simulation space measure in nanometer(nm).  
-`simulatingSpaceTotalStep`: Simulating space steps in each direction.  
+`simulatingSpaceSize`: The 2D simulation space in both direction measure in nanometer(nm).  
+`simulatingSpaceTotalStep`: Simulating space steps in both direction.  
 
 ## LEEM Parameters
 `U_a`: Accelerating Voltage in eV  
