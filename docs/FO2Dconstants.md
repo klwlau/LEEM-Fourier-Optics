@@ -8,10 +8,7 @@
 `U_a`: Accelerating Voltage in eV  
 `U_o`: Electron Voltage in eV  
 `delta_E`: Energy Spread in eV  
-`C_3`: Spherical Aberration Coefficient   
-`C_5`:  
-`C_c`: Chromatic Aberration Coefficient  
-`C_3c`:  
-`C_cc`:  
+`C_3`,`C_5`: Spherical Aberration Coefficient   
+`C_c`,`C_3c`,`C_cc`: Chromatic Aberration Coefficient  
 `alpha_ill`: Illumination Divergence Angle in radian  
 `alpha_ap`: Acceptance Aangle of the Contrast Aperture in rad  
