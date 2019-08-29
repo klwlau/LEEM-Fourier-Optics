@@ -196,7 +196,7 @@ def main():
 
     processTemp = np.zeros_like(sampleCoorRealSpaceXX)
 
-    with Parallel(n_jobs=-1, verbose=50) as parallel:
+    with Parallel(n_jobs=numberOfThreads, verbose=50) as parallel:
         for process in breakProcess:
 
             multicoreResults = parallel(delayed(ijSymmetry)(counter_i) for counter_i in process)

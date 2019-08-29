@@ -7,6 +7,7 @@ else:
 
 resultFileName = "resultFileName"
 timezone = 'Asia/Hong_Kong'
+numberOfThreads = -1
 
 simulatingSpaceSize = 25 * 1e-9  # total simulating space in nm
 simulatingSpaceTotalStep = 501  # total simulating steps
