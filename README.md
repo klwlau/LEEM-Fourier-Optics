@@ -16,3 +16,4 @@ Users can match the simulation with their LEEM setting by tuning constants and s
 
 ## 2D FO Simulation Setup
 In 2D FO Simulation, user can setup the constants in the `constants2DFO.py` file.
+Details of constants are listed [here](https://github.com/klwlau/LEEM-Fourier-Optics/blob/master/docs/FO2Dconstants.md).
