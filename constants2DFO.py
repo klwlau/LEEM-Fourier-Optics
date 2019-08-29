@@ -6,6 +6,7 @@ else:
     print("Loading Constants.py")
 
 resultFileName = "resultFileName"
+timezone = 'Asia/Hong_Kong'
 
 simulatingSpaceSize = 25 * 1e-9  # nm #25 #
 simulatingSpaceTotalStep = 501  # sample total step size

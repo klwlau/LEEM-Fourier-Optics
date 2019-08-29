@@ -11,7 +11,7 @@ if __name__ == '__main__':
     from utilityFunc import *
 
 fmt = '%H:%M:%S'  # %d/%m
-timeZone = pytz.timezone('Asia/Hong_Kong')
+timeZonePytz = pytz.timezone(timezone)
 
 
 def chunks(l, n):
@@ -29,13 +29,13 @@ def main():
             progress = (counter / len(loopList)) * 100
             totalTime = elapsedTime / (progress / 100)
             timeLeft = totalTime - elapsedTime
-            nowDT = datetime.now(timeZone)
+            nowDT = datetime.now(timeZonePytz)
             currentHKTime = nowDT.strftime(fmt)
             if done:
                 print("-Total Time: %.2f Minutes -" % elapsedTime)
             else:
-                print("-ID:" + str(counter) + "--Elapsed Time: %.2f / %.2f min -" % (elapsedTime, totalTime)
-                          + "Time Left: %.2f  min -" % timeLeft + "%.2f" % progress + "%--HKT:" + currentHKTime)
+                print("-ID:" + str(counter) + "---Elapsed Time: %.2f / %.2f min---" % (elapsedTime, totalTime)
+                          + "Time Left: %.2f  min---" % timeLeft + "%.2f" % progress + "%-- Time:" + currentHKTime)
 
 
 
@@ -214,7 +214,7 @@ def main():
     matrixI = np.fft.fftshift(processTemp)
     matrixI = np.absolute(matrixI)
     print("start saving matrix")
-    nowDT = datetime.now(timeZone)
+    nowDT = datetime.now(timeZonePytz)
     timeStamp = nowDT.strftime('%Y%m%d_%H%M%S')
     matrixI = matrixI.T
     np.save(resultFileName + ".npy", matrixI)
