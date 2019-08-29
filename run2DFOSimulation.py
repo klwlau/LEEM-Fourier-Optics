@@ -118,10 +118,8 @@ def main():
     EctConstant1 = delta_fc * lamda
     EctConstant2 = 1 / 2 * delta_f3c * lamda ** 3
 
-    @jit(nopython=True, cache=True)  # , parallel=True
+    @jit(nopython=True, cache=True)
     def outerForLoop(counter_i):
-
-        # global returnMatrix
         returnMatrix = np.zeros_like(sampleCoorRealSpaceXX, dtype=np.complex128)
 
         qq_i = maskedQSpaceXX[counter_i] + 1j * maskedQSpaceYY[counter_i]
@@ -167,10 +165,6 @@ def main():
                 returnMatrix = returnMatrix + R_o * E_s * E_ct * maskedWaveObjectFT[counter_i] * np.conj(
                     maskedWaveObjectFT[counter_j]) * EXP
                 if counter_i > counter_j:
-                    # EXP_exponent_sym = 2j * np.pi * (
-                    #             (qq_j - qq_i).real * sampleCoorRealSpaceXX + (qq_j - qq_i).imag * sampleCoorRealSpaceYY)
-                    #
-
 
                     R_o_sym = 1 / R_o
                     E_s_sym = E_s
@@ -196,14 +190,13 @@ def main():
             returnMatrix1 = outerForLoop(counter_i)
             returnMatrix2 = outerForLoop(totalOuterLoopCall - counter_i - 1)
             returnMatrix = returnMatrix1+returnMatrix2
-            # returnMatrix = ne.evaluate("returnMatrix1+returnMatrix2")
 
         return returnMatrix
 
     num_cores = multiprocessing.cpu_count()
     totalOuterLoopCall = len(maskedQSpaceXX)
     loopList = list(range(totalOuterLoopCall))[:int(totalOuterLoopCall / 2) + 1]
-    # loopList = list(range(len(maskedQSpaceXX)))
+
     breakProcess = list(chunks(loopList, num_cores * 2))
     numberOfChunk = int(len(breakProcess))
     print("Total Process: ", len(loopList))
@@ -215,7 +208,7 @@ def main():
 
     processTemp = np.zeros_like(sampleCoorRealSpaceXX)
 
-    with Parallel(n_jobs=-1, verbose=50) as parallel:  # ,backend="threading"
+    with Parallel(n_jobs=-1, verbose=50) as parallel:
         for process in breakProcess:
 
             multicoreResults = parallel(delayed(ijSymmetry)(counter_i) for counter_i in process)
