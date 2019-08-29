@@ -8,8 +8,8 @@ else:
 resultFileName = "resultFileName"
 timezone = 'Asia/Hong_Kong'
 
-simulatingSpaceSize = 25 * 1e-9  # nm #25 #
-simulatingSpaceTotalStep = 501  # sample total step size
+simulatingSpaceSize = 25 * 1e-9  # total simulating space in nm
+simulatingSpaceTotalStep = 501  # total simulating steps
 
 
 U_a = 15.01e3  # eV  Accelerating Voltage
