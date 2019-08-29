@@ -53,16 +53,16 @@ def main(mainPass):
 
     # defocus = mainPass
 
-    objectMaskStep = int((objectSpaceSize / sampleSpaceSize * sampleSpaceTotalStep) / 2)
+    # objectMaskStep = int((objectSpaceSize / sampleSpaceSize * sampleSpaceTotalStep) / 2)
     sampleCoorRealSpaceXX, sampleCoorRealSpaceYY = np.mgrid[-sampleSpaceSize:sampleSpaceSize:sampleSpaceTotalStep * 1j,
                                                    -sampleSpaceSize:sampleSpaceSize:sampleSpaceTotalStep * 1j]
 
     sampleStepSize = sampleCoorRealSpaceXX[1][0] - sampleCoorRealSpaceXX[0][0]
     simulatedSpace = np.zeros(sampleCoorRealSpaceXX.shape)
-    sampleCenterX, sampleCenterY = int(sampleSpaceTotalStep / 2 + 1), int(sampleSpaceTotalStep / 2 + 1)
-    simulatedObjectMask = np.copy(simulatedSpace)
-    simulatedObjectMask[sampleCenterX - objectMaskStep:sampleCenterX + objectMaskStep,
-    sampleCenterY - objectMaskStep + 30:sampleCenterY + objectMaskStep + 30] = 1
+    # sampleCenterX, sampleCenterY = int(sampleSpaceTotalStep / 2 + 1), int(sampleSpaceTotalStep / 2 + 1)
+    # simulatedObjectMask = np.copy(simulatedSpace)
+    # simulatedObjectMask[sampleCenterX - objectMaskStep:sampleCenterX + objectMaskStep,
+    # sampleCenterY - objectMaskStep + 30:sampleCenterY + objectMaskStep + 30] = 1
 
     # simulatedObject = np.multiply(create2DSimulatedObject(simulatedSpace), simulatedObjectMask)
 

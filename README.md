@@ -1,6 +1,6 @@
 # LEEM Image Simulation with Fourier Optics
 
-This is a simulation program written in python that help user to simulate sample viewed in Low Energy Electron Microscopy (LEEM) using Fourier Optics (FO).
+This is a simulation program written in python that help user to simulate sample viewed in Low Energy Electron Microscopy (LEEM) using Fourier Optics (FO). The method and mathematical derivation are documented at [here](https://www.sciencedirect.com/science/article/abs/pii/S0304399118304418).
 
 
 # Package Requirements
@@ -11,4 +11,7 @@ This is a simulation program written in python that help user to simulate sample
 - numpy 1.16.4+
 - pytz 2019.2+
 
-# Simulation setup
+# Simulation Setup
+Users can match the simulation with their LEEM setting by turning constant in the program.
+
+## 2D FO Simulation Setup
