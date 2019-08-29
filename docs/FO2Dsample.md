@@ -15,9 +15,11 @@ For example we generate a square step object with amplitude 1 with the object 0 
 ```python 
 
 def create2DSimulatedObject():
-    # define a
+    # define a zero array with dimension simulatingSpaceTotalStep by simulatingSpaceTotalStep.
+    # simulatingSpaceTotalStep definition is load by "from FO2Dconstants import *"
     simulatedObject = np.zeros((simulatingSpaceTotalStep,simulatingSpaceTotalStep))
 
+    #define the square step object
     amp = 1
     simulatedObject[251 - 50:251 + 50, 251 - 50:251 + 50] = amp
 

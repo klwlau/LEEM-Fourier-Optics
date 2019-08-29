@@ -1,6 +1,8 @@
 from FO2Dconstants import *
 
 def create2DSimulatedObject():
+    # define a zero array with dimension simulatingSpaceTotalStep by simulatingSpaceTotalStep.
+    # simulatingSpaceTotalStep definition is load by "from FO2Dconstants import *"
     simulatedObject = np.zeros((simulatingSpaceTotalStep,simulatingSpaceTotalStep))
 
     amp = 1
