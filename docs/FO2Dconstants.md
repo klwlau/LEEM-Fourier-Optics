@@ -10,8 +10,8 @@
 `delta_E`: Energy Spread in eV  
 `C_3`: Spherical Aberration Coefficient   
 `C_5`:  
-`C_c`: # m   Chromatic Aberration Coefficient  
-`C_3c`: 67.4  
-`C_cc`: .9  
-`alpha_ill`: .1E-3  # rad Illumination Divergence Angle  
-`alpha_ap`: .37E-3  # rad Acceptance Aangle of the Contrast Aperture  
+`C_c`: Chromatic Aberration Coefficient  
+`C_3c`:  
+`C_cc`:  
+`alpha_ill`: Illumination Divergence Angle in radian  
+`alpha_ap`: Acceptance Aangle of the Contrast Aperture in rad  
