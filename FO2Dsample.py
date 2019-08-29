@@ -1,9 +1,9 @@
 from FO2Dconstants import *
 
 def create2DSimulatedObject():
-    amp = 1
-    simulatedObject = amp * np.zeros((simulatingSpaceTotalStep,simulatingSpaceTotalStep))
+    simulatedObject = np.zeros((simulatingSpaceTotalStep,simulatingSpaceTotalStep))
 
+    amp = 1
     simulatedObject[251 - 50:251 + 50, 251 - 50:251 + 50] = amp
 
     return simulatedObject
