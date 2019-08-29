@@ -19,7 +19,7 @@ def chunks(l, n):
         yield l[i:i + n]
 
 
-def main(mainPass):
+def main():
     start_time = time.time()
     from sample2D import create2DSimulatedObject
 
@@ -217,7 +217,6 @@ def main(mainPass):
 
     with Parallel(n_jobs=-1, verbose=50) as parallel:  # ,backend="threading"
         for process in breakProcess:
-            # multicoreResults = parallel(delayed(outerForLoop)(counter_i) for counter_i in process)
 
             multicoreResults = parallel(delayed(ijSymmetry)(counter_i) for counter_i in process)
             tempArray = np.array(multicoreResults)
@@ -243,4 +242,4 @@ def main(mainPass):
 
 
 if __name__ == '__main__':
-    main(0)
+    main()
