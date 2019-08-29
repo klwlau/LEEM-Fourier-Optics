@@ -1,5 +1,11 @@
 # Parameters in 2D FO Simulation
 
+## Computing Parameters
+
+`resultFileNote`: A string which will be added to the saved `.npy` result file name.  
+`timezone`: Recorded time's timezone, list of timezones can be found [here](https://stackoverflow.com/questions/13866926/is-there-a-list-of-pytz-timezones).   
+`numberOfThreads`: Number of threads used in the simulation with -1 means using all threads, -2 means using all threads minus 1.
+
 ## Simulation Parameters
 `simulatingSpaceSize`: The 2D simulation space in both direction measure in nanometer(nm).  
 `simulatingSpaceTotalStep`: Simulating space steps in both direction.  

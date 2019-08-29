@@ -21,4 +21,7 @@ Details of constants are listed [here](https://github.com/klwlau/LEEM-Fourier-Op
 To setup the sample in the simulation user can specify in `FO2Dsample.py`.  
 Details of sample setup are listed [here](https://github.com/klwlau/LEEM-Fourier-Optics/blob/master/docs/FO2Dsample.md).
 
-
+## Simulation Output
+Two `.npy` files are saved after the simulation. 
+- `simObject_TimeStamp.npy` for simulated sample.
+- `result_UserNote_TimeStamp.npy` for simulated result.
