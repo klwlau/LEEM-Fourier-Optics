@@ -20,3 +20,7 @@
 `alpha_ap`: Acceptance Aangle of the Contrast Aperture in radian  
 `M_L`: Lateral Magnification  
 `defocus`: Defocus current in mA  
+
+## Optimum LEEM Parameters
+
+LEEM parameters such as `C_3`, `C_5`, `C_c`, `C_3c` and `C_cc` are energy dependent. User can recalculate the optimum parameters according to this [paper](https://www.sciencedirect.com/science/article/abs/pii/S0304399111002294).
