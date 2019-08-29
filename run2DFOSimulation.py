@@ -23,7 +23,7 @@ def main():
     start_time = time.time()
     from sample2D import create2DSimulatedObject
 
-    def printStatus(counter, done=False, loopMode=False):
+    def printStatus(counter, done=False):
         if counter != 0:
             elapsedTime = ((time.time() - start_time) / 60)
             progress = (counter / len(loopList)) * 100
@@ -34,15 +34,8 @@ def main():
             if done:
                 print("-Total Time: %.2f Minutes -" % elapsedTime)
             else:
-                if loopMode:
-                    print("Loop:", loopMainCounter, "/", loopLen,
-                          "-ID:" + str(counter) + "--Elapsed Time: %.2f / %.2f min -" % (elapsedTime, totalTime)
-                          + "Time Left: %.2f  min -" % timeLeft + "OuterLoop Time:%.1f s" % (
-                                  elapsedTime * 60 / (counter + 1)) + "%.2f" % progress + "%--HKT:" + currentHKTime)
-                else:
-                    print("-ID:" + str(counter) + "--Elapsed Time: %.2f / %.2f min -" % (elapsedTime, totalTime)
-                          + "Time Left: %.2f  min -" % timeLeft + "OuterLoop Time: %.1f s--" % (
-                                  elapsedTime * 60 / (counter + 1)) + "%.2f" % progress + "%--HKT:" + currentHKTime)
+                print("-ID:" + str(counter) + "--Elapsed Time: %.2f / %.2f min -" % (elapsedTime, totalTime)
+                          + "Time Left: %.2f  min -" % timeLeft + "%.2f" % progress + "%--HKT:" + currentHKTime)
 
 
 
