@@ -54,8 +54,8 @@ def main():
     # defocus = mainPass
 
     # objectMaskStep = int((objectSpaceSize / sampleSpaceSize * sampleSpaceTotalStep) / 2)
-    sampleCoorRealSpaceXX, sampleCoorRealSpaceYY = np.mgrid[-sampleSpaceSize:sampleSpaceSize:sampleSpaceTotalStep * 1j,
-                                                   -sampleSpaceSize:sampleSpaceSize:sampleSpaceTotalStep * 1j]
+    sampleCoorRealSpaceXX, sampleCoorRealSpaceYY = np.mgrid[-simulatingSpaceSize:simulatingSpaceSize:simulatingSpaceTotalStep * 1j,
+                                                   -simulatingSpaceSize:simulatingSpaceSize:simulatingSpaceTotalStep * 1j]
 
     sampleStepSize = sampleCoorRealSpaceXX[1][0] - sampleCoorRealSpaceXX[0][0]
     simulatedSpace = np.zeros(sampleCoorRealSpaceXX.shape)
@@ -74,10 +74,10 @@ def main():
     amp = 1
     Object = amp * np.exp(1j * objectPhaseShift)
 
-    ObjectFT = np.fft.fftshift(np.fft.fft2(Object) / sampleSpaceTotalStep ** 2)
+    ObjectFT = np.fft.fftshift(np.fft.fft2(Object) / simulatingSpaceTotalStep ** 2)
 
     # setup qSpace
-    qSpaceCoor = 1 / sampleStepSize / (sampleSpaceTotalStep - 1) * np.arange(sampleSpaceTotalStep)
+    qSpaceCoor = 1 / sampleStepSize / (simulatingSpaceTotalStep - 1) * np.arange(simulatingSpaceTotalStep)
     qSpaceCoor = qSpaceCoor - (np.amax(qSpaceCoor) - np.amin(qSpaceCoor)) / 2  # adjust qSpaceCoor center
 
     qSpaceXX, qSpaceYY = np.meshgrid(qSpaceCoor, qSpaceCoor)

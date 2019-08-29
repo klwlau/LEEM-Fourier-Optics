@@ -7,9 +7,9 @@ else:
 
 resultFileName = "resultFileName"
 
-sampleSpaceTotalStep = 501  # sample total step size
-sampleSpaceSize = 25 * 1e-9  # nm #25 #
-# objectSpaceSize = 5 * 1e-9  # nm #5
+simulatingSpaceSize = 25 * 1e-9  # nm #25 #
+simulatingSpaceTotalStep = 501  # sample total step size
+
 
 U_a = 15.01e3  # eV  Accelerating Voltage
 U_o = 10  # eV  Electron Voltage
