@@ -32,5 +32,6 @@ After that we run `FO2Dconstants.py` in terminal:
 
     python FO2Dconstants.py
     
-Output:  
+Output:
+
 ![preview sample](./img/viewSample.PNG)
