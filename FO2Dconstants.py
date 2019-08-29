@@ -5,7 +5,7 @@ if __name__ == '__main__':
 else:
     print("Loading Constants.py")
 
-resultFileName = "resultFileName"
+resultFileNote = ""
 timezone = 'Asia/Hong_Kong'
 numberOfThreads = -1
 

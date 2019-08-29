@@ -211,8 +211,7 @@ def main():
     print("start saving matrix")
     nowDT = datetime.now(timeZonePytz)
     matrixI = matrixI.T
-    np.save(resultFileName + ".npy", matrixI)
-    np.save("result_"+startTimeStamp+".npy", matrixI)
+    np.save("result_"+resultFileNote+"_"+startTimeStamp+".npy", matrixI)
     print("finished saving matrix")
     print("End Main")
     printStatus(100, done=True)
