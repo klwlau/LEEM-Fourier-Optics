@@ -21,7 +21,7 @@ def chunks(l, n):
 
 def main():
     start_time = time.time()
-    from sample2D import create2DSimulatedObject
+    from FO2Dsample import create2DSimulatedObject
 
     def printStatus(counter, done=False):
         if counter != 0:
