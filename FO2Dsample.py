@@ -45,7 +45,6 @@ def create2DSimulatedObject(simulatedSpace):
 
         return returnMatrix
 
-    # simulatedObject += rippleObject(150, 251, 167, 300, -15)
     simulatedObject[251 - 50:251 + 50, 251 - 50:251 + 50] = 1
 
     return simulatedObject

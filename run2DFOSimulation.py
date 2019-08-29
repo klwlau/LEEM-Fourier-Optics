@@ -52,12 +52,6 @@ def main():
 
     sampleStepSize = sampleCoorRealSpaceXX[1][0] - sampleCoorRealSpaceXX[0][0]
     simulatedSpace = np.zeros(sampleCoorRealSpaceXX.shape)
-    # sampleCenterX, sampleCenterY = int(sampleSpaceTotalStep / 2 + 1), int(sampleSpaceTotalStep / 2 + 1)
-    # simulatedObjectMask = np.copy(simulatedSpace)
-    # simulatedObjectMask[sampleCenterX - objectMaskStep:sampleCenterX + objectMaskStep,
-    # sampleCenterY - objectMaskStep + 30:sampleCenterY + objectMaskStep + 30] = 1
-
-    # simulatedObject = np.multiply(create2DSimulatedObject(simulatedSpace), simulatedObjectMask)
 
     objectPhaseShift = K * create2DSimulatedObject(simulatedSpace)
 
