@@ -12,6 +12,7 @@ This is a simulation program written in python that help user to simulate sample
 - pytz 2019.2+
 
 # Simulation Setup
-Users can match the simulation with their LEEM setting by turning constant in the program.
+Users can match the simulation with their LEEM setting by tuning constants and sample in the program.
 
 ## 2D FO Simulation Setup
+In 2D FO Simulation, user can setup the constants in the `constants2DFO.py` file.
