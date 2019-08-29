@@ -12,16 +12,16 @@ To preview the sample user can run `FO2Dconstants.py` by itself, a plot of `simu
 
 For example we generate a square step object with amplitude 1 with the object 0 outside:
 
-    ```python
-    def create2DSimulatedObject():
-        # define a
-        simulatedObject = np.zeros((simulatingSpaceTotalStep,simulatingSpaceTotalStep))
-    
-        amp = 1
-        simulatedObject[251 - 50:251 + 50, 251 - 50:251 + 50] = amp
-    
-        return simulatedObject
-    ```
+```python
+def create2DSimulatedObject():
+    # define a
+    simulatedObject = np.zeros((simulatingSpaceTotalStep,simulatingSpaceTotalStep))
+
+    amp = 1
+    simulatedObject[251 - 50:251 + 50, 251 - 50:251 + 50] = amp
+
+    return simulatedObject
+```
 
 
 After that we run `FO2Dconstants.py` in terminal:
@@ -30,9 +30,3 @@ After that we run `FO2Dconstants.py` in terminal:
     
 Output:  
 ![preview sample](./img/viewSample.PNG)
-
-
-```python
-s = "test"
-print s
-```
