@@ -18,6 +18,8 @@ For example we generate a square step object with amplitude 1 with the object 0 
 
 ```python 
 
+from FO2Dconstants import 
+
 def create2DSimulatedObject():
     # define a zero array with dimension simulatingSpaceTotalStep by simulatingSpaceTotalStep.
     # simulatingSpaceTotalStep definition is load by "from FO2Dconstants import *"
