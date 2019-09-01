@@ -3,7 +3,7 @@
 To setup the object function, user can config a numpy array (np.array) in `FO2Dsample.py`. 
 The object funciton is called `simulatedObject` that is generated within a function called 
 `create2DSimulatedObject()`. Alternatively, user can load the object function from a np.array file `.npy` that the user 
-prepared separately. (A sample script is prepared in [here](##Loading object function from separate file))  
+prepared separately. (A sample script is prepared in [here](##Loading-object-function-from-separate-file))  
 
 the np array is generated during the simulation by create 2D simulated object in main()
 
