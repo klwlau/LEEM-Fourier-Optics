@@ -46,6 +46,8 @@ Output:
 
 ## Loading object function from separate file
 
+Here is a sample code for loading a object function stored in `objectFunction.npy` to the simulation.
+
 ```python 
 import numpy as np
 
