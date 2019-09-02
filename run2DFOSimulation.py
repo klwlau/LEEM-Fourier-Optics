@@ -54,7 +54,7 @@ def main():
     sampleStepSize = sampleCoorRealSpaceXX[1][0] - sampleCoorRealSpaceXX[0][0]
     simulatedSpace = np.zeros(sampleCoorRealSpaceXX.shape)
 
-    objectPhaseShift = K * create2DSimulatedObject(simulatedSpace)
+    objectPhaseShift = K * create2DSimulatedObject()
 
     np.save("simObject_"+startTimeStamp+".npy", objectPhaseShift)
 
