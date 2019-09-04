@@ -45,18 +45,18 @@ def main():
     q_max = alpha_ap / lamda
     q_ill = alpha_ill / lamda
 
-    # defocus = mainPass
 
-    # objectMaskStep = int((objectSpaceSize / sampleSpaceSize * sampleSpaceTotalStep) / 2)
+    objectPhaseShift = K * create2DSimulatedObject()
+    np.save("simObject_"+startTimeStamp+".npy", objectPhaseShift)
+
+    simulatingSpaceTotalStep = objectPhaseShift.shape[1]
+
     sampleCoorRealSpaceXX, sampleCoorRealSpaceYY = np.mgrid[-simulatingSpaceSize:simulatingSpaceSize:simulatingSpaceTotalStep * 1j,
                                                    -simulatingSpaceSize:simulatingSpaceSize:simulatingSpaceTotalStep * 1j]
 
     sampleStepSize = sampleCoorRealSpaceXX[1][0] - sampleCoorRealSpaceXX[0][0]
     simulatedSpace = np.zeros(sampleCoorRealSpaceXX.shape)
 
-    objectPhaseShift = K * create2DSimulatedObject()
-
-    np.save("simObject_"+startTimeStamp+".npy", objectPhaseShift)
 
     # apply wave function and apply FFT
     amp = 1

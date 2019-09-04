@@ -10,7 +10,7 @@ timezone = 'Asia/Hong_Kong'
 numberOfThreads = -1 # number of threads used in the simulation with -1 means using all threads, -2 means using all threads minus 1.
 
 simulatingSpaceSize = 25 * 1e-9  # total simulating space in nm
-simulatingSpaceTotalStep = 501  # total simulating steps
+# simulatingSpaceTotalStep = 501  # total simulating steps
 
 
 U_a = 15.01e3  # eV  Accelerating Voltage
