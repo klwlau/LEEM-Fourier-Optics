@@ -26,7 +26,7 @@ Details of sample setup are listed [here](https://github.com/klwlau/LEEM-Fourier
 After the config, user can run the software in terminal or by other editor:
 
 ```
-python run2DFOSimulation.py
+python runFO2DSimulation.py
 ```
 
 
