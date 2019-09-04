@@ -5,4 +5,3 @@ from joblib import Parallel, delayed
 import multiprocessing
 from FO1Dconstants import *
 
-print("test")
