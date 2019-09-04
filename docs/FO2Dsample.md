@@ -5,10 +5,7 @@ The object funciton is called `simulatedObject` that is generated within a funct
 `create2DSimulatedObject()`. Alternatively, user can load the object function from a np.array file `.npy` that the user 
 prepared separately. (A sample script is prepared in [here](#Loading-object-function-from-separate-file))
 
-(**Note**: User have to make sure that the loaded np.array have the same dimension with
- `simulatingSpaceTotalStep` in `FO2Dsample.py`, because, within the `main()` function, 
- the dimension of `simulatedObject` is not checked against the parameter`simulatingSpaceTotalStep` 
- in `FO2Dconstants.py`.)
+
       
 
 ## Preview object function
@@ -18,12 +15,9 @@ For example we generate a square step object with amplitude 1 with the object 0 
 
 ```python 
 
-from FO2Dconstants import 
-
 def create2DSimulatedObject():
-    # define a zero array with dimension simulatingSpaceTotalStep by simulatingSpaceTotalStep.
-    # simulatingSpaceTotalStep definition is load by "from FO2Dconstants import *"
-    simulatedObject = np.zeros((simulatingSpaceTotalStep,simulatingSpaceTotalStep))
+    # define a zero array with dimension 501 by 501.
+    simulatedObject = np.zeros((501, 501))
 
     #define the square step object
     amp = 1

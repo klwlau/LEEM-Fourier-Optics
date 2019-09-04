@@ -5,6 +5,7 @@ def create2DSimulatedObject():
     # define a zero array with dimension 501 by 501.
     simulatedObject = np.zeros((501, 501))
 
+    #define the square step object
     amp = 1
     simulatedObject[251 - 50:251 + 50, 251 - 50:251 + 50] = amp
 
