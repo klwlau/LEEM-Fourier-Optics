@@ -21,6 +21,8 @@ q = q.T
 # kCounter = 1
 for kVal in KList:
 
+    print("Start kVal:", kVal)
+
     F_wave_obj = np.zeros(int(2 * n_max))
 
     for i in range(len(F_wave_obj)):
@@ -66,7 +68,7 @@ for kVal in KList:
     for mat in parallelReult:
         matrixI += mat
 
-    # np.savetxt("foo.csv", matrixI, delimiter=",")
+    print("Saving kVal:", kVal)
     np.save("FO1Dresult_"+ str(kVal) + "_" + startTimeStamp + ".npy", matrixI)
 
 
