@@ -72,6 +72,6 @@ for mat in k:
     matrixI += mat
 
 np.savetxt("foo.csv", matrixI, delimiter=",")
-np.save("FO1Dresult_" + "_" + startTimeStamp + ".npy", matrixI)
+np.save("FO1Dresult" + "_" + startTimeStamp + ".npy", matrixI)
 
 # timer.toc()
