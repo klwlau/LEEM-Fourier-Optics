@@ -12,7 +12,7 @@ object_wavelength = 900e-9
 n_sample = 1 + 2 ** 10
 l = np.linspace(-object_wavelength, object_wavelength, n_sample)
 
-KList = [3, 4, 5, 6] * 2
+KList = np.array([3, 4, 5, 6]) * 2
 n_max = np.floor(q_max / (1 / object_wavelength))
 q = (1 / object_wavelength) * np.arange(-n_max, n_max, 1)
 
