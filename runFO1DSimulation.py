@@ -43,17 +43,24 @@ E_ct = E_cc * np.exp(-np.pi ** 2 * (delta_fc * lamda * (Q ** 2 - QQ ** 2) + 1 / 
 
 I = np.zeros((len(l), len(delta_z)))
 
-for zCounter, z in enumerate(delta_z):
+# for zCounter, z in enumerate(delta_z)
+
+def FO1D(z, zCounter):
     R_o = np.exp(1j * 2 * np.pi * (
-                C_3 * lamda ** 3 * (Q ** 4 - QQ ** 4) / 4 + C_5 * lamda ** 5 * (Q ** 6 - QQ ** 6) / 6 - z * lamda * (
-                    Q ** 2 - QQ ** 2) / 2))
+            C_3 * lamda ** 3 * (Q ** 4 - QQ ** 4) / 4 + C_5 * lamda ** 5 * (Q ** 6 - QQ ** 6) / 6 - z * lamda * (
+            Q ** 2 - QQ ** 2) / 2))
     E_s = np.exp(-np.pi ** 2 * q_ill ** 2 * (
-                C_3 * lamda ** 3 * (Q ** 3 - QQ ** 3) + C_5 * lamda ** 5 * (Q ** 5 - QQ ** 5) - z * lamda * (
-                    Q - QQ)) ** 2 / (4 * np.log(2)))
+            C_3 * lamda ** 3 * (Q ** 3 - QQ ** 3) + C_5 * lamda ** 5 * (Q ** 5 - QQ ** 5) - z * lamda * (
+            Q - QQ)) ** 2 / (4 * np.log(2)))
     AR = np.multiply(np.multiply(np.multiply(A, R_o), E_s), E_ct)
 
     for i in range(len(q)):
         for j in range(i + 1, len(q)):
             I[:, zCounter] = I[:, zCounter] + 2 * (AR[j][i] * np.exp(1j * 2 * np.pi * (Q[j][i] - QQ[j][i]) * l)).real
+
+    return I
+
+with Parallel(n_jobs=-1, verbose=50) as parallel:
+    k = parallel(delayed(FO1D)(z,zCounter) for zCounter, z in enumerate(delta_z))
 
 timer.toc()
