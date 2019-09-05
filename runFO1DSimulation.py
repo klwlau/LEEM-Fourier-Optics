@@ -5,11 +5,11 @@ from joblib import Parallel, delayed
 import multiprocessing
 from FO1Dconstants import *
 from scipy import special
-from pytictoc import TicToc
+# from pytictoc import TicToc
 
-timer = TicToc()
+# timer = TicToc()
 
-timer.tic()
+# timer.tic()
 fmt = '%H:%M:%S'  # %d/%m
 timeZonePytz = pytz.timezone(timezone)
 startTimeStamp = datetime.now(timeZonePytz).strftime('%Y%m%d_%H%M%S')
@@ -73,4 +73,4 @@ for mat in k:
 np.savetxt("foo.csv", matrixI, delimiter=",")
 np.save("FO1Dresult_"+"_"+startTimeStamp+".npy", matrixI)
 
-timer.toc()
+# timer.toc()
