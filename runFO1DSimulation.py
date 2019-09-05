@@ -10,6 +10,10 @@ from pytictoc import TicToc
 timer = TicToc()
 
 timer.tic()
+fmt = '%H:%M:%S'  # %d/%m
+timeZonePytz = pytz.timezone(timezone)
+startTimeStamp = datetime.now(timeZonePytz).strftime('%Y%m%d_%H%M%S')
+
 
 object_wavelength = 900e-9
 n_sample = 1 + 2 ** 10
@@ -41,7 +45,7 @@ E_cc = (1 - 1j * np.pi * delta_fcc * lamda * (Q ** 2 - QQ ** 2) / (4 * np.log(2)
 E_ct = E_cc * np.exp(-np.pi ** 2 * (delta_fc * lamda * (Q ** 2 - QQ ** 2) + 1 / 2 * delta_f3c * lamda ** 3 * (
             Q ** 4 - QQ ** 4)) ** 2 * E_cc ** 2 / (16 * np.log(2)))
 
-I = np.zeros((len(l), len(delta_z)))
+matrixI = np.zeros((len(l), len(delta_z)))
 
 # for zCounter, z in enumerate(delta_z)
 
@@ -56,11 +60,17 @@ def FO1D(z, zCounter):
 
     for i in range(len(q)):
         for j in range(i + 1, len(q)):
-            I[:, zCounter] = I[:, zCounter] + 2 * (AR[j][i] * np.exp(1j * 2 * np.pi * (Q[j][i] - QQ[j][i]) * l)).real
+            matrixI[:, zCounter] = matrixI[:, zCounter] + 2 * (AR[j][i] * np.exp(1j * 2 * np.pi * (Q[j][i] - QQ[j][i]) * l)).real
 
-    return I
+    return matrixI
 
-with Parallel(n_jobs=-1, verbose=50) as parallel:
+with Parallel(n_jobs=numberOfThreads, verbose=50) as parallel:
     k = parallel(delayed(FO1D)(z,zCounter) for zCounter, z in enumerate(delta_z))
+
+for mat in k:
+    matrixI += mat
+
+np.savetxt("foo.csv", matrixI, delimiter=",")
+np.save("FO1Dresult_"+"_"+startTimeStamp+".npy", matrixI)
 
 timer.toc()
