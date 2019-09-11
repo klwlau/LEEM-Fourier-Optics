@@ -126,5 +126,6 @@ with Parallel(n_jobs=numberOfThreads, verbose=50) as parallel:
 for mat in parallelReult:
     matrixI += mat
 
+matrixI = np.abs(matrixI)
 
 np.save("FO1Dresult_" + resultFileNote + "_" + startTimeStamp + ".npy", matrixI)
