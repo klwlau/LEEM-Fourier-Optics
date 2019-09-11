@@ -10,7 +10,7 @@ timeZonePytz = pytz.timezone(timezone)
 startTimeStamp = datetime.now(timeZonePytz).strftime('%Y%m%d_%H%M%S')
 
 object_wavelength = 900e-9
-n_sample = 1 + 2 ** 11
+n_sample = 1 + 2 ** 10
 # l = np.linspace(-object_wavelength, object_wavelength, n_sample)
 
 # KList = np.array([3, 4, 5, 6]) * 2
