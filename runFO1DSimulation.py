@@ -3,20 +3,21 @@ import pytz
 from joblib import Parallel, delayed
 from FO1Dconstants import *
 from scipy import special
+import multiprocessing
 
 fmt = '%H:%M:%S'  # %d/%m
 timeZonePytz = pytz.timezone(timezone)
 startTimeStamp = datetime.now(timeZonePytz).strftime('%Y%m%d_%H%M%S')
 
 object_wavelength = 900e-9
-n_sample = 1 + 2 ** 10
+n_sample = 1 + 2 ** 11
 # l = np.linspace(-object_wavelength, object_wavelength, n_sample)
 
-KList = np.array([3, 4, 5, 6]) * 2
-n_max = np.floor(q_max / (1 / object_wavelength))
-q = (1 / object_wavelength) * np.arange(-n_max, n_max, 1)
-
-q = q.T
+# KList = np.array([3, 4, 5, 6]) * 2
+# n_max = np.floor(q_max / (1 / object_wavelength))
+# q = (1 / object_wavelength) * np.arange(-n_max, n_max, 1)
+#
+# q = q.T
 
 # kVal = 1
 #
@@ -35,23 +36,30 @@ q = q.T
 
 K = 1
 period = 800
-l = np.linspace(-period,period,n_sample)
+l = np.linspace(-period, period, n_sample)
 h = np.zeros_like(l)
-for counter,element in enumerate(l):
-    if element <0:
+for counter, element in enumerate(l):
+    if element < 0:
         h[counter] = 1
-h = K*h
+h = K * h
 l *= 1e-9
-phase_shift = K*h*np.pi
+phase_shift = K * h * np.pi
 amp = 1
-
 
 # Main simulation
 
-wave_obj = amp*np.exp(1j*phase_shift)
-F_wave_obj = np.fft.fft(wave_obj,n_sample)
-# q = 1/
+wave_obj = amp * np.exp(1j * phase_shift)
+F_wave_obj = np.fft.fftshift(np.fft.fft(wave_obj, n_sample))
+q = 1 / (l[1] - l[0]) * np.arange(0, n_sample, 1) / (n_sample - 1)
+q = q - (np.max(q) - np.min(q)) / 2
+q = q.T
 
+a = np.sum(np.abs(q) <= q_max)
+
+
+if len(q)>a:
+    q = q[np.ceil(n_sample/2+1-(a-1)/2):np.floor(n_sample/2+1+(a+1)/2)]
+    F_wave_obj = F_wave_obj[np.ceil(n_sample / 2 + 1 - (a - 1) / 2):np.floor(n_sample / 2 + 1 + (a + 1) / 2)]
 
 Q, QQ = np.meshgrid(q, q)
 F_wave_obj_q, F_wave_obj_qq = np.meshgrid(F_wave_obj, np.conj(F_wave_obj))
@@ -62,7 +70,6 @@ E_ct = E_cc * np.exp(-np.pi ** 2 * (delta_fc * lamda * (Q ** 2 - QQ ** 2) + 1 / 
         Q ** 4 - QQ ** 4)) ** 2 * E_cc ** 2 / (16 * np.log(2)))
 
 matrixI = np.zeros((len(l), len(delta_z)))
-
 
 
 def FO1D(z, zCounter):
@@ -77,19 +84,18 @@ def FO1D(z, zCounter):
     for i in range(len(q)):
         for j in range(i + 1, len(q)):
             matrixI[:, zCounter] = matrixI[:, zCounter] + 2 * (
-                        AR[j][i] * np.exp(1j * 2 * np.pi * (Q[j][i] - QQ[j][i]) * l)).real
+                    AR[j][i] * np.exp(1j * 2 * np.pi * (Q[j][i] - QQ[j][i]) * l)).real
 
     return matrixI
 
 
-print("Total Task:",len(delta_z))
+print("Total Task:", len(delta_z))
+print("Total Parallel Steps:", len(delta_z)/(multiprocessing.cpu_count()+numberOfThreads+1))
 with Parallel(n_jobs=numberOfThreads, verbose=50) as parallel:
     parallelReult = parallel(delayed(FO1D)(z, zCounter) for zCounter, z in enumerate(delta_z))
 
 for mat in parallelReult:
     matrixI += mat
 
-# print("Saving kVal:", kVal)
-np.save("FO1Dresult_"+resultFileNote + "_" + startTimeStamp + ".npy", matrixI)
 
-
+np.save("FO1Dresult_" + resultFileNote + "_" + startTimeStamp + ".npy", matrixI)
