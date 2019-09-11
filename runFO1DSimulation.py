@@ -36,31 +36,31 @@ period = 800
 l = np.linspace(-period, period, n_sample)
 
 # Step Object
-# K = 1
-# h = np.zeros_like(l)
-# for counter, element in enumerate(l):
-#     if element < 0:
-#         h[counter] = 1
-# h = K * h
-# l *= 1e-9
-# phase_shift = K * h * np.pi
-# amp = 1
-
-# Sin Object
-K = 10*np.pi
-
-period = 900
-l = np.linspace(-period, period, n_sample)
-h = K*np.pi*np.sin(2*np.pi/period*l)
-l = l*1e-9
-phase_shift = h
+K = 1
+h = np.zeros_like(l)
+for counter, element in enumerate(l):
+    if element < 0:
+        h[counter] = 1
+h = K * h
+l *= 1e-9
+phase_shift = K * h * np.pi
 amp = 1
+
+# # Sin Object
+# K = 10*np.pi
+#
+# period = 900
+# l = np.linspace(-period, period, n_sample)
+# h = K*np.pi*np.sin(2*np.pi/period*l)
+# l = l*1e-9
+# phase_shift = h
+# amp = 1
 
 
 # Main simulation
 
 wave_obj = amp * np.exp(1j * phase_shift)
-F_wave_obj = np.fft.fftshift(np.fft.fft(wave_obj, n_sample))
+F_wave_obj = np.fft.fftshift(np.fft.fft(wave_obj, n_sample)*(1/n_sample))
 q = 1 / (l[1] - l[0]) * np.arange(0, n_sample, 1) / (n_sample - 1)
 q = q - (np.max(q) - np.min(q)) / 2
 q = q.T
@@ -102,8 +102,26 @@ def FO1D(z, zCounter):
 
 print("Total Task:", len(delta_z))
 print("Total Parallel Steps:", np.ceil(len(delta_z)/(multiprocessing.cpu_count()+numberOfThreads+1)))
+
+# z = delta_z[0]
+# zCounter = 0
+# R_o = np.exp(1j * 2 * np.pi * (
+#         C_3 * lamda ** 3 * (Q ** 4 - QQ ** 4) / 4 + C_5 * lamda ** 5 * (Q ** 6 - QQ ** 6) / 6 - z * lamda * (
+#         Q ** 2 - QQ ** 2) / 2))
+# E_s = np.exp(-np.pi ** 2 * q_ill ** 2 * (
+#         C_3 * lamda ** 3 * (Q ** 3 - QQ ** 3) + C_5 * lamda ** 5 * (Q ** 5 - QQ ** 5) - z * lamda * (
+#         Q - QQ)) ** 2 / (4 * np.log(2)))
+# AR = np.multiply(np.multiply(np.multiply(A, R_o), E_s), E_ct)
+#
+# for i in range(len(q)):
+#     for j in range(i + 1, len(q)):
+#         matrixI[:, zCounter] = matrixI[:, zCounter] + 2 * (
+#                 AR[j][i] * np.exp(1j * 2 * np.pi * (Q[j][i] - QQ[j][i]) * l)).real
+
+
 with Parallel(n_jobs=numberOfThreads, verbose=50) as parallel:
     parallelReult = parallel(delayed(FO1D)(z, zCounter) for zCounter, z in enumerate(delta_z))
+
 
 for mat in parallelReult:
     matrixI += mat

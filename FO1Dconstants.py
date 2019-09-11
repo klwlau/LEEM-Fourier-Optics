@@ -31,7 +31,7 @@ M_L = 0.653  # Lateral Magnification
 # delta_zo = -1 * defocus * 5.23 * 10 ** -6  # m
 # delta_z = 0e-6  # delta_zo * 3.2
 
-delta_z = np.arange(-120e-6,120e-6,2e-6)
+delta_z = np.linspace(-100E-6,100E-6,101)
 delta_fc = C_c*(delta_E/U_a)
 delta_f3c = C_3c*(delta_E/U_a)
 delta_fcc = C_cc*(delta_E/U_a)**2
