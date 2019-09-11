@@ -72,3 +72,4 @@ for kVal in KList:
     np.save("FO1Dresult_"+ str(kVal) + "_" + startTimeStamp + ".npy", matrixI)
 
 
+
