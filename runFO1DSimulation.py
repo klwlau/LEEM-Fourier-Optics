@@ -90,7 +90,7 @@ def FO1D(z, zCounter):
 
 
 print("Total Task:", len(delta_z))
-print("Total Parallel Steps:", len(delta_z)/(multiprocessing.cpu_count()+numberOfThreads+1))
+print("Total Parallel Steps:", np.ceil(len(delta_z)/(multiprocessing.cpu_count()+numberOfThreads+1)))
 with Parallel(n_jobs=numberOfThreads, verbose=50) as parallel:
     parallelReult = parallel(delayed(FO1D)(z, zCounter) for zCounter, z in enumerate(delta_z))
 
