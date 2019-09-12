@@ -7,7 +7,7 @@ else:
 
 
 
-resultFileNote = "NACSineObject"
+taskName = "NACSineObject"
 timezone = 'Asia/Hong_Kong'
 numberOfThreads = -1 # number of threads used in the simulation with -1 means using all threads, -2 means using all threads minus 1.
 

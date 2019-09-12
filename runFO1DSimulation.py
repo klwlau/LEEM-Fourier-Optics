@@ -99,6 +99,7 @@ def FO1D(z, zCounter):
     return matrixI
 
 
+print("Task:",taskName)
 print("Total Task:", len(delta_z))
 print("Total Parallel Steps:", np.ceil(len(delta_z)/(multiprocessing.cpu_count()+numberOfThreads+1)))
 
@@ -128,7 +129,7 @@ for mat in parallelReult:
 matrixI = np.abs(matrixI)
 
 
-resultFileName = "FO1Dresult_" + resultFileNote + "_" + startTimeStamp + ".npy"
+resultFileName = "FO1Dresult_" + taskName + "_" + startTimeStamp + ".npy"
 print("Saving result to:",resultFileName)
 
 np.save(resultFileName, matrixI)
