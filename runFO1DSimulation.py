@@ -69,7 +69,7 @@ a = np.sum(np.abs(q) <= q_max)
 
 if len(q)>a:
     q = q[int(np.ceil(n_sample/2+1-(a-1)/2)):int(np.floor(n_sample/2+1+(a+1)/2))]
-    F_wave_obj = F_wave_obj[np.ceil(n_sample / 2 + 1 - (a - 1) / 2):np.floor(n_sample / 2 + 1 + (a + 1) / 2)]
+    F_wave_obj = F_wave_obj[int(np.ceil(n_sample / 2 + 1 - (a - 1) / 2)):int(np.floor(n_sample / 2 + 1 + (a + 1) / 2))]
 
 Q, QQ = np.meshgrid(q, q)
 F_wave_obj_q, F_wave_obj_qq = np.meshgrid(F_wave_obj, np.conj(F_wave_obj))
