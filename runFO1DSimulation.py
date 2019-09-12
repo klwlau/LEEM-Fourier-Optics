@@ -10,26 +10,6 @@ startTimeStamp = datetime.now(timeZonePytz).strftime('%Y%m%d_%H%M%S')
 
 object_wavelength = 900e-9
 n_sample = 1 + 2 ** 10
-# l = np.linspace(-object_wavelength, object_wavelength, n_sample)
-
-# KList = np.array([3, 4, 5, 6]) * 2
-# n_max = np.floor(q_max / (1 / object_wavelength))
-# q = (1 / object_wavelength) * np.arange(-n_max, n_max, 1)
-#
-# q = q.T
-
-# kVal = 1
-#
-# print("Start kVal:", kVal)
-#
-# F_wave_obj = np.zeros(int(2 * n_max))
-#
-# for i in range(len(F_wave_obj)):
-#     n = i - (n_max + 1)
-#     if n < 0:
-#         F_wave_obj[i] = (-1) ** (abs(n)) * special.jv(abs(n), kVal * np.pi)
-#     else:
-#         F_wave_obj[i] = special.jv(n, kVal * np.pi)
 
 period = 800
 l = np.linspace(-period, period, n_sample)
