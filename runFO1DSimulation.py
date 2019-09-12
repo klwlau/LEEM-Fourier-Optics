@@ -2,7 +2,6 @@ from datetime import datetime
 import pytz
 from joblib import Parallel, delayed
 from FO1Dconstants import *
-from scipy import special
 import multiprocessing
 
 fmt = '%H:%M:%S'  # %d/%m
@@ -128,4 +127,8 @@ for mat in parallelReult:
 
 matrixI = np.abs(matrixI)
 
-np.save("FO1Dresult_" + resultFileNote + "_" + startTimeStamp + ".npy", matrixI)
+
+resultFileName = "FO1Dresult_" + resultFileNote + "_" + startTimeStamp + ".npy"
+print("Saving result to:",resultFileName)
+
+np.save(resultFileName, matrixI)
