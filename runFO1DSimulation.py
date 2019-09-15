@@ -26,6 +26,7 @@ l = np.linspace(-period, period, n_sample)
 # amp = 1
 
 # # Sin Object
+
 K = 10 * np.pi
 
 h = K * np.pi * np.sin(2 * np.pi / period * l)
