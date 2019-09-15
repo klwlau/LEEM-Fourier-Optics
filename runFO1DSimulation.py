@@ -14,6 +14,33 @@ n_sample = 1 + 2 ** 10
 period = 800
 l = np.linspace(-period, period, n_sample)
 
+
+def FO1D(z, zCounter):
+    R_o = np.exp(1j * 2 * np.pi * (
+            C_3 * lamda ** 3 * (Q ** 4 - QQ ** 4) / 4 + C_5 * lamda ** 5 * (Q ** 6 - QQ ** 6) / 6 - z * lamda * (
+            Q ** 2 - QQ ** 2) / 2))
+    E_s = np.exp(-np.pi ** 2 * q_ill ** 2 * (
+            C_3 * lamda ** 3 * (Q ** 3 - QQ ** 3) + C_5 * lamda ** 5 * (Q ** 5 - QQ ** 5) - z * lamda * (
+            Q - QQ)) ** 2 / (4 * np.log(2)))
+
+    # print("QQ.shape", QQ.shape)
+    # print("A.shape",A.shape)
+    # print("R_o.shape",R_o.shape)
+    # print("E_s.shape",E_s.shape)
+    # print("E_ct.shape",E_ct.shape)
+
+
+    AR = np.multiply(np.multiply(np.multiply(A, R_o), E_s), E_ct)
+
+    for i in range(len(q)):
+        for j in range(i + 1, len(q)):
+            matrixI[:, zCounter] = matrixI[:, zCounter] + 2 * (
+                    AR[j][i] * np.exp(1j * 2 * np.pi * (Q[j][i] - QQ[j][i]) * l)).real
+
+    matrixI[:, zCounter] = matrixI[:, zCounter] + np.trace(AR) * np.ones_like(l)
+
+    return matrixI
+
 # #####################Step Object#####################
 # K = 1
 # h = np.zeros_like(l)
@@ -38,6 +65,8 @@ amp = 1
 
 
 # Main simulation
+
+
 
 wave_obj = amp * np.exp(1j * phase_shift)
 
@@ -71,31 +100,7 @@ E_ct = E_cc * np.exp(-np.pi ** 2 * (delta_fc * lamda * (Q ** 2 - QQ ** 2) + 1 / 
 matrixI = np.zeros((len(l), len(delta_z)), dtype=complex)
 
 
-def FO1D(z, zCounter):
-    R_o = np.exp(1j * 2 * np.pi * (
-            C_3 * lamda ** 3 * (Q ** 4 - QQ ** 4) / 4 + C_5 * lamda ** 5 * (Q ** 6 - QQ ** 6) / 6 - z * lamda * (
-            Q ** 2 - QQ ** 2) / 2))
-    E_s = np.exp(-np.pi ** 2 * q_ill ** 2 * (
-            C_3 * lamda ** 3 * (Q ** 3 - QQ ** 3) + C_5 * lamda ** 5 * (Q ** 5 - QQ ** 5) - z * lamda * (
-            Q - QQ)) ** 2 / (4 * np.log(2)))
 
-    # print("QQ.shape", QQ.shape)
-    # print("A.shape",A.shape)
-    # print("R_o.shape",R_o.shape)
-    # print("E_s.shape",E_s.shape)
-    # print("E_ct.shape",E_ct.shape)
-
-
-    AR = np.multiply(np.multiply(np.multiply(A, R_o), E_s), E_ct)
-
-    for i in range(len(q)):
-        for j in range(i + 1, len(q)):
-            matrixI[:, zCounter] = matrixI[:, zCounter] + 2 * (
-                    AR[j][i] * np.exp(1j * 2 * np.pi * (Q[j][i] - QQ[j][i]) * l)).real
-
-    matrixI[:, zCounter] = matrixI[:, zCounter] + np.trace(AR) * np.ones_like(l)
-
-    return matrixI
 
 
 print("Task:", taskName)
