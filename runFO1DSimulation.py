@@ -93,18 +93,18 @@ print("Task:", taskName)
 print("Total Task:", len(delta_z))
 print("Total Parallel Steps:", np.ceil(len(delta_z) / (multiprocessing.cpu_count() + numberOfThreads + 1)))
 
-FO1D(delta_z[0],0)
+# FO1D(delta_z[0],0)
 
 
-# with Parallel(n_jobs=numberOfThreads, verbose=50) as parallel:
-#     parallelReult = parallel(delayed(FO1D)(z, zCounter) for zCounter, z in enumerate(delta_z))
-#
-# for mat in parallelReult:
-#     matrixI += mat
-#
-# matrixI = np.abs(matrixI)
-#
-# resultFileName = "FO1Dresult_" + taskName + "_" + startTimeStamp + ".npy"
-# print("Saving result to:", resultFileName)
-#
-# np.save(resultFileName, matrixI)
+with Parallel(n_jobs=numberOfThreads, verbose=50) as parallel:
+    parallelReult = parallel(delayed(FO1D)(z, zCounter) for zCounter, z in enumerate(delta_z))
+
+for mat in parallelReult:
+    matrixI += mat
+
+matrixI = np.abs(matrixI)
+
+resultFileName = "FO1Dresult_" + taskName + "_" + startTimeStamp + ".npy"
+print("Saving result to:", resultFileName)
+
+np.save(resultFileName, matrixI)
