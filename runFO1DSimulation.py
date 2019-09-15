@@ -28,7 +28,6 @@ l = np.linspace(-period, period, n_sample)
 # # Sin Object
 K = 10 * np.pi
 
-print("l.shape",l.shape)
 h = K * np.pi * np.sin(2 * np.pi / period * l)
 l = l * 1e-9
 phase_shift = h
@@ -40,19 +39,17 @@ wave_obj = amp * np.exp(1j * phase_shift)
 F_wave_obj = np.fft.fftshift(np.fft.fft(wave_obj, n_sample) * (1 / n_sample))
 
 n_max = np.floor(q_max / (1 / object_wavelength))
-# q = (1 / object_wavelength) * np.arange(-n_max, n_max, 1)
-# q = q.T
 q = 1/(l[1]-l[0])*np.arange(0,n_sample,1)/(n_sample)
 q = q-(np.max(q)-np.min(q))/2
 
 a = np.sum(np.abs(q) <= q_max)
 
 if len(q) >a:
-    print("trigger if")
+    # print("trigger if")
     q = q[int(np.ceil(n_sample/2+1-(a-1)/2)):int(np.floor(n_sample/2+1+(a+1)/2))]
     F_wave_obj = F_wave_obj[int(np.ceil(n_sample / 2 + 1 - (a - 1) / 2)):int(np.floor(n_sample / 2 + 1 + (a + 1) / 2))]
-else:
-    print("did not trigger if")
+# else:
+#     print("did not trigger if")
 
 Q, QQ = np.meshgrid(q, q)
 F_wave_obj_q, F_wave_obj_qq = np.meshgrid(F_wave_obj, np.conj(F_wave_obj))
