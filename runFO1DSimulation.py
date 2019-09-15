@@ -36,6 +36,12 @@ amp = 1
 # Main simulation
 
 wave_obj = amp * np.exp(1j * phase_shift)
+
+objectFileName = "FO1DObject_" + taskName + "_" + startTimeStamp + ".npy"
+print("Saving object to:", objectFileName)
+np.save(objectFileName,wave_obj)
+
+
 F_wave_obj = np.fft.fftshift(np.fft.fft(wave_obj, n_sample) * (1 / n_sample))
 
 n_max = np.floor(q_max / (1 / object_wavelength))
@@ -103,9 +109,8 @@ for mat in parallelReult:
 
 matrixI = np.abs(matrixI)
 
-resultFileName = "FO1Dresult_" + taskName + "_" + startTimeStamp + ".npy"
-objectFileName = "FO1DObject_" + taskName + "_" + startTimeStamp + ".npy"
+resultFileName = "FO1DResult_" + taskName + "_" + startTimeStamp + ".npy"
+
 print("Saving result to:", resultFileName)
 
-np.save(objectFileName,wave_obj)
 np.save(resultFileName, matrixI)
