@@ -27,8 +27,8 @@ l = np.linspace(-period, period, n_sample)
 # #####################Step Object#####################
 
 #####################Sin Object#####################
-
-K = 10 * np.pi
+kval = 30
+K = kval * np.pi
 h = K * np.pi * np.sin(2 * np.pi / period * l)
 l = l * 1e-9
 phase_shift = h
@@ -39,7 +39,9 @@ amp = 1
 
 wave_obj = amp * np.exp(1j * phase_shift)
 
-objectFileName = "CTF1DObjectWave_" + taskName + "_" + startTimeStamp + ".npy"
+# objectFileName = "CTF1DObjectWave_" + taskName + "_" + startTimeStamp + ".npy"
+objectFileName = "CTF1DObjectWave_" + taskName + "_"+str(kval)+"pi_" + startTimeStamp + ".npy"
+
 print("Saving object to:", objectFileName)
 np.save(objectFileName, phase_shift)
 
@@ -103,9 +105,9 @@ for pcounter , mat in enumerate(parallelReult):
 
 
 matrixI = np.abs(matrixI)**2
+# resultFileName = "CTF1DResult_" + taskName + "_" + startTimeStamp + ".npy"
+resultFileName = "CTF1DResult_" + taskName +"_"+ str(kval)+"pi_" + startTimeStamp + ".npy"
 
-
-resultFileName = "CTF1DResult_" + taskName + "_" + startTimeStamp + ".npy"
 print("Saving result to:", resultFileName)
 
 np.save(resultFileName, matrixI)
