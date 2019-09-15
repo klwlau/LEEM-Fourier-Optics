@@ -84,7 +84,7 @@ def FO1D(z, zCounter):
             matrixI[:, zCounter] = matrixI[:, zCounter] + 2 * (
                     AR[j][i] * np.exp(1j * 2 * np.pi * (Q[j][i] - QQ[j][i]) * l)).real
 
-    matrixI[:, zCounter] = matrixI[:, zCounter] + np.trace(AR) * np.ones_like(l)
+    # matrixI[:, zCounter] = matrixI[:, zCounter] + np.trace(AR) * np.ones_like(l)
 
     return matrixI
 
