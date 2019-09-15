@@ -11,7 +11,7 @@ startTimeStamp = datetime.now(timeZonePytz).strftime('%Y%m%d_%H%M%S')
 object_wavelength = 900e-9
 n_sample = 1 + 2 ** 10
 
-period = 800
+period = 900
 l = np.linspace(-period, period, n_sample)
 
 # ##Step Object
