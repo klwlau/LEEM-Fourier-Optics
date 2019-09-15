@@ -48,7 +48,7 @@ M_L = 0.653  # Lateral Magnification
 ##################### NAC Constants######################
 
 
-delta_z = np.linspace(-700E-6,700E-6,101)
+delta_z = np.linspace(-100E-6,100E-6,101)
 
 ###################################################################
 delta_fc = C_c*(delta_E/U_a)
