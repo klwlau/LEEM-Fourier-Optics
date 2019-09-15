@@ -28,8 +28,7 @@ l = np.linspace(-period, period, n_sample)
 # # Sin Object
 K = 10 * np.pi
 
-period = 900
-l = np.linspace(-period, period, n_sample)
+print("l.shape",l.shape)
 h = K * np.pi * np.sin(2 * np.pi / period * l)
 l = l * 1e-9
 phase_shift = h
@@ -68,6 +67,13 @@ def FO1D(z, zCounter):
             C_3 * lamda ** 3 * (Q ** 3 - QQ ** 3) + C_5 * lamda ** 5 * (Q ** 5 - QQ ** 5) - z * lamda * (
             Q - QQ)) ** 2 / (4 * np.log(2)))
 
+    print("QQ.shape", QQ.shape)
+    print("A.shape",A.shape)
+    print("R_o.shape",R_o.shape)
+    print("E_s.shape",E_s.shape)
+    print("E_ct.shape",E_ct.shape)
+
+
     AR = np.multiply(np.multiply(np.multiply(A, R_o), E_s), E_ct)
 
     for i in range(len(q)):
@@ -84,15 +90,18 @@ print("Task:", taskName)
 print("Total Task:", len(delta_z))
 print("Total Parallel Steps:", np.ceil(len(delta_z) / (multiprocessing.cpu_count() + numberOfThreads + 1)))
 
-with Parallel(n_jobs=numberOfThreads, verbose=50) as parallel:
-    parallelReult = parallel(delayed(FO1D)(z, zCounter) for zCounter, z in enumerate(delta_z))
+FO1D(delta_z[0],0)
 
-for mat in parallelReult:
-    matrixI += mat
 
-matrixI = np.abs(matrixI)
-
-resultFileName = "FO1Dresult_" + taskName + "_" + startTimeStamp + ".npy"
-print("Saving result to:", resultFileName)
-
-np.save(resultFileName, matrixI)
+# with Parallel(n_jobs=numberOfThreads, verbose=50) as parallel:
+#     parallelReult = parallel(delayed(FO1D)(z, zCounter) for zCounter, z in enumerate(delta_z))
+#
+# for mat in parallelReult:
+#     matrixI += mat
+#
+# matrixI = np.abs(matrixI)
+#
+# resultFileName = "FO1Dresult_" + taskName + "_" + startTimeStamp + ".npy"
+# print("Saving result to:", resultFileName)
+#
+# np.save(resultFileName, matrixI)
