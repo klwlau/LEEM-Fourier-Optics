@@ -40,7 +40,7 @@ wave_obj = amp * np.exp(1j * phase_shift)
 
 objectFileName = "FO1DObjectWave_" + taskName + "_" + startTimeStamp + ".npy"
 print("Saving object to:", objectFileName)
-np.save(objectFileName,wave_obj)
+np.save(objectFileName,phase_shift)
 
 
 F_wave_obj = np.fft.fftshift(np.fft.fft(wave_obj, n_sample) * (1 / n_sample))
