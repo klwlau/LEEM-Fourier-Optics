@@ -96,7 +96,7 @@ print("Total Parallel Steps:", np.ceil(len(delta_z) / (multiprocessing.cpu_count
 # FO1D(delta_z[0],0)
 
 
-with Parallel(n_jobs=numberOfThreads, verbose=50) as parallel:
+with Parallel(n_jobs=numberOfThreads, verbose=50,max_nbytes="10M") as parallel:
     parallelReult = parallel(delayed(FO1D)(z, zCounter) for zCounter, z in enumerate(delta_z))
 
 for mat in parallelReult:
