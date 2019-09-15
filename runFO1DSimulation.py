@@ -42,7 +42,7 @@ F_wave_obj = np.fft.fftshift(np.fft.fft(wave_obj, n_sample) * (1 / n_sample))
 n_max = np.floor(q_max / (1 / object_wavelength))
 # q = (1 / object_wavelength) * np.arange(-n_max, n_max, 1)
 # q = q.T
-q = 1/(l[1]-l[0])*np.arange(0,n_sample-1,1)/(n_sample-1)
+q = 1/(l[1]-l[0])*np.arange(0,n_sample,1)/(n_sample)
 q = q-(np.max(q)-np.min(q))/2
 
 a = np.sum(np.abs(q) <= q_max)
@@ -73,11 +73,11 @@ def FO1D(z, zCounter):
             C_3 * lamda ** 3 * (Q ** 3 - QQ ** 3) + C_5 * lamda ** 5 * (Q ** 5 - QQ ** 5) - z * lamda * (
             Q - QQ)) ** 2 / (4 * np.log(2)))
 
-    print("QQ.shape", QQ.shape)
-    print("A.shape",A.shape)
-    print("R_o.shape",R_o.shape)
-    print("E_s.shape",E_s.shape)
-    print("E_ct.shape",E_ct.shape)
+    # print("QQ.shape", QQ.shape)
+    # print("A.shape",A.shape)
+    # print("R_o.shape",R_o.shape)
+    # print("E_s.shape",E_s.shape)
+    # print("E_ct.shape",E_ct.shape)
 
 
     AR = np.multiply(np.multiply(np.multiply(A, R_o), E_s), E_ct)
