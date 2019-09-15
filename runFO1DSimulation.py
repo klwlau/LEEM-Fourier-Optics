@@ -126,3 +126,4 @@ resultFileName = "FO1DResult_" + taskName +"_"+ str(kval)+"pi_" + startTimeStamp
 print("Saving result to:", resultFileName)
 
 np.save(resultFileName, matrixI)
+print("Done")
