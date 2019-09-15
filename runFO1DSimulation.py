@@ -45,11 +45,10 @@ q = q-(np.max(q)-np.min(q))/2
 a = np.sum(np.abs(q) <= q_max)
 
 if len(q) >a:
-    # print("trigger if")
+
     q = q[int(np.ceil(n_sample/2+1-(a-1)/2)):int(np.floor(n_sample/2+1+(a+1)/2))]
     F_wave_obj = F_wave_obj[int(np.ceil(n_sample / 2 + 1 - (a - 1) / 2)):int(np.floor(n_sample / 2 + 1 + (a + 1) / 2))]
-# else:
-#     print("did not trigger if")
+
 
 Q, QQ = np.meshgrid(q, q)
 F_wave_obj_q, F_wave_obj_qq = np.meshgrid(F_wave_obj, np.conj(F_wave_obj))
@@ -105,6 +104,8 @@ for mat in parallelReult:
 matrixI = np.abs(matrixI)
 
 resultFileName = "FO1Dresult_" + taskName + "_" + startTimeStamp + ".npy"
+objectFileName = "FO1DObject_" + taskName + "_" + startTimeStamp + ".npy"
 print("Saving result to:", resultFileName)
 
+np.save(objectFileName,wave_obj)
 np.save(resultFileName, matrixI)
