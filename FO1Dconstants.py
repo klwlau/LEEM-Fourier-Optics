@@ -7,7 +7,7 @@ else:
 
 
 
-taskName = "NACStepObject_Trace"
+taskName = "NACSinObject_Trace"
 timezone = 'Asia/Hong_Kong'
 numberOfThreads = -1 # number of threads used in the simulation with -1 means using all threads, -2 means using all threads minus 1.
 
@@ -48,7 +48,7 @@ M_L = 0.653  # Lateral Magnification
 ##################### NAC Constants######################
 
 
-delta_z = np.linspace(-100E-6,100E-6,101)
+delta_z = np.linspace(-700E-6,700E-6,101)
 
 ###################################################################
 delta_fc = C_c*(delta_E/U_a)
