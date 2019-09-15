@@ -37,7 +37,7 @@ amp = 1
 
 wave_obj = amp * np.exp(1j * phase_shift)
 
-objectFileName = "FO1DObject_" + taskName + "_" + startTimeStamp + ".npy"
+objectFileName = "FO1DObjectWave_" + taskName + "_" + startTimeStamp + ".npy"
 print("Saving object to:", objectFileName)
 np.save(objectFileName,wave_obj)
 
