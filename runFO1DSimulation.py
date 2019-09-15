@@ -14,24 +14,24 @@ n_sample = 1 + 2 ** 10
 period = 800
 l = np.linspace(-period, period, n_sample)
 
-# ##Step Object
-# K = 1
-# h = np.zeros_like(l)
-# for counter, element in enumerate(l):
-#     if element < 0:
-#         h[counter] = 1
-# h = K * h
-# l *= 1e-9
-# phase_shift = K * h * np.pi
-# amp = 1
-
-# # Sin Object
-K = 10 * np.pi
-
-h = K * np.pi * np.sin(2 * np.pi / period * l)
-l = l * 1e-9
-phase_shift = h
+##Step Object
+K = 1
+h = np.zeros_like(l)
+for counter, element in enumerate(l):
+    if element < 0:
+        h[counter] = 1
+h = K * h
+l *= 1e-9
+phase_shift = K * h * np.pi
 amp = 1
+
+# # # Sin Object
+# K = 10 * np.pi
+#
+# h = K * np.pi * np.sin(2 * np.pi / period * l)
+# l = l * 1e-9
+# phase_shift = h
+# amp = 1
 
 # Main simulation
 
