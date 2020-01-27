@@ -37,7 +37,8 @@ For  **Non-aberration-corrected**:
 | 10       | 0.345 | 39.4 | -0.075 | -59.37 | 23.09 |
 | 30       | 0.305 | 14.5 | -0.052 | -16.12 | 4.58  |
 
-For  **Aberration-corrected**:               
+For  **Aberration-corrected**:     
+
 | U_o (eV) | C_3 | C_5  | C_c | C_3c  | C_cc |
 | -------- | --- | ---  | --- | ----  | ---- |
 | 1        | 0   | 749  | 0   | -1433 | 731  |
