@@ -27,7 +27,8 @@ LEEM parameters such as `C_3`, `C_5`, `C_c`, `C_3c` and `C_cc` are energy depend
 
 There are calculated aberration coefficient for IBM LEEM system at image plane *M* = 1, sample diatance *L* = 1.5mm and microscope potential *U_a* = 15010eV in table 1 in Ultramicroscopy, **115**, 88–108 (2012).
 
-| *U_o* (eV)  | *C_3* |
-| ------------- | ------------- |
-| Content Cell  | Content Cell  |
-| Content Cell  | Content Cell  |
+| U_o (eV) | C_3 | C_5 | C_c | C_3c | C_cc |
+| -------- | --- | --- | --- | ---- | ---- |
+| *Non-aberration-corrected*               |
+| 1 | 0.492 | 768 | -0.13 | -1484 | 719 |
+
