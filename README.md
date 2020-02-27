@@ -32,8 +32,8 @@ python runFO2DSimulation.py
 
 ## Simulation Output
 Two `.npy` files are saved after the simulation. 
-- `simObject_TimeStamp.npy` for simulated sample.
-- `result_UserNote_TimeStamp.npy` for simulated result.
+- `simObject_<Time Stamp>.npy` for simulated sample.
+- `result_<User Note>_<TimeStamp>.npy` for simulated result.
 
 # Terms of use
 
