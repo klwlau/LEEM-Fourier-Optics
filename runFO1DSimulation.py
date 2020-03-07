@@ -29,7 +29,6 @@ def FO1D(z, zCounter):
     # print("E_s.shape",E_s.shape)
     # print("E_ct.shape",E_ct.shape)
 
-
     AR = np.multiply(np.multiply(np.multiply(A, R_o), E_s), E_ct)
 
     for i in range(len(q)):
@@ -63,33 +62,28 @@ amp = 1
 #####################Sin Object#####################
 
 
-
 # Main simulation
-
 
 
 wave_obj = amp * np.exp(1j * phase_shift)
 
 # objectFileName = "FO1DObjectWave_" + taskName + "_" + startTimeStamp + ".npy"
-objectFileName = "FO1DObjectWave_" + taskName + "_"+str(kval)+"pi_" + startTimeStamp + ".npy"
+objectFileName = "FO1DObjectWave_" + taskName + "_" + str(kval) + "pi_" + startTimeStamp + ".npy"
 
 print("Saving object to:", objectFileName)
 np.save(objectFileName, phase_shift)
 
-
 F_wave_obj = np.fft.fftshift(np.fft.fft(wave_obj, n_sample) * (1 / n_sample))
 
 n_max = np.floor(q_max / (1 / object_wavelength))
-q = 1/(l[1]-l[0])*np.arange(0,n_sample,1)/(n_sample)
-q = q-(np.max(q)-np.min(q))/2
+q = 1 / (l[1] - l[0]) * np.arange(0, n_sample, 1) / (n_sample)
+q = q - (np.max(q) - np.min(q)) / 2
 
 a = np.sum(np.abs(q) <= q_max)
 
-if len(q) >a:
-
-    q = q[int(np.ceil(n_sample/2+1-(a-1)/2)):int(np.floor(n_sample/2+1+(a+1)/2))]
+if len(q) > a:
+    q = q[int(np.ceil(n_sample / 2 + 1 - (a - 1) / 2)):int(np.floor(n_sample / 2 + 1 + (a + 1) / 2))]
     F_wave_obj = F_wave_obj[int(np.ceil(n_sample / 2 + 1 - (a - 1) / 2)):int(np.floor(n_sample / 2 + 1 + (a + 1) / 2))]
-
 
 Q, QQ = np.meshgrid(q, q)
 F_wave_obj_q, F_wave_obj_qq = np.meshgrid(F_wave_obj, np.conj(F_wave_obj))
@@ -101,10 +95,6 @@ E_ct = E_cc * np.exp(-np.pi ** 2 * (delta_fc * lamda * (Q ** 2 - QQ ** 2) + 1 / 
 
 matrixI = np.zeros((len(l), len(delta_z)), dtype=complex)
 
-
-
-
-
 print("Task:", taskName)
 print("Total Task:", len(delta_z))
 print("Total Parallel Steps:", np.ceil(len(delta_z) / (multiprocessing.cpu_count() + numberOfThreads + 1)))
@@ -112,7 +102,7 @@ print("Total Parallel Steps:", np.ceil(len(delta_z) / (multiprocessing.cpu_count
 # FO1D(delta_z[0],0)
 
 
-with Parallel(n_jobs=numberOfThreads, verbose=50,max_nbytes="50M") as parallel:
+with Parallel(n_jobs=numberOfThreads, verbose=50, max_nbytes="50M") as parallel:
     parallelReult = parallel(delayed(FO1D)(z, zCounter) for zCounter, z in enumerate(delta_z))
 
 for mat in parallelReult:
@@ -121,7 +111,7 @@ for mat in parallelReult:
 matrixI = np.abs(matrixI)
 
 # resultFileName = "FO1DResult_" + taskName + "_" + startTimeStamp + ".npy"
-resultFileName = "FO1DResult_" + taskName +"_"+ str(kval)+"pi_" + startTimeStamp + ".npy"
+resultFileName = "FO1DResult_" + taskName + "_" + str(kval) + "pi_" + startTimeStamp + ".npy"
 
 print("Saving result to:", resultFileName)
 
