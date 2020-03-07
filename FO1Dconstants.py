@@ -46,6 +46,9 @@ M_L = 0.653  # Lateral Magnification
 # delta_E = 0.25  # eV  Energy Spread
 # M_L = 0.653  # Lateral Magnification
 # ##################### NAC Constants######################
+defocus_current = np.linspace(-7, 7, 71)  #mA
+delta_zo = defocus_current * 5.23 * 10 ** -6
+delta_z = delta_zo*3.2
 
 
 delta_z = np.linspace(-200E-6,200E-6,101)
