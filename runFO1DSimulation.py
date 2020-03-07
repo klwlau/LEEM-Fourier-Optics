@@ -23,12 +23,6 @@ def FO1D(z, zCounter):
             C_3 * lamda ** 3 * (Q ** 3 - QQ ** 3) + C_5 * lamda ** 5 * (Q ** 5 - QQ ** 5) - z * lamda * (
             Q - QQ)) ** 2 / (4 * np.log(2)))
 
-    # print("QQ.shape", QQ.shape)
-    # print("A.shape",A.shape)
-    # print("R_o.shape",R_o.shape)
-    # print("E_s.shape",E_s.shape)
-    # print("E_ct.shape",E_ct.shape)
-
     AR = np.multiply(np.multiply(np.multiply(A, R_o), E_s), E_ct)
 
     for i in range(len(q)):
@@ -67,7 +61,6 @@ amp = 1
 
 wave_obj = amp * np.exp(1j * phase_shift)
 
-# objectFileName = "FO1DObjectWave_" + taskName + "_" + startTimeStamp + ".npy"
 objectFileName = "FO1DObjectWave_" + taskName + "_" + str(kval) + "pi_" + startTimeStamp + ".npy"
 
 print("Saving object to:", objectFileName)
@@ -99,7 +92,6 @@ print("Task:", taskName)
 print("Total Task:", len(delta_z))
 print("Total Parallel Steps:", np.ceil(len(delta_z) / (multiprocessing.cpu_count() + numberOfThreads + 1)))
 
-# FO1D(delta_z[0],0)
 
 
 with Parallel(n_jobs=numberOfThreads, verbose=50, max_nbytes="50M") as parallel:
