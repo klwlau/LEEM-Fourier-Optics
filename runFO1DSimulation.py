@@ -1,5 +1,4 @@
 from datetime import datetime
-import pytz
 from joblib import Parallel, delayed
 from FO1Dconstants import *
 import multiprocessing
@@ -89,14 +88,14 @@ def main():
     E_ct = E_cc * np.exp(-np.pi ** 2 * (delta_fc * lamda * (Q ** 2 - QQ ** 2) + 1 / 2 * delta_f3c * lamda ** 3 * (
             Q ** 4 - QQ ** 4)) ** 2 * E_cc ** 2 / (16 * np.log(2)))
 
-    matrixI = np.zeros((len(simulated_space), len(delta_z)), dtype=complex)
+    matrixI = np.zeros((len(simulated_space), len(delta_z_series)), dtype=complex)
 
     print("Task:", taskName)
-    print("Total Task:", len(delta_z))
-    print("Total Parallel Steps:", np.ceil(len(delta_z) / (multiprocessing.cpu_count() + numberOfThreads + 1)))
+    print("Total Task:", len(delta_z_series))
+    print("Total Parallel Steps:", np.ceil(len(delta_z_series) / (multiprocessing.cpu_count() + numberOfThreads + 1)))
 
     with Parallel(n_jobs=numberOfThreads, verbose=50, max_nbytes="50M") as parallel:
-        parallelReult = parallel(delayed(FO1D)(z, zCounter) for zCounter, z in enumerate(delta_z))
+        parallelReult = parallel(delayed(FO1D)(z, zCounter) for zCounter, z in enumerate(delta_z_series))
 
     for mat in parallelReult:
         matrixI += mat

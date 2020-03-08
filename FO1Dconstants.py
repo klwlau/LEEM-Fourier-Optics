@@ -46,13 +46,13 @@ M_L = 0.653  # Lateral Magnification
 # ##################### NAC Constants######################
 
 #############convert defocus_current into delta_z#############
-defocus_current = np.linspace(-7, 7, 71)  # mA
-delta_zo = defocus_current * 5.23 * 10 ** -6
-delta_z = delta_zo * 3.2
+defocus_current_series = np.linspace(-7, 7, 71)  # mA
+delta_zo = defocus_current_series * 5.23 * 10 ** -6
+delta_z_series = delta_zo * 3.2
 #############convert defocus_current into delta_z#############
 
 ##################directly use delta_z#############
-# delta_z = np.linspace(-200E-6, 200E-6, 101)
+# delta_z_series = np.linspace(-200E-6, 200E-6, 101)
 ##################directly use delta_z#############
 
 
