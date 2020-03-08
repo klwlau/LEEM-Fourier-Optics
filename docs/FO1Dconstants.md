@@ -19,7 +19,7 @@
 |`C_c`, `C_3c`, `C_cc`|`float`| Chromatic Aberration Coefficient in meter|  
 |`alpha_ill`|`float`| Illumination Divergence Angle in radian|  
 |`alpha_ap`|`float`| Acceptance Aangle of the Contrast Aperture in radian|  
-`M_L`: Lateral Magnification
+|`M_L`|`float`| Lateral Magnification|
 |--------------|---|--------------|  
 |`defocus_current_series`|`float`| Defocus current series measured in mA| 
 |--------------|or|--------------|
