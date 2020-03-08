@@ -9,7 +9,6 @@ This is a simulation program written in python that help user to simulate sample
 - numba 0.41.0+
 - scipy 1.3.1+
 - numpy 1.16.4+
-- pytz 2019.2+
 
 # Simulation Setup
 Users can match the simulation with their LEEM setting by tuning constants and sample in the program.
@@ -21,12 +20,26 @@ Documentation of constants are listed [here](https://github.com/klwlau/LEEM-Four
 To setup the sample in the simulation user can specify in `FO2Dsample.py`.  
 Documentation of sample setup are listed [here](https://github.com/klwlau/LEEM-Fourier-Optics/blob/master/docs/FO2Dsample.md).
 
+## 1D FO Simulation Setup
+In 1D FO Simulation, user can setup the constants in `FO1Dconstants.py`.  
+Documentation of constants are listed [here](https://github.com/klwlau/LEEM-Fourier-Optics/blob/master/docs/FO1Dconstants.md).
+
+To setup the sample in the simulation user can specify in `runFO1DSimulation.py`.  
+Documentation of sample setup are listed [here](https://github.com/klwlau/LEEM-Fourier-Optics/blob/master/docs/FO1Dsample.md).
+
+
 ## Program Execution
 
 After the config, user can run the software in terminal or by other editor:
 
 ```
 python runFO2DSimulation.py
+```
+
+or, running 1D FO simulation
+
+```
+python runFO1DSimulation.py
 ```
 
 
