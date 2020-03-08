@@ -9,10 +9,12 @@ startTimeStamp = datetime.now().strftime('%Y%m%d_%H%M%S')
 object_wavelength = 900e-9
 n_sample = 1 + 2 ** 10
 
+
 def create_simulated_space():
     period = 800
     simulated_space = np.linspace(-period, period, n_sample)
     return simulated_space
+
 
 def create_object_fucntion():
     simulated_space = create_simulated_space()
@@ -41,13 +43,7 @@ def create_object_fucntion():
     return amp * np.exp(1j * phase_shift)
 
 
-
-
-
-
-
 def main():
-
     def FO1D(z, zCounter):
         R_o = np.exp(1j * 2 * np.pi * (
                 C_3 * lamda ** 3 * (Q ** 4 - QQ ** 4) / 4 + C_5 * lamda ** 5 * (Q ** 6 - QQ ** 6) / 6 - z * lamda * (
@@ -70,8 +66,7 @@ def main():
     simulated_space = create_simulated_space()
     wave_obj = create_object_fucntion()
 
-    objectFileName = "FO1DObjectWave_" + taskName + "_"  + startTimeStamp + ".npy"
-
+    objectFileName = "FO1DObjectWave_" + taskName + "_" + startTimeStamp + ".npy"
 
     F_wave_obj = np.fft.fftshift(np.fft.fft(wave_obj, n_sample) * (1 / n_sample))
 
@@ -83,7 +78,8 @@ def main():
 
     if len(q) > a:
         q = q[int(np.ceil(n_sample / 2 + 1 - (a - 1) / 2)):int(np.floor(n_sample / 2 + 1 + (a + 1) / 2))]
-        F_wave_obj = F_wave_obj[int(np.ceil(n_sample / 2 + 1 - (a - 1) / 2)):int(np.floor(n_sample / 2 + 1 + (a + 1) / 2))]
+        F_wave_obj = F_wave_obj[
+                     int(np.ceil(n_sample / 2 + 1 - (a - 1) / 2)):int(np.floor(n_sample / 2 + 1 + (a + 1) / 2))]
 
     Q, QQ = np.meshgrid(q, q)
     F_wave_obj_q, F_wave_obj_qq = np.meshgrid(F_wave_obj, np.conj(F_wave_obj))
@@ -99,8 +95,6 @@ def main():
     print("Total Task:", len(delta_z))
     print("Total Parallel Steps:", np.ceil(len(delta_z) / (multiprocessing.cpu_count() + numberOfThreads + 1)))
 
-
-
     with Parallel(n_jobs=numberOfThreads, verbose=50, max_nbytes="50M") as parallel:
         parallelReult = parallel(delayed(FO1D)(z, zCounter) for zCounter, z in enumerate(delta_z))
 
@@ -115,6 +109,7 @@ def main():
 
     np.save(resultFileName, matrixI)
     print("Done")
+
 
 if __name__ == '__main__':
     main()
