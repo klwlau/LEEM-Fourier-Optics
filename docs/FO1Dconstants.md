@@ -11,7 +11,7 @@
 
 ## LEEM Parameters
 | Parameter | Type   | Description  |
-|---:      |:---:  |:---: |
+|---:      |:---:  |:---|
 |`U_a`|`float`| Accelerating Voltage in eV|  
 |`U_o`|`float`| Electron Voltage in eV|  
 |`delta_E`|`float`| Energy Spread in eV|  
