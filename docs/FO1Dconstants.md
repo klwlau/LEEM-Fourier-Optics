@@ -20,11 +20,11 @@
 |`alpha_ill`|`float`| Illumination Divergence Angle in radian|  
 |`alpha_ap`|`float`| Acceptance Aangle of the Contrast Aperture in radian|  
 `M_L`: Lateral Magnification
-|--------------|--------------|--------------|  
+|--------------|---|--------------|  
 |`defocus_current_series`|`float`| Defocus current series measured in mA| 
 |--------------|or|--------------|
 |`delta_z_series`|`float`| Real space distance series between the sample to the objective lens (if using delta_z directly, pls disable line 49-51 and enable line 55 in `FO1Dconstants.py`)|
-|--------------|--------------|--------------|
+|--------------|---|--------------|
 
 ## Optimum LEEM Parameters
 
