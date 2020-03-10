@@ -6,12 +6,11 @@ import multiprocessing
 startTimeStamp = datetime.now().strftime('%Y%m%d_%H%M%S')
 
 object_wavelength = 900e-9
-n_sample = 1 + 2 ** 10
 
 
 def create_simulated_space():
     period = 800
-    simulated_space = np.linspace(-period, period, n_sample)
+    simulated_space = np.linspace(-period, period, simulatingSpaceTotalStep)
     return simulated_space
 
 
@@ -67,18 +66,18 @@ def main():
 
     objectFileName = "FO1DObjectWave_" + taskName + "_" + startTimeStamp + ".npy"
 
-    F_wave_obj = np.fft.fftshift(np.fft.fft(wave_obj, n_sample) * (1 / n_sample))
+    F_wave_obj = np.fft.fftshift(np.fft.fft(wave_obj, simulatingSpaceTotalStep) * (1 / simulatingSpaceTotalStep))
 
     n_max = np.floor(q_max / (1 / object_wavelength))
-    q = 1 / (simulated_space[1] - simulated_space[0]) * np.arange(0, n_sample, 1) / (n_sample)
+    q = 1 / (simulated_space[1] - simulated_space[0]) * np.arange(0, simulatingSpaceTotalStep, 1) / (simulatingSpaceTotalStep)
     q = q - (np.max(q) - np.min(q)) / 2
 
     a = np.sum(np.abs(q) <= q_max)
 
     if len(q) > a:
-        q = q[int(np.ceil(n_sample / 2 + 1 - (a - 1) / 2)):int(np.floor(n_sample / 2 + 1 + (a + 1) / 2))]
+        q = q[int(np.ceil(simulatingSpaceTotalStep / 2 + 1 - (a - 1) / 2)):int(np.floor(simulatingSpaceTotalStep / 2 + 1 + (a + 1) / 2))]
         F_wave_obj = F_wave_obj[
-                     int(np.ceil(n_sample / 2 + 1 - (a - 1) / 2)):int(np.floor(n_sample / 2 + 1 + (a + 1) / 2))]
+                     int(np.ceil(simulatingSpaceTotalStep / 2 + 1 - (a - 1) / 2)):int(np.floor(simulatingSpaceTotalStep / 2 + 1 + (a + 1) / 2))]
 
     Q, QQ = np.meshgrid(q, q)
     F_wave_obj_q, F_wave_obj_qq = np.meshgrid(F_wave_obj, np.conj(F_wave_obj))
