@@ -47,8 +47,8 @@ M_L = 0.653  # Lateral Magnification
 
 #############convert defocus_current into delta_z#############
 defocus_current_series = np.linspace(-7, 7, 71)  # mA
-delta_zo = defocus_current_series * 5.23 * 10 ** -6
-delta_z_series = delta_zo * 3.2
+delta_zo_series = defocus_current_series * 5.23 * 10 ** -6
+delta_z_series = delta_zo_series * 3.2
 #############convert defocus_current into delta_z#############
 
 ##################directly use delta_z#############
