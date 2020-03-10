@@ -1,7 +1,7 @@
 from datetime import datetime
 import pytz
 from joblib import Parallel, delayed
-from CTF1Dconstants import *
+from legacy_code.CTF1Dconstants import *
 import multiprocessing
 
 fmt = '%H:%M:%S'  # %d/%m
