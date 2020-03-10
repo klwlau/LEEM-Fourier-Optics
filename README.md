@@ -30,7 +30,7 @@ Documentation of sample setup are listed [here](https://github.com/klwlau/LEEM-F
 
 ## Program Execution
 
-After the config, user can run the software in terminal or by other editor:
+After the config, user can run the software in terminal ***or by other editor/IDE***:
 
 ```
 python runFO2DSimulation.py

@@ -1,4 +1,4 @@
-# Parameters in 2D FO Simulation
+# Parameters in 1D FO Simulation
 
 ## Computing Parameters
 
@@ -6,7 +6,7 @@
 `numberOfThreads`: Number of threads used in the simulation with -1 means using all threads, -2 means using all threads minus 1.
 
 ## Simulation Parameters
-`simulatingSpaceSize`: The 2D simulation space in both direction measure in nanometer(nm).  
+`simulatingSpaceSize`: The 1D simulation space in both direction measure in nanometer(nm).  
 `simulatingSpaceTotalStep`: Simulating space steps in both direction.  
 
 ## LEEM Parameters
